@@ -8,10 +8,10 @@
  * @license LGPL-3.0-or-later
  */
 
-namespace Chuckki\ContaoIframeBundle;
+namespace Chuckki\HvzIframeBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class ChuckkiContaoIframeBundle extends Bundle
+class ChuckkiHvzIframeBundle extends Bundle
 {
 }

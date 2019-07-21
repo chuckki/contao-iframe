@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": "^5.6 || ^7.0",
+        "php": "^7.1",
         "contao/core-bundle": "4.4.*",
         "symfony/framework-bundle": "^3.3"
     },
@@ -28,16 +28,16 @@
         "symfony/phpunit-bridge": "^3.2"
     },
     "extra": {
-        "contao-manager-plugin": "Chuckki\\ContaoIframeBundle\\ContaoManager\\Plugin"
+        "contao-manager-plugin": "Chuckki\\HvzIframeBundle\\ContaoManager\\Plugin"
     },
     "autoload": {
         "psr-4": {
-            "Chuckki\\ContaoIframeBundle\\": "src/"
+            "Chuckki\\HvzIframeBundle\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Chuckki\\ContaoIframeBundle\\Tests\\": "tests/"
+            "Chuckki\\HvzIframeBundle\\Tests\\": "tests/"
         }
     },
     "support": {

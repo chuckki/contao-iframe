@@ -7,3 +7,10 @@ services:
         Symfony\Component\DependencyInjection\ContainerAwareInterface:
             calls:
                 - ["setContainer", ["@service_container"]]
+
+    Chuckki\HvzIframeBundle\Controller\FrameController:
+        arguments:
+            - '%kernel.project_dir%'
+            - "@session"
+            - "@contao.framework"
+        tags: ['controller.service_arguments']
