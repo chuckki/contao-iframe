@@ -12,6 +12,6 @@ namespace Chuckki\ContaoIframeBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class ContaoIframeBundle extends Bundle
+class ChuckkiContaoIframeBundle extends Bundle
 {
 }

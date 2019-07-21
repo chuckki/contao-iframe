@@ -14,9 +14,10 @@ use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
-use Chuckki\ContaoIframeBundle\ContaoIframeBundle;
+use Chuckki\ContaoIframeBundle\ChuckkiContaoIframeBundle;
+use Contao\ManagerPlugin\Routing\RoutingPluginInterface;
 
-class Plugin implements BundlePluginInterface
+class Plugin implements BundlePluginInterface, RoutingPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -24,8 +25,14 @@ class Plugin implements BundlePluginInterface
     public function getBundles(ParserInterface $parser)
     {
         return [
-            BundleConfig::create(ContaoIframeBundle::class)
+            BundleConfig::create(ChuckkiContaoIframeBundle::class)
                 ->setLoadAfter([ContaoCoreBundle::class]),
         ];
+    }
+
+    public function getRouteCollection(LoaderResolverInterface $resolver, KernelInterface $kernel)
+    {
+        $path = __DIR__ . '/../../src/Resources/config/routing.yml';
+        return $resolver->resolve($path)->load($path);
     }
 }

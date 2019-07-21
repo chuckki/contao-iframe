@@ -1,0 +1,14 @@
+#filesbyuuid:
+#    path: /extern/{uuid}
+#    defaults:
+#        _controller: Chuckki\ContaoIframeBundle\Controller\FrameController:loadFrameAction
+#        _scope: frontend
+#        _token_check: true
+#    requirements:
+#        uuid: '[a-fA-F0-9]{32}'
+
+
+chuckki_iframe:
+    resource: "@ChuckkiContaoIframeBundle/Controller/"
+    type:     annotation
+    prefix:   /
