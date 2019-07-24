@@ -1,0 +1,82 @@
+{% extends "@ChuckkiHvzIframe/base.html.twig" %}
+
+
+{% block content %}
+    <div class="citysearch">
+        <h3 id="hvzlistdropdown">Preise für Ihre Halteverbotszone in:</h3>
+
+        <div class="ta_wrapper">
+            <input type="text" placeholder="Name oder PLZ der Stadt eingeben" value="" id="tags">
+            <button id="searchButton" class="searchBtn">
+                <span class="">Suchen</span>
+            </button>
+        </div>
+
+
+        <div class="sexp">
+            Suchen Sie nach den folgenden Mustern: "<b>Berlin</b>", "<b>10115 Berlin</b>" oder "<b>10115</b>"
+        </div>
+
+        <div id="content"></div>
+    </div>
+
+{% endblock %}
+
+
+{% block jsbottom %}
+    <script type="application/javascript">
+        $(document).ready(function () {
+
+            let t = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace("ort"),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: "/search/%QUERY",
+                    wildcard: "%QUERY"
+                }
+            });
+
+            t.initialize();
+
+            let tagsEl = $("#tags");
+
+
+            tagsEl.typeahead({
+                minLength: 1,
+                hint: true,
+                highlight: true
+            }, {
+                source: t.ttAdapter(),
+                name: "myorts",
+                displayKey: "ort",
+                limit: 20
+            });
+
+            tagsEl.on("typeahead:selected", function () {
+                loadContent();
+                //window.location.href = "/halteverbot-suche.html?suche=" + encodeURIComponent($("#tags").val())
+            });
+
+            tagsEl.keypress(function (e) {
+                if (13 === e.which) {
+                    let o = $("#tags").val();
+                    loadContent();
+                    //window.location.href = "/halteverbot-suche.html?suche=" + encodeURIComponent(o)
+                }
+            });
+
+            tagsEl.focusout(function () {
+                if ($(window).width() < 800) {
+                    $(".tt-suggestion:first-child").trigger('click');
+                }
+                return true;
+            });
+
+            function loadContent() {
+                $("#content").load('/extern/hvb/2');
+            }
+
+        });
+
+    </script>
+{% endblock %}

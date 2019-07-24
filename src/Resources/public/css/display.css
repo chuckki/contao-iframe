@@ -1,0 +1,195 @@
+@import url(//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700);
+
+
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, form, fieldset, legend, label, input, select, textarea, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figure, figcaption, footer, header, main, menu, nav, section, summary, time, mark, audio, video {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+}
+
+body,
+table {
+    font-family: 'Open Sans', Verdana, 'DejaVu Sans', Arial, Helvetica, sans-serif;
+    font-size: 16px !important;
+    color: #343434;
+    line-height: 1.6;
+    padding: 0;
+    margin: 0
+}
+
+body {
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+button, .searchBtn {
+    background: #ff7500;
+    width: 16.666% !important;
+    height: 3rem;
+    border: 1px solid #f57000;
+    font-family: 'Open Sans', Verdana, 'DejaVu Sans', Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    border-radius: 0 4px 4px 0;
+}
+
+.citysearch {
+    border: 1px solid #E0E0E0;
+    background: #fcfcfc;
+    background: #cfcfcf;
+    padding: 10px 10px;
+    margin: 0 auto 10px;
+    /*    width: 80%;*/
+    font-size: 14px;
+}
+
+.ta_wrapper {
+    display: flex;
+    width: 80%;
+    margin: 0 auto;
+    box-shadow: 0 6px 8px -4px rgba(0, 0, 0, 0.14);
+}
+
+.ta_wrapper input {
+    padding-left: 42px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.tt-menu {
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #cccccc;
+    color: #4c4c4c;
+}
+
+.tt-suggestion {
+    padding: 3px 1em 3px .4em;
+    font-size: 1.1rem;
+}
+
+.tt-cursor {
+    background: #e0e0e0;
+    color: #4c4c4c;
+}
+
+.twitter-typeahead,
+.tt-hint,
+#tags {
+    width: 100%;
+    height: 3rem;
+}
+
+.tt-hint {
+    border-radius: 4px 0 0 4px;
+}
+
+#tags {
+    font-weight: 600;
+}
+
+h3#hvzlistdropdown {
+    text-align: center;
+}
+
+.sexp {
+    text-align: center;
+    margin-top: 5px;
+}
+
+.twitter-typeahead:before {
+    content: "\f002";
+    position: absolute;
+    top: 15px;
+    left: 14px;
+    font-family: 'FontAwesome';
+    z-index: 999999;
+    width: 30px;
+    height: 30px;
+    display: block;
+    font-size: 1.4em;
+    line-height: 20px;
+}
+
+
+#tags::-webkit-input-placeholder{
+ color: #747474;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 1;
+    padding-top:3px;
+}
+#tags:-ms-input-placeholder{
+ color: #747474;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 1;
+    padding-top:3px;
+}
+#tags::-ms-input-placeholder{
+ color: #747474;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 1;
+    padding-top:3px;
+}
+#tags::placeholder{
+ color: #747474;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+       text-overflow: ellipsis;
+    opacity: 1;
+    padding-top:3px;
+}
+/*
+
+
+.button, a.button, [class^="button-"], [class*=" button-"], a[class^="button-"], a[class*=" button-"] {
+    display: inline-block;
+    vertical-align: bottom;
+    border: 1px solid transparent;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    border-radius: 3px;
+    padding: .45em 2em;
+    padding-right: 2em;
+    padding-left: 2em;
+    font-family: 'Open Sans', Verdana, 'DejaVu Sans', Arial, Helvetica, sans-serif;
+    line-height: 1.42857;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+
+.citysearch input{
+border-radius: 4px;
+width: 100%;
+border: 1px solid #97adc1;
+box-shadow: 1px 1px 2px #949494 inset;
+font-size: 1.6rem;
+line-height: 2.2rem;
+padding: 1.3rem 1.3rem 1.2rem 40px;
+color: #263777;
+height: 4.8rem;
+}
+*/

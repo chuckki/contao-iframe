@@ -4,3 +4,10 @@ frameStarter:
         _controller: Chuckki\HvzIframeBundle\Controller\FrameController:loadFrameAction
         _scope: frontend
         _token_check: true
+
+hvzContent:
+    path: /extern/hvb/{id}
+    defaults:
+        _controller: Chuckki\HvzIframeBundle\Controller\FrameController:getHvbInfo
+        _scope: frontend
+        _token_check: false

@@ -22,8 +22,14 @@ class FrameController extends Controller
 
     public function loadFrameAction(): Response
     {
-        return $this->render('@ChuckkiHvzIframe/findmich.html.twig');
-
-//        return new Response('hier');
+        return $this->render('@ChuckkiHvzIframe/frame.start.html.twig');
     }
+
+    public function getHvbInfo($id): Response
+    {
+        return new Response("hier bin ich");
+        // load hvz date
+        // parse template
+    }
+
 }

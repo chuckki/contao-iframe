@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>Halteverbot online bestellen</title>
+
+    <base href="{{ app.request.getSchemeAndHttpHost() }}"/>
+
+    <link rel="stylesheet" href="{{ asset('bundles/chuckkihvziframe/css/normalize.css') }}" type="text/css"/>
+    <link rel="stylesheet" href="{{ asset('bundles/chuckkihvziframe/css/display.css') }}" type="text/css"/>
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"/>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.2.1/typeahead.bundle.min.js" integrity="sha256-VCsWOz+0GuHdS/sIICtQNTFJdbaDI80rxvoB7BXabrU=" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+
+        function checkForm() {
+
+            if (document.orderform.town.value == "notown") {
+                alert("Bitte wählen Sie zunächst eine Stadt aus.");
+                //document.orderform.town.focus();
+                document.getElementById('top').focus();
+                return false;
+            }
+
+            if (document.orderform.lang.value == "") {
+                alert("Bitte geben Sie die Länge Ihrer Halteverbotszone an.");
+                return false;
+            } else if (parseInt("" + document.orderform.lang.value + "") > 20) {
+                alert("Bei Bestellungen von Halteverbotszonen über 20 m Länge wird der Preis wahrscheinlich abweichen. Bitte setzen Sie sich NACH der Bestellung bei Bedarf mit uns per E-Mail oder kostenlos über unsere Hotline in Verbindung.");
+                //return true;
+            }
+
+            if (document.orderform.str.value == "") {
+                alert("Bitte geben Sie eine Straße für das Halteverbot an.");
+                document.orderform.str.focus();
+                return false;
+            }
+
+            if (document.orderform.hnr.value == "") {
+                alert("Bitte geben Sie eine Hausnummer für das Halteverbot an.");
+                document.orderform.hnr.focus();
+                return false;
+            }
+
+            if (document.orderform.plz.value.length < 5) {
+                alert("Bitte geben Sie in Deutschland eine fünfstellige Postleitzahl an.");
+                document.orderform.plz.focus();
+                return false;
+            }
+
+
+            if (document.orderform.zusatz.value == "") {
+                alert("Bitte geben Sie unbedingt den gewünschten Zeitraum für die Aufschrift an.");
+                document.orderform.zusatz.focus();
+                return false;
+            }
+
+
+            var plzmatch = false;
+            $.ajax({
+                url: '/ajax/checkPLZ.php'
+                    + '?plz='
+                    + encodeURI(document.orderform.plz.value)
+                    + '&town='
+                    + encodeURI(document.orderform.town.value),
+                success: function (result) {
+                    //alert(result);
+                    if (parseInt(result) < 1) {
+                        //
+                    } else {
+                        plzmatch = true;
+                    }
+                },
+                async: false
+            });
+
+            if (!plzmatch) {
+                alert("Diese Kombination aus Stadt und Postleitzahl ist uns nicht bekannt. Bitte kontaktieren Sie uns ggf. nach der Bestellung.");
+            }
+
+            if (document.orderform.detailtext.value == "") {
+
+                var myRadio = $('input[name="verwendung"]');
+                var checkedValue = myRadio.filter(':checked').val();
+
+                if (checkedValue == "baustelle" || checkedValue == "sonstiges") {
+
+                    alert("Bitte beschreiben Sie Ihr Vorhaben genauer.");
+                    // $('#vorhaben_fehler').show();
+                    return false;
+                }
+            }
+
+            if (document.orderform.extrabreit.value == "") {
+
+                var myRadio = $('input[name="car_type"]');
+                var checkedValue = myRadio.filter(':checked').val();
+
+                if (checkedValue == "lkw") {
+
+                    alert("Bitte geben Sie an, ob Sie eine einseitige oder beidseitige Halteverbotszone benötigen.");
+                    document.orderform.extrabreit.focus();
+                    return false;
+                }
+            }
+
+
+            return true;
+        }
+
+        /* checkout */
+        function checkCustomerData() {
+
+            if (document.customer_data.email.value == "") {
+                alert("Bitte geben Sie unbedingt Ihre E-Mail Adresse an.");
+                document.customer_data.email.focus();
+                return false;
+            }
+
+            if (document.customer_data.email.value != document.customer_data.email_repeat.value) {
+                alert("Bitte überprüfen Sie die Eingabe der E-Mail-Adressen.");
+                document.customer_data.email.focus();
+                return false;
+            }
+
+            var myRadio = $('input[name="anrede"]');
+            var checkedValue = myRadio.filter(':checked').val();
+
+            if (checkedValue == "undefined" || checkedValue == undefined) {
+
+                alert("Bitte geben Sie eine Anrede an.");
+                return false;
+            }
+
+            if (document.customer_data.anrede.value == "") {
+                alert("Bitte geben Sie eine Anrede an.");
+                return false;
+            }
+
+            if (document.customer_data.firstname.value == "" || document.customer_data.lastname.value == "") {
+                alert("Bitte geben Sie Ihren Vor- und Nachnamen an.");
+                document.customer_data.firstname.focus();
+                return false;
+            }
+
+            if (document.customer_data.strasse.value == "" || document.customer_data.nr.value == "") {
+                alert("Bitte geben Sie Ihre Straße und Hausnummer an.");
+                document.customer_data.strasse.focus();
+                return false;
+            }
+
+            if (document.customer_data.kunde_plz.value == "" || document.customer_data.ort.value == "") {
+                alert("Bitte geben Sie Ihre PLZ und Ihren Wohnort an.");
+                document.customer_data.kunde_plz.focus();
+                return false;
+            }
+
+            if (document.customer_data.fon.value == "") {
+                alert("Bitte geben Sie Ihre Telefonnummer an.");
+                document.customer_data.fon.focus();
+                return false;
+            }
+
+
+            return true;
+        }
+
+    </script>
+
+</head>
+<body style="max-width:980px;" onLoad="document.getElementById('top').focus();">
+
+{% block noscript %}
+    <noscript>
+        <style>
+            .page-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    z-index: 100;
+}
+            .page-cover p {
+    width: 95%;
+    font-size: 15px;
+}
+.page-cover p {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -10%);
+    width: 50%;
+    color: white;
+    background: rgba(0,0,0,0.6);
+    padding: 2rem;
+    border-radius: 4px;
+}
+            body:before {
+                content: " ";
+                width: 100%;
+                height: 100%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                background: rgba(0, 0, 0, 0.7);
+                z-index: 99;
+            }</style>
+        <div class="page-cover"><p>Um den vollen Funktionsumfang und die Bestellfunktion von platzda.de zu nutzen,
+                benötigen
+                Sie JavaScript. Eine Bestellung mit deaktiviertem JavaScript ist nicht möglich, da einige Funktionen im
+                Bestellvorgang dann nicht zur Verfügung stehen. Gerne nehmen wir Ihre Bestellung auch telefonisch unter
+                unserer kostenlosen Hotline (<a href="tel://08007528923" style="font-weight:bold;">0800 - 7528923</a>)
+                entgegen. <br><br>Eine Anleitung zum Einschalten von JavaScript finden Sie <a
+                    href="https://www.enable-javascript.com/de/" target="_blank">hier</a>.</p></div>
+    </noscript>
+{% endblock %}
+
+<a name="top" id="top" href="#"></a>
+<h2>Halteverbot bestellen - {{ app.request.getSchemeAndHttpHost() }}</h2>
+
+
+{% block content %}
+    <form action="bestellen/?aff=isvz#top" method="get" class="form-inline">
+        <fieldset>
+            <input type="hidden" name="aff" value="isvz"/>
+            <legend>Preise für ein Halteverbot in Ihrer Stadt</legend>
+            <p>Hier können Sie eine Halteverbotszone für Ihren Umzugswagen bestellen. Das Halteverbot wird für Sie
+                fertig
+                eingerichtet, natürlich mit allen behördlichen Genehmigungen.
+                <br/>
+                Um zu erfahren, welche Kosten bei der Einrichtung einer Halteverbotszone für Sie entstehen, wählen Sie
+                bitte
+                in einem ersten Schritt Ihre Stadt aus. Anschließend können Sie mit der Bestellung beginnen.
+            </p>
+
+            <div class="form-group">
+                <label><strong>Stadt wählen:</strong></label>
+                <select name="city" id="town3" class="form-control">
+                    <option value="0">wählen...</option>
+                    <option value="Aachen" class=" hinweis">Aachen</option>
+                    <option value="Ahrensburg" class=" verwendung extrabreit">Ahrensburg</option>
+                    <option value="Ammersbek" class=" verwendung extrabreit">Ammersbek</option>
+                    <option value="Bad-Oldesloe" class=" verwendung extrabreit">Bad Oldesloe</option>
+                    <option value="Bargteheide" class=" extrabreit">Bargteheide</option>
+                    <option value="Barmstedt" class=" extrabreit">Barmstedt</option>
+                    <option value="Barsbuettel" class=" verwendung extrabreit">Barsbüttel</option>
+                    <option value="Berlin" class=" hinweis verwendung extrabreit">Berlin</option>
+                    <option value="Bielefeld" class=" verwendung extrabreit">Bielefeld</option>
+                    <option value="Bochum" class=" hinweis extrabreit">Bochum</option>
+                    <option value="Bonn" class=" hinweis verwendung extrabreit">Bonn</option>
+                    <option value="Boenningstedt" class=" verwendung extrabreit">Bönningstedt</option>
+                    <option value="Braunschweig" class=" extrabreit">Braunschweig</option>
+                    <option value="Bremen" rel="kunde" class=" verwendung extrabreit">Bremen</option>
+                    <option value="Chemnitz" class=" extrabreit">Chemnitz</option>
+                    <option value="Cottbus" rel="kunde" class=" hinweis verwendung extrabreit">Cottbus</option>
+                    <option value="Darmstadt" class="">Darmstadt</option>
+                    <option value="Dortmund" class=" hinweis">Dortmund</option>
+                    <option value="Dresden" class=" hinweis verwendung extrabreit">Dresden</option>
+                    <option value="Duisburg" class=" hinweis extrabreit">Duisburg</option>
+                    <option value="Duesseldorf" class=" hinweis extrabreit">Düsseldorf</option>
+                    <option value="Ellerbek" class=" verwendung extrabreit">Ellerbek</option>
+                    <option value="Elmshorn" class=" verwendung extrabreit">Elmshorn</option>
+                    <option value="Erfurt" class=" hinweis extrabreit">Erfurt</option>
+                    <option value="Erlangen" class=" extrabreit">Erlangen</option>
+                    <option value="Essen" class=" hinweis extrabreit">Essen</option>
+                    <option value="Frankfurt-Main" class=" hinweis zusatzfrage extrabreit">Frankfurt-Main</option>
+                    <option value="Freiburg" class="">Freiburg</option>
+                    <option value="Fuerth" class=" hinweis zusatzfrage">Fürth</option>
+                    <option value="Geesthacht" class=" hinweis extrabreit">Geesthacht</option>
+                    <option value="Glinde" class=" verwendung extrabreit">Glinde</option>
+                    <option value="Goettingen" class="">Göttingen</option>
+                    <option value="Grosshansdorf" class="">Großhansdorf</option>
+                    <option value="Hagen" class=" hinweis zusatzfrage extrabreit">Hagen</option>
+                    <option value="Halle-Saale" class=" hinweis extrabreit">Halle (Saale)</option>
+                    <option value="Halstenbek" class=" hinweis verwendung extrabreit">Halstenbek</option>
+                    <option value="Hamburg" class=" verwendung extrabreit">Hamburg</option>
+                    <option value="Hannover" class=" extrabreit">Hannover</option>
+                    <option value="Hasloh" class=" verwendung extrabreit">Hasloh</option>
+                    <option value="Heidelberg" class=" hinweis extrabreit">Heidelberg</option>
+                    <option value="Heilbronn" class=" extrabreit">Heilbronn</option>
+                    <option value="Henstedt-Ulzburg" class=" hinweis extrabreit">Henstedt-Ulzburg</option>
+                    <option value="Hildesheim" class="">Hildesheim</option>
+                    <option value="Hoisdorf" class="">Hoisdorf</option>
+                    <option value="Ingolstadt" class=" hinweis zusatzfrage">Ingolstadt</option>
+                    <option value="Kaltenkirchen" class=" extrabreit">Kaltenkirchen</option>
+                    <option value="Karlsruhe" class=" extrabreit">Karlsruhe</option>
+                    <option value="Kassel" class=" verwendung extrabreit">Kassel</option>
+                    <option value="Kiel" class=" extrabreit">Kiel</option>
+                    <option value="Koblenz" class="">Koblenz</option>
+                    <option value="Koeln" class=" hinweis extrabreit">Köln</option>
+                    <option value="Krefeld" class=" hinweis extrabreit">Krefeld</option>
+                    <option value="Leipzig" class=" hinweis extrabreit">Leipzig</option>
+                    <option value="Leverkusen" class=" extrabreit">Leverkusen</option>
+                    <option value="Luebeck" class=" hinweis extrabreit">Lübeck</option>
+                    <option value="Lueneburg" class=" extrabreit">Lüneburg</option>
+                    <option value="Mainz" class=" hinweis extrabreit">Mainz</option>
+                    <option value="Mannheim" class=" hinweis">Mannheim</option>
+                    <option value="Moenchengladbach" class=" hinweis verwendung extrabreit">Mönchengladbach</option>
+                    <option value="Muenchen" class=" hinweis extrabreit">München</option>
+                    <option value="Muenster" class=" hinweis zusatzfrage extrabreit">Münster</option>
+                    <option value="Neu-Wulmstorf" class=" verwendung extrabreit">Neu Wulmstorf</option>
+                    <option value="Neuss" class=" hinweis extrabreit">Neuss</option>
+                    <option value="Norderstedt" class=" hinweis zusatzfrage verwendung extrabreit">Norderstedt</option>
+                    <option value="Nuernberg" class=" hinweis zusatzfrage">Nürnberg</option>
+                    <option value="Oberhausen" class="">Oberhausen</option>
+                    <option value="Offenbach" class="">Offenbach</option>
+                    <option value="Osnabrueck" class=" hinweis">Osnabrück</option>
+                    <option value="Oststeinbek" class=" extrabreit">Oststeinbek</option>
+                    <option value="Pinneberg" class=" hinweis verwendung extrabreit">Pinneberg</option>
+                    <option value="Potsdam" class=" extrabreit">Potsdam</option>
+                    <option value="Quickborn" class=" hinweis extrabreit">Quickborn</option>
+                    <option value="Regensburg" rel="kunde" class=" hinweis">Regensburg</option>
+                    <option value="Reinbek" class=" extrabreit">Reinbek</option>
+                    <option value="Rellingen" class=" verwendung extrabreit">Rellingen</option>
+                    <option value="Rostock" class=" hinweis extrabreit">Rostock</option>
+                    <option value="Saarbruecken" class="">Saarbrücken</option>
+                    <option value="Schenefeld" class=" hinweis verwendung extrabreit">Schenefeld</option>
+                    <option value="Seevetal-Meckelfeld" class=" verwendung extrabreit">Seevetal-Meckelfeld</option>
+                    <option value="Stuttgart" class=" hinweis extrabreit">Stuttgart</option>
+                    <option value="Trittau" class=" extrabreit">Trittau</option>
+                    <option value="Ulm" class=" hinweis extrabreit">Ulm</option>
+                    <option value="Wedel" class=" extrabreit">Wedel</option>
+                    <option value="Wentorf" class=" verwendung extrabreit">Wentorf</option>
+                    <option value="Wiesbaden" class=" hinweis extrabreit">Wiesbaden</option>
+                    <option value="Winsen-Luhe" class=" verwendung extrabreit">Winsen/Luhe</option>
+                    <option value="Wohltorf" class=" verwendung extrabreit">Wohltorf</option>
+                    <option value="Wuppertal" class=" hinweis extrabreit">Wuppertal</option>
+                </select>
+                <button type="submit" class="btn btn-default" name="" id="show-prices" value="Preise anzeigen">Preise
+                    anzeigen
+                </button>
+            </div>
+
+        </fieldset>
+    </form>
+{% endblock %}
+
+{% block footer %}
+    <div id="footer">
+        <a href="./#top" class="home-link">Halteverbot bestellen</a> |
+        <a href="./agb/#top" class="agb-link">AGB</a> |
+        <a href="./datenschutzerklaerung/#top" class="agb-link">Datenschutz</a> |
+        <a href="./impressum/#top" class="imprint-link">Impressum</a> |
+        <a href="./faq/#top" class="faq-link">FAQ</a> |
+        <a href="./widerruf/#top" class="widerruf-link">Widerrufsrecht</a>
+    </div>
+{% endblock %}
+
+{% block jsbottom %}
+<script type="text/javascript">
+
+    $('#town').live('change', function () {
+
+        var town = $(this).val();
+
+        /* neu genehmigungsfeld */
+        if ($("option:selected", this).attr("rel") == "kunde") {
+
+            $('#police-nope').click();
+            $('#gen_alle').hide();
+            $('#gen_kunde').show();
+            $('#genehmigungsinfo').hide();
+            $('#kunde_upload').show();
+
+        } else {
+            $('#police-yes').click();
+            $('#gen_alle').show();
+            $('#gen_kunde').hide();
+            $('#genehmigungsinfo').show();
+            $('#kunde_upload').hide();
+
+        }
+
+        /* neu hinweisfeld */
+        if ($("option:selected", this).hasClass("hinweis")) {
+            $.post('/ajax/getHinweis.php', {town: town}, function (res) {
+                $('.stadthinweis').html(res);
+                $('.stadthinweis').show();
+            });
+        } else {
+            $('.stadthinweis').hide();
+        }
+
+        /* neu zusatzfrage */
+        if ($("option:selected", this).hasClass("zusatzfrage")) {
+            $.post('/ajax/getZusatz.php', {town: town}, function (res) {
+                var ar = res.split('::::');
+                var name = ar[0];
+                var frage = ar[1];
+                var err = ar[2];
+                $('#zusatzheadline').html(name);
+                $('#zusatz_rechts').html(frage);
+                $('#zusatzfrage_fehler').html(err);
+                $('#zusatzfrage_fehler').hide();
+
+                $('#zusatzfrage').show();
+            });
+        } else {
+            $('#zusatzfrage_antwort').html('');
+            $('#zusatz_links').html();
+            $('#zusatzfrage').hide();
+            $('#zusatzheadline').html('');
+        }
+
+        /* neu verwendung */
+        if ($("option:selected", this).hasClass("verwendung")) {
+            $('.vumzug').attr("checked", "checked");
+            $('#verwendung_online').show();
+        } else {
+            $('.vumzug').attr("checked", "checked");
+            $('#verwendung_online').hide();
+        }
+
+        /* neu car_type */
+        if ($("option:selected", this).hasClass("extrabreit")) {
+            $('#car_choose').show();
+            $('.transporter').attr("checked", "checked");
+            $('#extrabreit option:first').attr("selected", "selected");
+            $('#extrabreit').hide();
+            $('#extratext').hide();
+        } else {
+            $('#car_choose').hide();
+            $('.transporter').attr("checked", "checked");
+            $('#extrabreit option:first').attr("selected", "selected");
+            $('#extratext').hide();
+        }
+
+        /* neu preislink */
+        if ($("option:selected", this).val() == "notown") {
+            $('#preisliste').html('Zur <a href="/Halteverbot/">Preisliste</a>.');
+        } else {
+            $('#preisliste').html('Zur Preisliste für <a href="/Halteverbot/' + $("option:selected", this).val() + '/">' + $("option:selected", this).val() + '</a>.');
+        }
+
+
+        var town = $("option:selected", this).val();
+
+        /* neu preis plus */
+        if ($("option:selected", this).val() == "notown") {
+            $('.pallgemein').show();
+            $('.pstadt').hide();
+        } else {
+            $('.pallgemein').hide();
+            $.post('/ajax/getPlus.php', {town: town}, function (res) {
+
+                if (res != '-')
+                    $('.pstadt').html("<strong>kostenpflichtig; " + res + " EUR</strong>");
+                else
+                    $('.pstadt').html("<strong>im Preis des Halteverbots enthalten</strong>");
+
+                $('.pstadt').show();
+                // -- Stadt in Select oben setzen
+                $("select#town3 option").filter(function () {
+                    return $(this).val() == town;
+                }).attr('selected', true);
+                $('#town4').html($("option:selected", 'select#town3').text());
+            });
+
+        }
+
+
+        /* neu iFrame price table */
+        var town = $(this).val();
+        $.post('/iframes/getPriceTable.inc.php', {city: town, ajax: true}, function (res) {
+            $('#prices').replaceWith(res);
+        });
+
+
+    });
+
+    $(document).on('change', '#police-yes', function () {
+
+        $('#ajaxprice').html('<img src="/img/ajax-loader-ball.gif" />');
+
+        var town = $('#town').val();
+        var police = $(this).val();
+
+        $.post('/ajax/calcPrice.php', {town: town, police: police}, function (res) {
+            $('#ajaxprice').html('&euro; ' + res + ',-');
+        });
+
+        $('#hinweisgenehmigung').hide();
+        $('#kunde_upload').hide();
+        $('#genehmigungsinfo').show();
+    });
+
+    $(document).on('change', '#police-nope', function () {
+
+        $('#ajaxprice').html('<img src="/img/ajax-loader-ball.gif" />');
+
+        var town = $('#town').val();
+        var police = $(this).val();
+
+        $.post('/ajax/calcPrice.php', {town: town, police: police}, function (res) {
+            $('#ajaxprice').html('&euro; ' + res + ',-');
+        });
+
+        $('#hinweisgenehmigung').show();
+        $('#kunde_upload').show();
+        $('#genehmigungsinfo').hide();
+    });
+
+
+    $('.verwendung').live('change', function () {
+
+        if ($(this).val() == "umzug") {
+            $('#detailtext').removeClass('required_for_submit');
+        } else if ($(this).val() == "baustelle") {
+            $('#detailtext').removeClass('required_for_submit');
+            $('#detailtext').addClass('required_for_submit');
+        } else if ($(this).val() == "sonstiges") {
+            $('#detailtext').removeClass('required_for_submit');
+            $('#detailtext').addClass('required_for_submit');
+        }
+    });
+
+
+    $('.car_type').live('click', function () {
+
+        if ($(this).val() == "transporter") {
+            $('#extrabreit option:first').attr("selected", "selected");
+            $('#extrabreit').hide();
+            $('#extratext').hide();
+        } else {
+            $('#extrabreit').show();
+            $('#extratext').show();
+        }
+    });
+
+
+    // checkbox sammelrechnung
+    var sizecart = 1;
+    if ($('#firma_address').val() == "" || sizecart < 2) {
+
+        $('.sammel').hide();
+    }
+
+    $('#firma_address').live('keyup', function () {
+
+        if ($('#firma_address').val() != "") {
+
+            if (sizecart > 1) {
+
+                $('.sammel').fadeIn();
+            }
+        } else {
+            $('.sammel').fadeOut();
+        }
+    });
+
+
+    function ScrollTop() {
+        if (document.all) {
+            document.body.scrollLeft = 0;
+            document.body.scrollTop = 0;
+        } else {
+            //window.scrollTo(0,top);
+        }
+    }
+
+</script>
+{% endblock %}
+
+
+</body>
+</html>
