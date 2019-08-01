@@ -52,15 +52,19 @@
                 limit: 20
             });
 
-            tagsEl.on("typeahead:selected", function () {
-                loadContent();
-                //window.location.href = "/halteverbot-suche.html?suche=" + encodeURIComponent($("#tags").val())
+            var selectedDatum;
+
+            tagsEl.on("typeahead:selected", function (ev, suggestion) {
+                selectedDatum = suggestion;
+            });
+
+            $( "#searchButton" ).click(function() {
+                loadContent(selectedDatum);
             });
 
             tagsEl.keypress(function (e) {
                 if (13 === e.which) {
-                    let o = $("#tags").val();
-                    loadContent();
+                    loadContent(selectedDatum);
                     //window.location.href = "/halteverbot-suche.html?suche=" + encodeURIComponent(o)
                 }
             });
@@ -73,10 +77,13 @@
             });
 
             function loadContent() {
-                $("#content").load('/extern/hvb/2');
+                $("#content").load('/extern/hvb/' + selectedDatum['id']);
             }
 
         });
 
     </script>
+
+
+
 {% endblock %}

@@ -4,6 +4,15 @@ frameStarter:
         _controller: Chuckki\HvzIframeBundle\Controller\FrameController:loadFrameAction
         _scope: frontend
         _token_check: true
+    methods: [GET]
+
+formProceed:
+    path: /extern
+    defaults:
+        _controller: Chuckki\HvzIframeBundle\Controller\FrameController:checkFormAction
+        _scope: frontend
+        _token_check: true
+    methods: [POST]
 
 hvzContent:
     path: /extern/hvb/{id}

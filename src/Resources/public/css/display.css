@@ -46,7 +46,6 @@ button, .searchBtn {
 .citysearch {
     border: 1px solid #E0E0E0;
     background: #fcfcfc;
-    background: #cfcfcf;
     padding: 10px 10px;
     margin: 0 auto 10px;
     /*    width: 80%;*/
@@ -156,40 +155,22 @@ h3#hvzlistdropdown {
     opacity: 1;
     padding-top:3px;
 }
-/*
 
-
-.button, a.button, [class^="button-"], [class*=" button-"], a[class^="button-"], a[class*=" button-"] {
-    display: inline-block;
-    vertical-align: bottom;
-    border: 1px solid transparent;
-    border-top-color: transparent;
-    border-right-color: transparent;
-    border-bottom-color: transparent;
-    border-left-color: transparent;
-    border-radius: 3px;
-    padding: .45em 2em;
-    padding-right: 2em;
-    padding-left: 2em;
-    font-family: 'Open Sans', Verdana, 'DejaVu Sans', Arial, Helvetica, sans-serif;
-    line-height: 1.42857;
-    font-weight: 600;
+#footer{
     text-align: center;
+}
+
+.price{
+font-weight: 600;
+font-size: 18px;
     white-space: nowrap;
-    cursor: pointer;
-    text-decoration: none;
+    font-family: "Open Sans", Verdana, "DejaVu Sans", Arial, Helvetica, sans-serif;
+    min-width: 20%;
+    text-align: right;
 }
 
+.detailList{
+        padding: 15px;
 
-.citysearch input{
-border-radius: 4px;
-width: 100%;
-border: 1px solid #97adc1;
-box-shadow: 1px 1px 2px #949494 inset;
-font-size: 1.6rem;
-line-height: 2.2rem;
-padding: 1.3rem 1.3rem 1.2rem 40px;
-color: #263777;
-height: 4.8rem;
+    display: flex;
 }
-*/

@@ -1,0 +1,59 @@
+<div id="hvzDetails">
+    <h3>Halteverbot für {{ hvz.question }}</h3>
+    <div class="detailList">
+        <div class="description">
+            <p>
+                Beantragung einer behördlichen Genehmigung inklusive fristegerechter Aufstellung des Halteverbots
+                in {{ hvz.question }}, Anfertigung eines Aufstellprotokolls, Lieferung und Aufstellung sowie Abholung
+                der Halteverbotsschilder nach Ablauf der Gültigkeitsdauer.
+            </p>
+        </div>
+        <div class="price">
+            {{ hvz.hvz_single|number_format(2, ',', '.') }} €</p>
+
+        </div>
+    </div>
+</div>
+
+<div id="orderForm">
+    {{ hvzForm | raw }}
+</div>
+
+<script>
+(function($) {
+"use strict";
+    $(document).ready(function() {
+        var form = $(document.querySelector('input[name="FORM_SUBMIT"][value="{{ formId }}"]').form);
+        form.submit(function() {
+            $.ajax({
+                type: 'POST',
+                data: window.FormData ? new FormData(this) : form.serialize(),
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    if (data == 'true') {
+                        form.off('submit').submit();
+                        return;
+                    }
+                    form.animate({'opacity':0}, 200, 'swing', function() {
+                        form.html(data);
+                        form.animate({'opacity':1}, 200);
+
+                        try {
+                            form.find('input,textarea').each(function (el) {
+                                el.cleardefault();
+                            });
+                        } catch (err) {}
+
+                        form.trigger('ajax_change');
+                        $(window).trigger('ajax_change');
+                    });
+                }
+            });
+
+            return false;
+        });
+    });
+})(jQuery);
+</script>
