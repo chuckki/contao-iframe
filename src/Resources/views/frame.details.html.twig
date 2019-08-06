@@ -16,7 +16,8 @@
 </div>
 
 <div id="orderForm">
-    {{ hvzForm | raw }}
+
+    {{ include('@ChuckkiHvzIframe/form.html.twig', {request_token: 'bar', ort: 'Lünen'}) }}
 </div>
 
 <script>

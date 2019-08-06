@@ -55,7 +55,7 @@ button, .searchBtn {
 
 .citysearch {
     border: 1px solid #E0E0E0;
-    background: #fcfcfc;
+    background: #F6F6F6;
     padding: 10px 10px;
     margin: 0 auto 10px;
     /*    width: 80%;*/
@@ -185,3 +185,63 @@ font-size: 18px;
 
     display: flex;
 }
+
+
+
+legend{
+    font-size: 13px;
+    padding: 0 12px;
+    height: 22px;
+    background: #fff;
+    text-align: center;
+    font-weight: 600;
+    border: solid 1px #e0e0e0;
+    border-radius: 12px;
+    line-height: 22px;
+    justify-content: center;
+}
+
+.formbody input{
+    height: 50px;
+    padding-top: 18px;
+    padding-left: 32px;
+    padding-right: 0.7142em;
+    border: 1px solid #e0e0e0;
+    font-family: 'Open Sans', Verdana, 'DejaVu Sans', Arial, Helvetica, sans-serif;
+    background-color: #ffffff;
+    font-size: 1.5em;
+}
+
+span.placeholder{
+    white-space: nowrap;
+    position: absolute;
+    top: 8px;
+    left: 12px;
+    pointer-events: none;
+    font-size: 10px;
+    color: #6a6a78;
+    transition: top 250ms ease-out, font-size 250ms ease-out;
+    z-index: 2;
+}
+
+.formRow{
+    height: 50px;
+    min-height: 50px;
+    position: relative;
+    display: inline-block;
+    line-height: 16px;
+}
+
+.empty span {
+    top: 18px;
+    left: 12px;
+    font-size: 14px;
+}
+
+
+.formbody input:focus,
+.formbody select:focus,
+.formbody textarea:focus {
+    border-color: #969696;
+}
+

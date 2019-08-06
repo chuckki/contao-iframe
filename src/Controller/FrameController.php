@@ -27,16 +27,17 @@ class FrameController extends Controller
 
     public function loadFrameAction(): Response
     {
-
         return $this->render('@ChuckkiHvzIframe/frame.start.html.twig');
     }
 
     public function checkFormAction(): Response
     {
-        $objForm = $this->buildForm();
+        $hvzId = \Input::post('hvzId');
+        $objHvz = HvzModel::findById($hvzId);
+        $objForm = $this->buildForm($objHvz);
         if ($objForm->validate()) {
             $arrData = $objForm->fetchAll();
-            $output  = "<pre>";
+            $output  .= "<pre>";
             $output  .= print_r($arrData, true);
         } else {
             $output = "validation error";
@@ -47,20 +48,20 @@ class FrameController extends Controller
     public function getHvbInfo($id): Response
     {
         $orderObj   = HvzModel::findById($id);
-        $formString = $this->buildForm($orderObj)->generate();
-        $insertTags = new InsertTags();
-        $objForm    = $insertTags->replace($formString, false);
+        $formString = $this->buildForm($orderObj);
+
         return $this->render(
             '@ChuckkiHvzIframe/frame.details.html.twig',
             [
                 'hvz'     => $orderObj,
-                'hvzForm' => $objForm,
+                'hvzForm' => $formString->generate(),
+                'requestToken' => \RequestToken::get(),
                 'formId'  => 'hvzOrderform'
             ]
         );
     }
 
-    private function buildForm(HvzModel $hvzModel = null)
+    private function buildForm(HvzModel $hvzModel)
     {
         $objForm = new Form(
             'hvzOrderform', 'POST', function ($objHaste) {
@@ -68,17 +69,23 @@ class FrameController extends Controller
         }
         );
 
-        $objForm->setFormActionFromUri('/?test=2');
+        $objForm->addFormField('hvzId',
+            array(
+                'default'     => $hvzModel->id,
+                'label'       => 'hvzId',
+                'inputType'   => 'hidden',
+                'eval'        => array('mandatory' => true)
+            )
+        );
 
         // Ort
         $objForm->addFormField(
             'ort',
             array(
-                'default'     => !empty($hvzModel->question) ? $hvzModel->question : '',
+                'default'     => $hvzModel->question,
                 'label'       => 'Ort',
                 'inputType'   => 'text',
-                'explanation' => array('hier stehe ich', 'tstw'),
-                'eval'        => array('mandatory' => true, 'readonly' => true, 'helpwizard' => true)
+                'eval'        => array('mandatory' => true, 'readonly' => true)
             )
         );
         // PLZ
@@ -103,19 +110,12 @@ class FrameController extends Controller
         $objForm->addFormField(
             'termsOfUse',
             array(
-                'label'     => array('', 'This is the <label>'),
+                'label'     => array('', 'Einverstanden mit den AGB'),
                 'inputType' => 'checkbox',
                 'eval'      => array('mandatory' => true)
             )
         );
-        $objForm->addFormField(
-            'year',
-            array(
-                'label'     => 'Year',
-                'inputType' => 'text',
-                'eval'      => array('mandatory' => true, 'datepicker' => true)
-            )
-        );
+
         // Let's add  a submit button
         $objForm->addFormField(
             'submit',
