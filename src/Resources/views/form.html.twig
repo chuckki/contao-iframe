@@ -1,3 +1,5 @@
+<script src="{{ asset('bundles/chuckkihvziframe/js/datepicker-de.js') }}"></script>
+
 <form action="" method="POST" enctype="application/x-www-form-urlencoded">
     <div class="formbody">
         <input type="hidden" name="FORM_SUBMIT" value="hvzOrderform">
@@ -38,7 +40,7 @@
             <div class="formRow empty">
                 <span class="placeholder">Datum</span>
                 <i class="far fa-calendar input-unity"></i>
-                <input type="text" class="text mandatory" id="startDate" name="vom">
+                <input type="text" class="text mandatory" id="startDateInput" name="vom">
             </div>
 
 
@@ -46,10 +48,38 @@
                 $(function () {
 //                    $("#startDate").datepicker();
                 });
+                function cancelSelection(){
+                    $(".datepicker__modal").hide();
+                }
+
+                $("#startDateInput").click( function () {
+                    let picker = $(".datepicker__modal");
+                    picker.show();
+                    picker.focus();
+                })
             </script>
 
 
-<div id="datepicker"></div>
+            <div class="datepicker__modal" id="vondatum_datepicker" style="display: block;">
+                <div id="datepicker__centered-container">
+                    <div class="datepicker__tip-message">
+                        <span class="tip-message__headline">TIPP</span>
+                        <p class="tip-message__text">
+                            Wählen Sie ein Startdatum für Ihre Halteverbotszone in {{ ort }}. <br>Nachfolgend können Sie noch die Dauer bzw. die Anzahl der gültigen Tage bestimmen.
+                        </p>
+                    </div>
+                    <div id="startDateForHvz" class="spot-for-datepicker padding-horizontal-m padding-vertical-s">
+                    </div>
+                    <div class="datepicker__button-pane padding-right-l">
+                        <button onclick="cancelSelection()" type="button">Schliessen</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
 
             <div class="formRow empty">
                 <div class="select-container">

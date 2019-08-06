@@ -38,9 +38,9 @@ body {
     margin: 0 auto;
 }
 
-button, .searchBtn {
+.searchBtn {
     background: #ff7500;
-    width: 16.666% !important;
+    width: 16.666%;
     height: 3rem;
     border: 1px solid #f57000;
     font-family: 'Open Sans', Verdana, 'DejaVu Sans', Arial, Helvetica, sans-serif;
@@ -133,62 +133,64 @@ h3#hvzlistdropdown {
 }
 
 
-#tags::-webkit-input-placeholder{
- color: #747474;
+#tags::-webkit-input-placeholder {
+    color: #747474;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     opacity: 1;
-    padding-top:3px;
+    padding-top: 3px;
 }
-#tags:-ms-input-placeholder{
- color: #747474;
+
+#tags:-ms-input-placeholder {
+    color: #747474;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     opacity: 1;
-    padding-top:3px;
+    padding-top: 3px;
 }
-#tags::-ms-input-placeholder{
- color: #747474;
+
+#tags::-ms-input-placeholder {
+    color: #747474;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     opacity: 1;
-    padding-top:3px;
+    padding-top: 3px;
 }
-#tags::placeholder{
- color: #747474;
+
+#tags::placeholder {
+    color: #747474;
     white-space: nowrap;
     overflow: hidden;
     -o-text-overflow: ellipsis;
-       text-overflow: ellipsis;
+    text-overflow: ellipsis;
     opacity: 1;
-    padding-top:3px;
+    padding-top: 3px;
 }
 
-#footer{
+#footer {
     text-align: center;
 }
 
-.price{
-font-weight: 600;
-font-size: 18px;
+.price {
+    font-weight: 600;
+    font-size: 18px;
     white-space: nowrap;
     font-family: "Open Sans", Verdana, "DejaVu Sans", Arial, Helvetica, sans-serif;
     min-width: 20%;
     text-align: right;
 }
 
-.detailList{
-        padding: 15px;
+.detailList {
+    padding: 15px;
 
     display: flex;
 }
 
 
-
-legend{
+legend {
     font-size: 13px;
     padding: 0 12px;
     height: 22px;
@@ -201,7 +203,7 @@ legend{
     justify-content: center;
 }
 
-.formbody input{
+.formbody input {
     height: 50px;
     padding-top: 18px;
     padding-left: 32px;
@@ -212,7 +214,7 @@ legend{
     font-size: 15px;
 }
 
-span.placeholder{
+span.placeholder {
     white-space: nowrap;
     position: absolute;
     top: 8px;
@@ -224,7 +226,7 @@ span.placeholder{
     z-index: 2;
 }
 
-.formRow{
+.formRow {
     height: 50px;
     min-height: 50px;
     position: relative;
@@ -245,7 +247,7 @@ span.placeholder{
     border-color: #969696;
 }
 
-.input-unity{
+.input-unity {
     font-size: 13px;
     top: 19px;
     left: 10px;
@@ -254,6 +256,143 @@ span.placeholder{
     z-index: 333;
 }
 
-fieldset{
+fieldset {
     margin: 20px 0;
+}
+
+
+.datepicker__modal {
+    position: fixed;
+    overflow-y: scroll;
+    background-color: rgba(52, 52, 52, 0.7);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 200;
+    height: 100%;
+    font-family: 'Open Sans', Verdana, 'DejaVu Sans', Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    line-height: 1.6;
+    display: none;
+}
+
+.datepicker__modal #datepicker__centered-container {
+    max-width: 328px;
+    margin: auto;
+}
+
+.datepicker__modal #datepicker__centered-container .datepicker__tip-message {
+
+    background-color: #FF7500;
+    color: #FFFFFF;
+    height: 120px;
+    padding: 7px 26px;
+    text-align: center;
+    line-height: normal;
+
+}
+
+.datepicker__modal #datepicker__centered-container .spot-for-datepicker {
+
+    height: auto;
+    background-color: #FFFFFF;
+
+}
+
+.datepicker__modal #datepicker__centered-container .datepicker__button-pane {
+
+    height: 40px;
+    background-color: #FFFFFF;
+    font-size: 12px;
+    text-align: right;
+
+}
+#removal-lead-engine-component .padding-right-l, #removal-lead-engine-component .padding-horizontal-l {
+
+    padding-right: 24px !important;
+
+}
+
+.datepicker__modal #datepicker__centered-container .datepicker__button-pane button {
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #FF7500;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    padding: 1px 7px 2px;
+}
+
+.datepicker__modal #datepicker__centered-container {
+    max-width: 328px;
+    margin: auto;
+}
+
+@media screen and (min-height: 440px) {
+    .datepicker__modal #datepicker__centered-container {
+        margin-top: calc(50vh - 220px);
+    }
+}
+
+
+.datepicker__modal #datepicker__centered-container .spot-for-datepicker .ui-datepicker {
+
+    background-color: #FFFFFF;
+    height: auto;
+    margin: auto;
+    width: 100%;
+
+}
+
+.datepicker__modal #datepicker__centered-container .datepicker__tip-message .tip-message__headline {
+
+    background-color: #FFFFFF;
+    color: #FF7500;
+    font-weight: bold;
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 14px;
+    margin-top: 10px;
+    margin-bottom: 9px;
+
+}
+.datepicker__modal #datepicker__centered-container .spot-for-datepicker .ui-datepicker .ui-datepicker-calendar .ui-state-default {
+
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    margin: auto;
+    line-height: 40px;
+    font-size: 12px;
+    color: black;
+    background-color: #FFFFFF;
+
+}
+.datepicker__modal #datepicker__centered-container .spot-for-datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day .ui-state-default {
+
+    color: #FFFFFF !important;
+    background-color: #FF7500 !important;
+    border-radius: 50%;
+
+}
+
+.ui-datepicker .ui-datepicker-calendar th{
+    font-weight: normal;
+}
+
+.ui-widget-header {
+
+    color: #222222;
+    font-weight: bold;
+
+}
+
+.datepicker__modal #datepicker__centered-container .spot-for-datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-title {
+
+    font-size: 14px;
+    line-height: 50px;
+    background-color: #FFFFFF;
+
 }
