@@ -81,7 +81,11 @@
             }
 
             function autolLoadContent() {
-                $("#content").load('/extern/hvb/120');
+                $("#content").load('/extern/hvb/120', function () {
+                        $("#startDate").datepicker();
+                        $( "#datepicker" ).datepicker();
+                    }
+                );
             }
 
             autolLoadContent();
@@ -89,7 +93,5 @@
         });
 
     </script>
-
-
 
 {% endblock %}

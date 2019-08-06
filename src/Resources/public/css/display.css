@@ -209,14 +209,14 @@ legend{
     border: 1px solid #e0e0e0;
     font-family: 'Open Sans', Verdana, 'DejaVu Sans', Arial, Helvetica, sans-serif;
     background-color: #ffffff;
-    font-size: 1.5em;
+    font-size: 15px;
 }
 
 span.placeholder{
     white-space: nowrap;
     position: absolute;
     top: 8px;
-    left: 12px;
+    left: 32px;
     pointer-events: none;
     font-size: 10px;
     color: #6a6a78;
@@ -234,7 +234,7 @@ span.placeholder{
 
 .empty span {
     top: 18px;
-    left: 12px;
+    left: 32px;
     font-size: 14px;
 }
 
@@ -245,16 +245,15 @@ span.placeholder{
     border-color: #969696;
 }
 
-.fas.input-unity{
+.input-unity{
     font-size: 13px;
-    top: -35px;
-    left: 12px;
+    top: 19px;
+    left: 10px;
     color: #FF7500;
-    font-style: normal;
-    font-weight: normal;
-    line-height: 22px;
-    display: block;
-    background: red;
-    position: relative;
+    position: absolute;
     z-index: 333;
+}
+
+fieldset{
+    margin: 20px 0;
 }

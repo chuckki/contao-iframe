@@ -1,231 +1,272 @@
 <form action="" method="POST" enctype="application/x-www-form-urlencoded">
-<div class="formbody">
-    <input type="hidden" name="FORM_SUBMIT" value="<?= $this->formSubmit ?>">
-    <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
+    <div class="formbody">
+        <input type="hidden" name="FORM_SUBMIT" value="hvzOrderform">
+        <input type="hidden" name="REQUEST_TOKEN" value="{{ request_token }}">
 
-    <fieldset id="hvzAdresse">
-        <legend>Adresse für das Halteverbot in {{ ort }}</legend>
+        <script>
+            let inputEl = $(".formbody input");
+            inputEl.focus(function () {
+                $(this).parent().removeClass('empty');
+            });
+            inputEl.focusout(function () {
+                if (!$(this).val()) {
+                    $(this).parent().addClass('empty');
+                }
+            })
+        </script>
 
-
-        <div class="formRow empty">
-            <span class="placeholder">PLZ von {{ ort }}</span>
-            <i class="fas fa-map-marker-alt input-unity"></i>
-            <input type="tel" class="text mandatory" id="ctrl_50" name="PLZ">
-        </div>
-
-<script>
-    let inputEl = $(".formbody input");
-    inputEl.focus(function () {
-        $(this).parent().removeClass('empty');
-    });
-    inputEl.focusout(function () {
-        if( !$(this).val() ) {
-            $(this).parent().addClass('empty');
-        }
-    })
-</script>
-
-
-        <div class="formRow">
-            <span class="placeholder">Straße und Hausnummer</span>
-            <input type="text" value="asdfasdf 123" class="text mandatory" id="ctrl_51" name="Strasse" >
-        </div>
-    </fieldset>
-
-
-    <fieldset id="hvzDatum">
-        <legend>Wann soll die Halteverbotszone gestellt werden</legend>
-        <div class="formRow mydate">
-            <div class="date1">
-                <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-                <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-                <script>
-                    $( function() {
-                        $( "#ctrl_53" ).datepicker();
-                    } );
-                </script>
-                <label class="mandatory withExpl" for="ctrl_53">
-                    <span class="withExpl">Datum</span><span class="invisible">Pflichtfeld</span> vom
-                </label>
-                <input type="text" class="text mandatory" value="" readonly="readonly" id="ctrl_53" name="vom">
+        <fieldset id="hvzAdresse">
+            <legend>Adresse für das Halteverbot in {{ ort }}</legend>
+            <div class="formRow empty">
+                <span class="placeholder">PLZ von {{ ort }}</span>
+                <i class="fas fa-map-marker-alt input-unity"></i>
+                <input type="tel" class="text mandatory" id="ctrl_50" name="PLZ">
             </div>
-            <div class="date2">
-                <label class="mandatory last" for="ctrl_54">
-                    <span class="invisible">Pflichtfeld</span> Wie viele Tage
-                </label>
-                <select id="ctrl_54" name="wievieleTage">
-                    <option value="1" selected="">1 Tag</option>
-                    <option value="2">2 Tage</option>
-                    <option value="3">3 Tage</option>
-                    <option value="4">4 Tage</option>
-                    <option value="5">5 Tage</option>
-                    <option value="6">6 Tage</option>
-                    <option value="7">7 Tage</option>
-                    <option value="8">8 Tage</option>
-                    <option value="9">9 Tage</option>
-                    <option value="10">10 Tage</option>
-                    <option value="11">11 Tage</option>
-                    <option value="12">12 Tage</option>
-                    <option value="13">13 Tage</option>
-                    <option value="14">14 Tage</option>
-                </select>
+            <div class="formRow">
+                <span class="placeholder">Straße und Hausnummer</span>
+                <!--<i class="fas fa-road input-unity"></i>-->
+                <i class="fas fa-map-marked-alt input-unity"></i>
+                <input type="text" value="asdfasdf 123" class="text mandatory" id="ctrl_51" name="Strasse">
             </div>
-        </div>
-
-        <div class="formRow">
-            <div class="date1">
-                <label class="mandatory" for="ctrl_55">
-                    <span class="invisible">Pflichtfeld</span>täglich von
-                </label>
-                <select id="ctrl_55" name="vomUhrzeit">
-                    <option value="7" selected=""> 7 Uhr</option>
-                    <option value="8"> 8 Uhr</option>
-                    <option value="9"> 9 Uhr</option>
-                    <option value="10">10 Uhr</option>
-                    <option value="11">11 Uhr</option>
-                    <option value="12">12 Uhr</option>
-                    <option value="13">13 Uhr</option>
-                    <option value="14">14 Uhr</option>
-                    <option value="15">15 Uhr</option>
-                    <option value="16">16 Uhr</option>
-                    <option value="17">17 Uhr</option>
-                    <option value="18">18 Uhr</option>
-                    <option value="19">19 Uhr</option>
-                    <option value="20">20 Uhr</option>
-                </select>
-            </div>
-            <div class="date2">
-
-                <label class="mandatory last" for="ctrl_108"><span class="invisible">Pflichtfeld</span>täglich bis </label>
-                <select id="ctrl_108" name="bisUhrzeit">
-                    <option value="7"> 7 Uhr</option>
-                    <option value="8"> 8 Uhr</option>
-                    <option value="9"> 9 Uhr</option>
-                    <option value="10">10 Uhr</option>
-                    <option value="11">11 Uhr</option>
-                    <option value="12">12 Uhr</option>
-                    <option value="13">13 Uhr</option>
-                    <option value="14">14 Uhr</option>
-                    <option value="15">15 Uhr</option>
-                    <option value="16">16 Uhr</option>
-                    <option value="17">17 Uhr</option>
-                    <option value="18">18 Uhr</option>
-                    <option value="19" selected="">19 Uhr</option>
-                    <option value="20">20 Uhr</option>
-                </select>
-            </div>
-        </div>
-
-    </fieldset>
+        </fieldset>
 
 
-    <fieldset id="hvzDetails">
-        <legend>Halteverbot Details</legend>
+        <fieldset id="hvzDatum">
+            <legend>Wann soll die Halteverbotszone gestellt werden</legend>
 
-        <div class="formRow" id="grund">
-            <div class="date1">
-                <label class="mandatory" for="ctrl_247">
-                    <span class="invisible">Pflichtfeld</span> Grund für die Stellung
-                </label>
-                <select class="select mandatory" id="ctrl_247" name="Grund">
-                    <option value="">Bitte wählen Sie</option>
-                    <option value="umzug" selected="">Umzug</option>
-                    <option value="containergestellung">Containergestellung</option>
-                    <option value="baustelle">Baustelle</option>
-                    <option value="sonstiges">Sonstiges</option>
-                </select>
-            </div>
-            <div class="date2">
-                <label class="mandatory" for="ctrl_62">
-                    <span class="invisible">Pflichtfeld</span> Größe in Meter
-                </label>
-                <select class="select mandatory" id="ctrl_62" name="Meter">
-                    <option value="5">5m</option>
-                    <option value="10">10m</option>
-                    <option selected="" value="15">15m</option>
-                    <option value="20">20m</option>
-                </select>
-            </div>
-        </div>
 
-        <div class="formRow">
-            <div id="grundAddon">
-                <p>
-                    <strong>Bitte beachten Sie:</strong><br>
-                    Bei Containergestellung und Baustellen können die Preise der Stadt variieren. Wir werden Sie diesbezüglich
-                    umgehend informieren.
-                </p>
+            <div class="formRow empty">
+                <span class="placeholder">Datum</span>
+                <i class="far fa-calendar input-unity"></i>
+                <input type="text" class="text mandatory" id="startDate" name="vom">
             </div>
 
-            <div id="grundSonstig">
-                <p>
-                    <strong>Bitte beachten Sie:</strong><br>
-                    Bitte geben Sie den Grund in den Zusatzinformationen mit an.
-                </p>
+
+            <script>
+                $(function () {
+//                    $("#startDate").datepicker();
+                });
+            </script>
+
+
+<div id="datepicker"></div>
+
+            <div class="formRow empty">
+                <div class="select-container">
+                    <select id="main-ingredient" class="select">
+                        <option value="" disabled>Anzal der Tage</option>
+                        <option value="1" selected="">1 Tag</option>
+                        <option value="2">2 Tage</option>
+                        <option value="3">3 Tage</option>
+                        <option value="4">4 Tage</option>
+                        <option value="5">5 Tage</option>
+                        <option value="6">6 Tage</option>
+                        <option value="7">7 Tage</option>
+                        <option value="8">8 Tage</option>
+                        <option value="9">9 Tage</option>
+                        <option value="10">10 Tage</option>
+                        <option value="11">11 Tage</option>
+                        <option value="12">12 Tage</option>
+                        <option value="13">13 Tage</option>
+                        <option value="14">14 Tage</option>
+                        </optgroup>
+                    </select>
+                </div>
             </div>
-        </div>
-
-        <div class="formRow floatme" id="fahrzeug">
-            <span class="expl">für welche Fahrzeugart</span>
-            <input type="hidden" value="" name="Fahrzeug">
-
-            <label for="opt_65_0" id="lbl_65_0" class="btn car floatmeL">
-                <input type="radio" value="Fahrzeug bis 3,5t" class="radio" id="opt_65_0" checked="checked" name="Fahrzeug">
-                Fahrzeug bis 3,5t
-                <i class="fa fa-car" aria-hidden="true"></i></label>
-
-            <label for="opt_65_1" id="lbl_65_1" class="btn lkw floatmeR">
-                <input type="radio" value="Fahrzeug größer 3,5t (LKW)" class="radio" id="opt_65_1" name="Fahrzeug">
-                Fahrzeug größer 3,5t
-                <i class="fa fa-truck" aria-hidden="true"></i></label>
-        </div>
-
-        <div class="formRow">
-            <label class="zusatzinfo" for="ctrl_66">Zusatzinformationen</label>  <textarea cols="40" rows="6" class="textarea" id="ctrl_66" placeholder="evtl. weitere Informationen zur Aufstellung" name="Zusatzinformationen"></textarea>
-        </div>
-        <div class="formRow gutscheinRow">
-            <label class="mandatory" for="ctrl_122"> Gutscheincode</label>  <input type="text" value="hvz18spfgp" class="text mandatory" id="ctrl_122" placeholder="Gutscheincode" name="gutscheincode">
-        </div><p class="rabattInfo">Mit dem von Ihnen eingegeben Gutscheincode erhalten Sie <strong>5% Rabatt</strong></p>
-    </fieldset>
-
-    <fieldset id="rechnungsadresse">
-        <legend>Rechnungsadresse</legend>
-
-        <div id="stepThreeError" class="stepError" style="display:none;">Bitte füllen Sie alle <strong>rot</strong> umrandeten Felder aus.</div>
-
-        <div class="formRow" id="gender">
-
-            <label for="opt_68_0" id="lbl_68_0" class="btn male"><input type="radio" value="Herr" checked="checked" class="radio" id="opt_68_0" name="Geschlecht">Herr<i class="fa fa-male" aria-hidden="true"></i></label>
-
-            <label for="opt_68_1" id="lbl_68_1" class="btn female"><input type="radio" value="Frau" class="radio" id="opt_68_1" name="Geschlecht">Frau<i class="fa fa-female" aria-hidden="true"></i></label>
-        </div>
 
 
-        <div class="formRow">
-            <label for="ctrl_72">Firma</label>  <input type="text" value="" placeholder="Firma" class="text" id="ctrl_72" name="firma">
-        </div>
-        <div class="formRow " id="umstElement" style="display: none;">
-            <label for="ctrl_248">USt-IdNr.</label>  <input type="text" value="" placeholder="USt-IdNr. (optional)" class="text" id="ctrl_248" name="umstid">
-        </div>
-        <div class="formRow">
-            <label class="mandatory" for="ctrl_57"><span class="invisible">Pflichtfeld</span> Name<span class="mandatory">*</span></label>  <input type="text" value="Esken" class="text mandatory" id="ctrl_57" placeholder="Name" name="Name">
-        </div>
-        <div class="formRow">
-            <label class="mandatory" for="ctrl_67"><span class="invisible">Pflichtfeld</span> Vorname<span class="mandatory">*</span></label>  <input type="text" value="Dennis" class="text mandatory" id="ctrl_67" placeholder="Vorname" name="Vorname">
-        </div>
-        <div class="formRow">
-            <label class="mandatory" for="ctrl_69"><span class="invisible">Pflichtfeld</span> Straße / Hausnummer<span class="mandatory">*</span></label>  <input type="text" value="Mörserstrasse 21" class="text mandatory" placeholder="Strasse/Hausnummer" id="ctrl_69" name="strasse_rechnung">
-        </div>
-        <div class="formRow">
-            <label class="mandatory" for="ctrl_70"><span class="invisible">Pflichtfeld</span> Ort / PLZ<span class="mandatory">*</span></label> <input type="text" value="348832 Mensche" class="text mandatory" id="ctrl_70" placeholder="Ort/PLZ" name="ort_rechnung">
-        </div>
-        <div class="formRow">
-            <label class="mandatory" for="ctrl_58"><span class="invisible">Pflichtfeld</span> eMail<span class="mandatory">*</span></label>  <input type="email" value="bestHVB@projektorientiert.de" class="text mandatory" id="ctrl_58" placeholder="E-Mail-Adresse" name="email">
-        </div>
-        <div class="formRow">
-            <label class="mandatory" for="ctrl_59"><span class="invisible">Pflichtfeld</span> Telefon<span class="mandatory">*</span></label>  <input type="tel" value="0234234" class="text mandatory" id="ctrl_59" placeholder="Telefon tagsüber" name="Telefon">
-        </div>
-    </fieldset>
+            <div class="formRow">
+                <div class="date1">
+                    <label class="mandatory" for="ctrl_55">
+                        <span class="invisible">Pflichtfeld</span>täglich von
+                    </label>
+                    <select id="ctrl_55" name="vomUhrzeit">
+                        <option value="7" selected=""> 7 Uhr</option>
+                        <option value="8"> 8 Uhr</option>
+                        <option value="9"> 9 Uhr</option>
+                        <option value="10">10 Uhr</option>
+                        <option value="11">11 Uhr</option>
+                        <option value="12">12 Uhr</option>
+                        <option value="13">13 Uhr</option>
+                        <option value="14">14 Uhr</option>
+                        <option value="15">15 Uhr</option>
+                        <option value="16">16 Uhr</option>
+                        <option value="17">17 Uhr</option>
+                        <option value="18">18 Uhr</option>
+                        <option value="19">19 Uhr</option>
+                        <option value="20">20 Uhr</option>
+                    </select>
+                </div>
+                <div class="date2">
 
-</div>
+                    <label class="mandatory last" for="ctrl_108"><span class="invisible">Pflichtfeld</span>täglich bis
+                    </label>
+                    <select id="ctrl_108" name="bisUhrzeit">
+                        <option value="7"> 7 Uhr</option>
+                        <option value="8"> 8 Uhr</option>
+                        <option value="9"> 9 Uhr</option>
+                        <option value="10">10 Uhr</option>
+                        <option value="11">11 Uhr</option>
+                        <option value="12">12 Uhr</option>
+                        <option value="13">13 Uhr</option>
+                        <option value="14">14 Uhr</option>
+                        <option value="15">15 Uhr</option>
+                        <option value="16">16 Uhr</option>
+                        <option value="17">17 Uhr</option>
+                        <option value="18">18 Uhr</option>
+                        <option value="19" selected="">19 Uhr</option>
+                        <option value="20">20 Uhr</option>
+                    </select>
+                </div>
+            </div>
+
+        </fieldset>
+
+
+        <fieldset id="hvzDetails">
+            <legend>Halteverbot Details</legend>
+
+            <div class="formRow" id="grund">
+                <div class="date1">
+                    <label class="mandatory" for="ctrl_247">
+                        <span class="invisible">Pflichtfeld</span> Grund für die Stellung
+                    </label>
+                    <select class="select mandatory" id="ctrl_247" name="Grund">
+                        <option value="">Bitte wählen Sie</option>
+                        <option value="umzug" selected="">Umzug</option>
+                        <option value="containergestellung">Containergestellung</option>
+                        <option value="baustelle">Baustelle</option>
+                        <option value="sonstiges">Sonstiges</option>
+                    </select>
+                </div>
+                <div class="date2">
+                    <label class="mandatory" for="ctrl_62">
+                        <span class="invisible">Pflichtfeld</span> Größe in Meter
+                    </label>
+                    <select class="select mandatory" id="ctrl_62" name="Meter">
+                        <option value="5">5m</option>
+                        <option value="10">10m</option>
+                        <option selected="" value="15">15m</option>
+                        <option value="20">20m</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="formRow">
+                <div id="grundAddon">
+                    <p>
+                        <strong>Bitte beachten Sie:</strong><br>
+                        Bei Containergestellung und Baustellen können die Preise der Stadt variieren. Wir werden Sie
+                        diesbezüglich
+                        umgehend informieren.
+                    </p>
+                </div>
+
+                <div id="grundSonstig">
+                    <p>
+                        <strong>Bitte beachten Sie:</strong><br>
+                        Bitte geben Sie den Grund in den Zusatzinformationen mit an.
+                    </p>
+                </div>
+            </div>
+
+            <div class="formRow floatme" id="fahrzeug">
+                <span class="expl">für welche Fahrzeugart</span>
+                <input type="hidden" value="" name="Fahrzeug">
+
+                <label for="opt_65_0" id="lbl_65_0" class="btn car floatmeL">
+                    <input type="radio" value="Fahrzeug bis 3,5t" class="radio" id="opt_65_0" checked="checked"
+                           name="Fahrzeug">
+                    Fahrzeug bis 3,5t
+                    <i class="fa fa-car" aria-hidden="true"></i></label>
+
+                <label for="opt_65_1" id="lbl_65_1" class="btn lkw floatmeR">
+                    <input type="radio" value="Fahrzeug größer 3,5t (LKW)" class="radio" id="opt_65_1" name="Fahrzeug">
+                    Fahrzeug größer 3,5t
+                    <i class="fa fa-truck" aria-hidden="true"></i></label>
+            </div>
+
+            <div class="formRow">
+                <label class="zusatzinfo" for="ctrl_66">Zusatzinformationen</label> <textarea cols="40" rows="6"
+                                                                                              class="textarea"
+                                                                                              id="ctrl_66"
+                                                                                              placeholder="evtl. weitere Informationen zur Aufstellung"
+                                                                                              name="Zusatzinformationen"></textarea>
+            </div>
+            <div class="formRow gutscheinRow">
+                <label class="mandatory" for="ctrl_122"> Gutscheincode</label> <input type="text" value="hvz18spfgp"
+                                                                                      class="text mandatory"
+                                                                                      id="ctrl_122"
+                                                                                      placeholder="Gutscheincode"
+                                                                                      name="gutscheincode">
+            </div>
+            <p class="rabattInfo">Mit dem von Ihnen eingegeben Gutscheincode erhalten Sie <strong>5% Rabatt</strong></p>
+        </fieldset>
+
+        <fieldset id="rechnungsadresse">
+            <legend>Rechnungsadresse</legend>
+
+            <div id="stepThreeError" class="stepError" style="display:none;">Bitte füllen Sie alle <strong>rot</strong>
+                umrandeten Felder aus.
+            </div>
+
+            <div class="formRow" id="gender">
+
+                <label for="opt_68_0" id="lbl_68_0" class="btn male"><input type="radio" value="Herr" checked="checked"
+                                                                            class="radio" id="opt_68_0"
+                                                                            name="Geschlecht">Herr<i class="fa fa-male"
+                                                                                                     aria-hidden="true"></i></label>
+
+                <label for="opt_68_1" id="lbl_68_1" class="btn female"><input type="radio" value="Frau" class="radio"
+                                                                              id="opt_68_1" name="Geschlecht">Frau<i
+                        class="fa fa-female" aria-hidden="true"></i></label>
+            </div>
+
+
+            <div class="formRow">
+                <label for="ctrl_72">Firma</label> <input type="text" value="" placeholder="Firma" class="text"
+                                                          id="ctrl_72" name="firma">
+            </div>
+            <div class="formRow " id="umstElement" style="display: none;">
+                <label for="ctrl_248">USt-IdNr.</label> <input type="text" value="" placeholder="USt-IdNr. (optional)"
+                                                               class="text" id="ctrl_248" name="umstid">
+            </div>
+            <div class="formRow">
+                <label class="mandatory" for="ctrl_57"><span class="invisible">Pflichtfeld</span> Name<span
+                        class="mandatory">*</span></label> <input type="text" value="Esken" class="text mandatory"
+                                                                  id="ctrl_57" placeholder="Name" name="Name">
+            </div>
+            <div class="formRow">
+                <label class="mandatory" for="ctrl_67"><span class="invisible">Pflichtfeld</span> Vorname<span
+                        class="mandatory">*</span></label> <input type="text" value="Dennis" class="text mandatory"
+                                                                  id="ctrl_67" placeholder="Vorname" name="Vorname">
+            </div>
+            <div class="formRow">
+                <label class="mandatory" for="ctrl_69"><span class="invisible">Pflichtfeld</span> Straße /
+                    Hausnummer<span class="mandatory">*</span></label> <input type="text" value="Mörserstrasse 21"
+                                                                              class="text mandatory"
+                                                                              placeholder="Strasse/Hausnummer"
+                                                                              id="ctrl_69" name="strasse_rechnung">
+            </div>
+            <div class="formRow">
+                <label class="mandatory" for="ctrl_70"><span class="invisible">Pflichtfeld</span> Ort / PLZ<span
+                        class="mandatory">*</span></label> <input type="text" value="348832 Mensche"
+                                                                  class="text mandatory" id="ctrl_70"
+                                                                  placeholder="Ort/PLZ" name="ort_rechnung">
+            </div>
+            <div class="formRow">
+                <label class="mandatory" for="ctrl_58"><span class="invisible">Pflichtfeld</span> eMail<span
+                        class="mandatory">*</span></label> <input type="email" value="bestHVB@projektorientiert.de"
+                                                                  class="text mandatory" id="ctrl_58"
+                                                                  placeholder="E-Mail-Adresse" name="email">
+            </div>
+            <div class="formRow">
+                <label class="mandatory" for="ctrl_59"><span class="invisible">Pflichtfeld</span> Telefon<span
+                        class="mandatory">*</span></label> <input type="tel" value="0234234" class="text mandatory"
+                                                                  id="ctrl_59" placeholder="Telefon tagsüber"
+                                                                  name="Telefon">
+            </div>
+        </fieldset>
+
+    </div>
 </form>
