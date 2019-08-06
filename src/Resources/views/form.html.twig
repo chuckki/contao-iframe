@@ -4,35 +4,31 @@
     <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
 
     <fieldset id="hvzAdresse">
-        <legend>Adresse für das Halteverbot</legend>
+        <legend>Adresse für das Halteverbot in {{ ort }}</legend>
 
 
         <div class="formRow empty">
             <span class="placeholder">PLZ von {{ ort }}</span>
+            <i class="fas fa-map-marker-alt input-unity"></i>
             <input type="tel" class="text mandatory" id="ctrl_50" name="PLZ">
         </div>
 
 <script>
-
-    $(".formbody input").focus(function () {
+    let inputEl = $(".formbody input");
+    inputEl.focus(function () {
         $(this).parent().removeClass('empty');
-    })
-
-
-    $(".formbody input").focusout(function () {
+    });
+    inputEl.focusout(function () {
         if( !$(this).val() ) {
             $(this).parent().addClass('empty');
         }
     })
-
 </script>
 
 
         <div class="formRow">
-            <label class="mandatory" for="ctrl_51">
-                <span class="invisible">Pflichtfeld</span> Straße/Hausnummer<span class="mandatory">*</span>
-            </label>
-            <input type="text" value="asdfasdf 123" class="text mandatory" id="ctrl_51" name="Strasse" placeholder="Straße und Hausnummer">
+            <span class="placeholder">Straße und Hausnummer</span>
+            <input type="text" value="asdfasdf 123" class="text mandatory" id="ctrl_51" name="Strasse" >
         </div>
     </fieldset>
 

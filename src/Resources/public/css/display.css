@@ -245,3 +245,16 @@ span.placeholder{
     border-color: #969696;
 }
 
+.fas.input-unity{
+    font-size: 13px;
+    top: -35px;
+    left: 12px;
+    color: #FF7500;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 22px;
+    display: block;
+    background: red;
+    position: relative;
+    z-index: 333;
+}
