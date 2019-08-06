@@ -46,10 +46,10 @@ class FrameController extends Controller
 
     public function getHvbInfo($id): Response
     {
-        $formString = $this->buildForm()->generate();
+        $orderObj   = HvzModel::findById($id);
+        $formString = $this->buildForm($orderObj)->generate();
         $insertTags = new InsertTags();
         $objForm    = $insertTags->replace($formString, false);
-        $orderObj = HvzModel::findById($id);
         return $this->render(
             '@ChuckkiHvzIframe/frame.details.html.twig',
             [
@@ -60,19 +60,60 @@ class FrameController extends Controller
         );
     }
 
-    private function buildForm()
+    private function buildForm(HvzModel $hvzModel = null)
     {
         $objForm = new Form(
             'hvzOrderform', 'POST', function ($objHaste) {
             return Input::post('FORM_SUBMIT') === $objHaste->getFormId();
         }
         );
+
+        $objForm->setFormActionFromUri('/?test=2');
+
+        // Ort
+        $objForm->addFormField(
+            'ort',
+            array(
+                'default'     => !empty($hvzModel->question) ? $hvzModel->question : '',
+                'label'       => 'Ort',
+                'inputType'   => 'text',
+                'explanation' => array('hier stehe ich', 'tstw'),
+                'eval'        => array('mandatory' => true, 'readonly' => true, 'helpwizard' => true)
+            )
+        );
+        // PLZ
+        $objForm->addFormField(
+            'plz',
+            array(
+                'label'     => 'PLZ',
+                'inputType' => 'text',
+                'eval'      => array('mandatory' => true, 'rgxp' => 'digit', 'maxlength' => 5, 'minlength' => 4)
+            )
+        );
+        // Strasse
+        $objForm->addFormField(
+            'strasse',
+            array(
+                'label'     => 'Straße und Hausnumer',
+                'inputType' => 'text',
+                'eval'      => array('mandatory' => true)
+            )
+        );
+        // Need a checkbox?
+        $objForm->addFormField(
+            'termsOfUse',
+            array(
+                'label'     => array('', 'This is the <label>'),
+                'inputType' => 'checkbox',
+                'eval'      => array('mandatory' => true)
+            )
+        );
         $objForm->addFormField(
             'year',
             array(
                 'label'     => 'Year',
                 'inputType' => 'text',
-                'eval'      => array('mandatory' => true, 'rgxp' => 'digit')
+                'eval'      => array('mandatory' => true, 'datepicker' => true)
             )
         );
         // Let's add  a submit button
