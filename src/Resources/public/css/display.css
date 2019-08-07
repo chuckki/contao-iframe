@@ -219,7 +219,13 @@ legend {
     justify-content: center;
 }
 
-.formbody input {
+.label-radio i{
+    line-height: 20px;
+}
+
+.formbody input[type="text"],
+.formbody input[type="tel"]
+{
     height: 50px;
     padding-top: 18px;
     padding-left: 32px;
@@ -230,6 +236,22 @@ legend {
     font-size: 15px;
 }
 
+.formbody .select{
+    height: 50px;
+    padding-top: 18px;
+    padding-left: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.select-container::after{
+    font-family: "FontAwesome","Font Awesome 5 Pro";
+    bottom: 3px;
+    font-weight: 900;
+}
+
+.select-container .placeholder{
+left: 12px;
+}
 span.placeholder {
     white-space: nowrap;
     position: absolute;
@@ -432,3 +454,19 @@ h3 {
     font-size: 1.17rem;
     line-height: 1.6rem;
 }
+
+.font-xxl{
+    line-height: 60px;
+    display: inline-block;
+}
+
+
+.campaign-box{
+    width: 50%;
+    margin: 20px auto;
+}
+
+.campaign-box .tooltip-icon{
+    vertical-align: top;
+}
+

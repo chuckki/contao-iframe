@@ -37,10 +37,7 @@
             });
 
             t.initialize();
-
             let tagsEl = $("#tags");
-
-
             tagsEl.typeahead({
                 minLength: 1,
                 hint: true,
@@ -56,9 +53,10 @@
 
             tagsEl.on("typeahead:selected", function (ev, suggestion) {
                 selectedDatum = suggestion;
+                loadContent(selectedDatum);
             });
 
-            $( "#searchButton" ).click(function() {
+            $("#searchButton").click(function () {
                 loadContent(selectedDatum);
             });
 
@@ -76,41 +74,19 @@
             });
 
             function loadContent() {
-                $("#content").load('/extern/hvb/' + selectedDatum['id']);
+                $("#content").load('/extern/hvb/' + selectedDatum['id'], function () {
+                    $("#startDateForHvz").datepicker({
+                        altFormat: "dd.mm.yy",
+                        minDate: "+7d",
+                        beforeShow: function () {
+                            $("#startDateInput").parent().addClass('notempty');
+                        }
+                    }).on("change", function () {
+                        $("#startDateForHvz").datepicker("option", "altField", "#startDateInput");
+                        cancelSelection();
+                    });
+                });
             }
-
-            function autolLoadContent() {
-                $("#content").load('/extern/hvb/120', function () {
-
-                        $("#startDateForHvz").datepicker(
-                            {
-                                altFormat: "dd.mm.yy",
-                                minDate: "+7d",
-                                beforeShow: function () {
-                                    $("#startDateInput").parent().addClass('notempty');
-                                }
-                            }
-                        )
-                        .on( "change", function() {
-
-                            $("#startDateForHvz").datepicker("option", "altField", "#startDateInput");
-                            cancelSelection();
-                        });
-
-
-                    }
-                );
-
-
-
-
-
-            }
-
-            autolLoadContent();
-
         });
-
     </script>
-
 {% endblock %}

@@ -30,21 +30,6 @@ class FrameController extends Controller
         return $this->render('@ChuckkiHvzIframe/frame.start.html.twig');
     }
 
-    public function checkFormAction(): Response
-    {
-        $hvzId = \Input::post('hvzId');
-        $objHvz = HvzModel::findById($hvzId);
-        $objForm = $this->buildForm($objHvz);
-        if ($objForm->validate()) {
-            $arrData = $objForm->fetchAll();
-            $output  .= "<pre>";
-            $output  .= print_r($arrData, true);
-        } else {
-            $output = "validation error";
-        }
-        return new Response($output);
-    }
-
     public function getHvbInfo($id): Response
     {
         $orderObj   = HvzModel::findById($id);
@@ -126,4 +111,21 @@ class FrameController extends Controller
         );
         return $objForm;
     }
+
+
+    public function checkFormAction(): Response
+    {
+        $hvzId = \Input::post('hvzId');
+        $objHvz = HvzModel::findById($hvzId);
+        $objForm = $this->buildForm($objHvz);
+        if ($objForm->validate()) {
+            $arrData = $objForm->fetchAll();
+            $output  .= "<pre>";
+            $output  .= print_r($arrData, true);
+        } else {
+            $output = "validation error";
+        }
+        return new Response($output);
+    }
+
 }

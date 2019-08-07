@@ -20,21 +20,17 @@
                 $(this).parent().addClass('notempty');
             });
 
-            inputEl.on("change, focusout, blur",function () {
-                if ($(this).val() =="") {
+            inputEl.on("change, focusout, blur", function () {
+                if ($(this).val() == "") {
                     $(this).parent().addClass('empty');
                 }
-            })
-
-
-            $(function () {
-//                    $("#startDate").datepicker();
             });
-            function cancelSelection(){
+
+            function cancelSelection() {
                 $(".datepicker__modal").hide();
             }
 
-            $("#startDateInput").click( function () {
+            $("#startDateInput").click(function () {
                 let picker = $(".datepicker__modal");
                 picker.show();
                 picker.focus();
@@ -43,17 +39,17 @@
 
 
         <fieldset id="hvzAdresse">
-            <legend>Adresse für das Halteverbot in {{ ort }}</legend>
+            <legend>Adresse für das Halteverbot in {{ ort|raw }}</legend>
             <div class="formRow empty">
-                <span class="placeholder">PLZ von {{ ort }}</span>
+                <span class="placeholder">PLZ von {{ ort|raw }}</span>
                 <i class="fas fa-map-marker-alt input-unity"></i>
                 <input type="tel" class="text mandatory" id="ctrl_50" name="PLZ">
             </div>
-            <div class="formRow">
+            <div class="formRow empty">
                 <span class="placeholder">Straße und Hausnummer</span>
                 <!--<i class="fas fa-road input-unity"></i>-->
                 <i class="fas fa-map-marked-alt input-unity"></i>
-                <input type="text" value="asdfasdf 123" class="text mandatory" id="ctrl_51" name="Strasse">
+                <input type="text" class="text mandatory" id="ctrl_51" name="Strasse">
             </div>
         </fieldset>
 
@@ -65,13 +61,13 @@
                 <i class="far fa-calendar input-unity"></i>
                 <input type="text" class="text mandatory" id="startDateInput" value="" name="vom">
             </div>
-
             <div class="datepicker__modal" id="vondatum_datepicker">
                 <div id="datepicker__centered-container">
                     <div class="datepicker__tip-message">
                         <span class="tip-message__headline">TIPP</span>
                         <p class="tip-message__text">
-                            Wählen Sie ein Startdatum für Ihre Halteverbotszone in {{ ort }}. <br>Nachfolgend können Sie noch die Dauer bzw. die Anzahl der gültigen Tage bestimmen.
+                            Wählen Sie ein Startdatum für Ihre Halteverbotszone in {{ ort|raw }}. <br>Nachfolgend können
+                            Sie noch die Dauer bzw. die Anzahl der gültigen Tage bestimmen.
                         </p>
                     </div>
                     <div id="startDateForHvz" class="spot-for-datepicker padding-horizontal-m padding-vertical-s">
@@ -81,15 +77,9 @@
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
-            <div class="formRow empty">
+            <div class="formRow">
                 <div class="select-container">
+                    <span class="placeholder">Zeitraum</span>
                     <select id="main-ingredient" class="select">
                         <option value="" disabled>Anzal der Tage</option>
                         <option value="1" selected="">1 Tag</option>
@@ -110,17 +100,10 @@
                     </select>
                 </div>
             </div>
-
-
-
-
-
             <div class="formRow">
 
-
-
                 <div class="select-container">
-                    <label class="input-label" for="main-ingredient">täglich von</label>
+                    <span class="placeholder">täglich von</span>
                     <select id="main-ingredient" class="select">
                         <option value="7" selected=""> 7 Uhr</option>
                         <option value="8"> 8 Uhr</option>
@@ -139,10 +122,10 @@
                     </select>
                 </div>
 
-
-
+            </div>
+            <div class="formRow">
                 <div class="select-container">
-                    <label class="input-label" for="main-ingredient">täglich bis</label>
+                    <span class="placeholder">täglich bis</span>
                     <select id="main-ingredient" class="select">
                         <option value="7"> 7 Uhr</option>
                         <option value="8"> 8 Uhr</option>
@@ -163,31 +146,45 @@
 
 
             </div>
-
         </fieldset>
 
 
         <fieldset id="hvzDetails">
             <legend>Halteverbot Details</legend>
 
-            <div class="formRow" id="grund">
-                <div class="date1">
-                    <label class="mandatory" for="ctrl_247">
-                        <span class="invisible">Pflichtfeld</span> Grund für die Stellung
-                    </label>
-                    <select class="select mandatory" id="ctrl_247" name="Grund">
-                        <option value="">Bitte wählen Sie</option>
+            <div class="formRow">
+                <div class="select-container">
+                    <span class="placeholder">Grund für die Stellung</span>
+                    <select id="main-ingredient" class="select">
                         <option value="umzug" selected="">Umzug</option>
                         <option value="containergestellung">Containergestellung</option>
                         <option value="baustelle">Baustelle</option>
                         <option value="sonstiges">Sonstiges</option>
                     </select>
                 </div>
-                <div class="date2">
-                    <label class="mandatory" for="ctrl_62">
-                        <span class="invisible">Pflichtfeld</span> Größe in Meter
-                    </label>
-                    <select class="select mandatory" id="ctrl_62" name="Meter">
+
+                <div style="display: none">
+                    <div id="grundAddon">
+                        <p>
+                            <strong>Bitte beachten Sie:</strong><br>
+                            Bei Containergestellung und Baustellen können die Preise der Stadt variieren. Wir werden Sie
+                            diesbezüglich
+                            umgehend informieren.
+                        </p>
+                    </div>
+                    <div id="grundSonstig">
+                        <p>
+                            <strong>Bitte beachten Sie:</strong><br>
+                            Bitte geben Sie den Grund in den Zusatzinformationen mit an.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="formRow">
+                <div class="select-container">
+                    <span class="placeholder">Länge</span>
+                    <select id="main-ingredient" class="select">
                         <option value="5">5m</option>
                         <option value="10">10m</option>
                         <option selected="" value="15">15m</option>
@@ -196,55 +193,52 @@
                 </div>
             </div>
 
-            <div class="formRow">
-                <div id="grundAddon">
-                    <p>
-                        <strong>Bitte beachten Sie:</strong><br>
-                        Bei Containergestellung und Baustellen können die Preise der Stadt variieren. Wir werden Sie
-                        diesbezüglich
-                        umgehend informieren.
-                    </p>
+
+            <div class="formRow" id="grund">
+
+
+                <div class="checkbox-container">
+                    <input type="checkbox" id="example-form_input12" class="input-checkbox">
+                    <label for="example-form_input12" class="label-checkbox">Please accept this. Or not. Your choice.
+                        (But we'd appreciate it.)</label>
                 </div>
 
-                <div id="grundSonstig">
-                    <p>
-                        <strong>Bitte beachten Sie:</strong><br>
-                        Bitte geben Sie den Grund in den Zusatzinformationen mit an.
-                    </p>
+                <div class="formRow floatme" id="fahrzeug">
+
+                    <ul class="radio-list">
+                        <li class="radio-container">
+                            <input type="radio" class="input-radio" id="apple-2" name="fruit-2" checked="">
+                            <label for="apple-2" class="label-radio"><span> Fahrzeug bis 3,5t <i class="fas fa-car-side"></i></span></label>
+                        </li>
+                        <li class="radio-container">
+                            <input type="radio" class="input-radio" id="banana-2" name="fruit-2">
+                            <label for="banana-2" class="label-radio"> Fahrzeug größer 3,5t <i class="fas fa-truck-moving"></i></label>
+                        </li>
+                    </ul>
+
+
+                    <span class="expl">für welche Fahrzeugart</span>
+
                 </div>
-            </div>
 
-            <div class="formRow floatme" id="fahrzeug">
-                <span class="expl">für welche Fahrzeugart</span>
-                <input type="hidden" value="" name="Fahrzeug">
 
-                <label for="opt_65_0" id="lbl_65_0" class="btn car floatmeL">
-                    <input type="radio" value="Fahrzeug bis 3,5t" class="radio" id="opt_65_0" checked="checked"
-                           name="Fahrzeug">
-                    Fahrzeug bis 3,5t
-                    <i class="fa fa-car" aria-hidden="true"></i></label>
 
-                <label for="opt_65_1" id="lbl_65_1" class="btn lkw floatmeR">
-                    <input type="radio" value="Fahrzeug größer 3,5t (LKW)" class="radio" id="opt_65_1" name="Fahrzeug">
-                    Fahrzeug größer 3,5t
-                    <i class="fa fa-truck" aria-hidden="true"></i></label>
-            </div>
-
-            <div class="formRow">
-                <label class="zusatzinfo" for="ctrl_66">Zusatzinformationen</label> <textarea cols="40" rows="6"
-                                                                                              class="textarea"
-                                                                                              id="ctrl_66"
-                                                                                              placeholder="evtl. weitere Informationen zur Aufstellung"
-                                                                                              name="Zusatzinformationen"></textarea>
-            </div>
-            <div class="formRow gutscheinRow">
-                <label class="mandatory" for="ctrl_122"> Gutscheincode</label> <input type="text" value="hvz18spfgp"
-                                                                                      class="text mandatory"
-                                                                                      id="ctrl_122"
-                                                                                      placeholder="Gutscheincode"
-                                                                                      name="gutscheincode">
-            </div>
-            <p class="rabattInfo">Mit dem von Ihnen eingegeben Gutscheincode erhalten Sie <strong>5% Rabatt</strong></p>
+                <div class="formRow">
+                    <label class="zusatzinfo" for="ctrl_66">Zusatzinformationen</label> <textarea cols="40" rows="6"
+                                                                                                  class="textarea"
+                                                                                                  id="ctrl_66"
+                                                                                                  placeholder="evtl. weitere Informationen zur Aufstellung"
+                                                                                                  name="Zusatzinformationen"></textarea>
+                </div>
+                <div class="formRow gutscheinRow">
+                    <label class="mandatory" for="ctrl_122"> Gutscheincode</label> <input type="text" value="hvz18spfgp"
+                                                                                          class="text mandatory"
+                                                                                          id="ctrl_122"
+                                                                                          placeholder="Gutscheincode"
+                                                                                          name="gutscheincode">
+                </div>
+                <p class="rabattInfo">Mit dem von Ihnen eingegeben Gutscheincode erhalten Sie <strong>5% Rabatt</strong>
+                </p>
         </fieldset>
 
         <fieldset id="rechnungsadresse">

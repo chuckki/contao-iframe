@@ -1,60 +1,65 @@
 <div id="hvzDetails">
-    <h3>Halteverbot für {{ hvz.question|raw }}</h3>
-    <div class="detailList">
-        <div class="description">
-            <p>
-                Beantragung einer behördlichen Genehmigung inklusive fristegerechter Aufstellung des Halteverbots
-                in {{ hvz.question|raw }}, Anfertigung eines Aufstellprotokolls, Lieferung und Aufstellung sowie Abholung
-                der Halteverbotsschilder nach Ablauf der Gültigkeitsdauer.
-            </p>
-        </div>
-        <div class="price">
-            {{ hvz.hvz_single|number_format(2, ',', '.') }} €</p>
+    <div class="campaign-box">
+        <h2 class="font-xxl">{{ hvz.hvz_single|number_format(2, ',', '.') }} €</h2>
+        <span class="tooltip-icon" data-placement="right" data-toggle="tooltip"
+              data-original-title="Der endgültige Preis ist abhängig von der Gültigkeitsdauer sowie einer eventuelle verkehrssicherheits bedingter Erweiterung auf eine doppelte Schilderstellung."></span>
 
-        </div>
+        <h3>Halteverbotszone für {{ hvz.question|raw }}</h3>
+        <p>
+            Beantragung einer behördlichen Genehmigung inklusive fristegerechter Aufstellung des
+            Halteverbots in {{ hvz.question|raw }}, Anfertigung eines Aufstellprotokolls, Lieferung
+            und Aufstellung sowie Abholung der Halteverbotsschilder nach Ablauf der Gültigkeitsdauer.
+        </p>
+
     </div>
 </div>
 
 <div id="orderForm">
-
-    {{ include('@ChuckkiHvzIframe/form.html.twig', {request_token: 'bar', ort: 'Lünen'}) }}
+    {{ include('@ChuckkiHvzIframe/form.html.twig', {request_token: 'bar', ort: hvz.question }) }}
 </div>
 
 <script>
-(function($) {
-"use strict";
-    $(document).ready(function() {
-        var form = $(document.querySelector('input[name="FORM_SUBMIT"][value="{{ formId }}"]').form);
-        form.submit(function() {
-            $.ajax({
-                type: 'POST',
-                data: window.FormData ? new FormData(this) : form.serialize(),
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function(data) {
-                    if (data == 'true') {
-                        form.off('submit').submit();
-                        return;
-                    }
-                    form.animate({'opacity':0}, 200, 'swing', function() {
-                        form.html(data);
-                        form.animate({'opacity':1}, 200);
+    (function ($) {
+        "use strict";
+        $(document).ready(function () {
 
-                        try {
-                            form.find('input,textarea').each(function (el) {
-                                el.cleardefault();
-                            });
-                        } catch (err) {}
-
-                        form.trigger('ajax_change');
-                        $(window).trigger('ajax_change');
-                    });
-                }
+            jQuery(function () {
+                jQuery('[data-toggle="tooltip"]').tooltip({container: 'body'});
             });
 
-            return false;
+
+            var form = $(document.querySelector('input[name="FORM_SUBMIT"][value="{{ formId }}"]').form);
+            form.submit(function () {
+                $.ajax({
+                    type: 'POST',
+                    data: window.FormData ? new FormData(this) : form.serialize(),
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data == 'true') {
+                            form.off('submit').submit();
+                            return;
+                        }
+                        form.animate({'opacity': 0}, 200, 'swing', function () {
+                            form.html(data);
+                            form.animate({'opacity': 1}, 200);
+
+                            try {
+                                form.find('input,textarea').each(function (el) {
+                                    el.cleardefault();
+                                });
+                            } catch (err) {
+                            }
+
+                            form.trigger('ajax_change');
+                            $(window).trigger('ajax_change');
+                        });
+                    }
+                });
+
+                return false;
+            });
         });
-    });
-})(jQuery);
+    })(jQuery);
 </script>
