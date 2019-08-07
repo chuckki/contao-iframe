@@ -15,7 +15,32 @@
                     $(this).parent().addClass('empty');
                 }
             })
+
+            $("#startDateInput").focus(function () {
+                $(this).parent().addClass('notempty');
+            });
+
+            inputEl.on("change, focusout, blur",function () {
+                if ($(this).val() =="") {
+                    $(this).parent().addClass('empty');
+                }
+            })
+
+
+            $(function () {
+//                    $("#startDate").datepicker();
+            });
+            function cancelSelection(){
+                $(".datepicker__modal").hide();
+            }
+
+            $("#startDateInput").click( function () {
+                let picker = $(".datepicker__modal");
+                picker.show();
+                picker.focus();
+            })
         </script>
+
 
         <fieldset id="hvzAdresse">
             <legend>Adresse für das Halteverbot in {{ ort }}</legend>
@@ -35,32 +60,13 @@
 
         <fieldset id="hvzDatum">
             <legend>Wann soll die Halteverbotszone gestellt werden</legend>
-
-
             <div class="formRow empty">
                 <span class="placeholder">Datum</span>
                 <i class="far fa-calendar input-unity"></i>
-                <input type="text" class="text mandatory" id="startDateInput" name="vom">
+                <input type="text" class="text mandatory" id="startDateInput" value="" name="vom">
             </div>
 
-
-            <script>
-                $(function () {
-//                    $("#startDate").datepicker();
-                });
-                function cancelSelection(){
-                    $(".datepicker__modal").hide();
-                }
-
-                $("#startDateInput").click( function () {
-                    let picker = $(".datepicker__modal");
-                    picker.show();
-                    picker.focus();
-                })
-            </script>
-
-
-            <div class="datepicker__modal" id="vondatum_datepicker" style="display: block;">
+            <div class="datepicker__modal" id="vondatum_datepicker">
                 <div id="datepicker__centered-container">
                     <div class="datepicker__tip-message">
                         <span class="tip-message__headline">TIPP</span>
@@ -75,6 +81,7 @@
                     </div>
                 </div>
             </div>
+
 
 
 
@@ -105,12 +112,16 @@
             </div>
 
 
+
+
+
             <div class="formRow">
-                <div class="date1">
-                    <label class="mandatory" for="ctrl_55">
-                        <span class="invisible">Pflichtfeld</span>täglich von
-                    </label>
-                    <select id="ctrl_55" name="vomUhrzeit">
+
+
+
+                <div class="select-container">
+                    <label class="input-label" for="main-ingredient">täglich von</label>
+                    <select id="main-ingredient" class="select">
                         <option value="7" selected=""> 7 Uhr</option>
                         <option value="8"> 8 Uhr</option>
                         <option value="9"> 9 Uhr</option>
@@ -127,11 +138,12 @@
                         <option value="20">20 Uhr</option>
                     </select>
                 </div>
-                <div class="date2">
 
-                    <label class="mandatory last" for="ctrl_108"><span class="invisible">Pflichtfeld</span>täglich bis
-                    </label>
-                    <select id="ctrl_108" name="bisUhrzeit">
+
+
+                <div class="select-container">
+                    <label class="input-label" for="main-ingredient">täglich bis</label>
+                    <select id="main-ingredient" class="select">
                         <option value="7"> 7 Uhr</option>
                         <option value="8"> 8 Uhr</option>
                         <option value="9"> 9 Uhr</option>
@@ -148,6 +160,8 @@
                         <option value="20">20 Uhr</option>
                     </select>
                 </div>
+
+
             </div>
 
         </fieldset>

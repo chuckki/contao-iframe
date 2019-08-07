@@ -65,7 +65,6 @@
             tagsEl.keypress(function (e) {
                 if (13 === e.which) {
                     loadContent(selectedDatum);
-                    //window.location.href = "/halteverbot-suche.html?suche=" + encodeURIComponent(o)
                 }
             });
 
@@ -82,9 +81,30 @@
 
             function autolLoadContent() {
                 $("#content").load('/extern/hvb/120', function () {
-                        $( "#startDateForHvz" ).datepicker();
+
+                        $("#startDateForHvz").datepicker(
+                            {
+                                altFormat: "dd.mm.yy",
+                                minDate: "+7d",
+                                beforeShow: function () {
+                                    $("#startDateInput").parent().addClass('notempty');
+                                }
+                            }
+                        )
+                        .on( "change", function() {
+
+                            $("#startDateForHvz").datepicker("option", "altField", "#startDateInput");
+                            cancelSelection();
+                        });
+
+
                     }
                 );
+
+
+
+
+
             }
 
             autolLoadContent();

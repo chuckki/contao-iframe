@@ -23,6 +23,21 @@ html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pr
     outline: 0;
 }
 
+html{
+    font-size: 100%;
+}
+
+*{
+    outline: none; /* Works in Firefox, Chrome, IE8 and above */
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
 body,
 table {
     font-family: 'Open Sans', Verdana, 'DejaVu Sans', Arial, Helvetica, sans-serif;
@@ -123,13 +138,14 @@ h3#hvzlistdropdown {
     position: absolute;
     top: 15px;
     left: 14px;
-    font-family: 'FontAwesome';
+    font-family: "Font Awesome 5 Pro";
     z-index: 999999;
     width: 30px;
     height: 30px;
     display: block;
     font-size: 1.4em;
     line-height: 20px;
+    font-weight: 900;
 }
 
 
@@ -225,7 +241,6 @@ span.placeholder {
     transition: top 250ms ease-out, font-size 250ms ease-out;
     z-index: 2;
 }
-
 .formRow {
     height: 50px;
     min-height: 50px;
@@ -238,6 +253,12 @@ span.placeholder {
     top: 18px;
     left: 32px;
     font-size: 14px;
+}
+
+.notempty span{
+
+ top: 8px;
+left: 32px;    font-size: 10px;
 }
 
 
@@ -253,11 +274,16 @@ span.placeholder {
     left: 10px;
     color: #FF7500;
     position: absolute;
-    z-index: 333;
+    z-index: 2;
 }
 
 fieldset {
     margin: 20px 0;
+}
+
+select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #000;
 }
 
 
@@ -395,4 +421,14 @@ fieldset {
     line-height: 50px;
     background-color: #FFFFFF;
 
+}
+
+h2{
+    font-size: 24px;
+    line-height: 1.6rem;
+}
+
+h3 {
+    font-size: 1.17rem;
+    line-height: 1.6rem;
 }
