@@ -224,7 +224,8 @@ legend {
 }
 
 .formbody input[type="text"],
-.formbody input[type="tel"]
+.formbody input[type="tel"],
+.formbody input[type="email"]
 {
     height: 50px;
     padding-top: 18px;

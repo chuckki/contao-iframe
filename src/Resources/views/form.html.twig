@@ -241,12 +241,48 @@
                 </p>
         </fieldset>
 
+
+
         <fieldset id="rechnungsadresse">
             <legend>Rechnungsadresse</legend>
 
-            <div id="stepThreeError" class="stepError" style="display:none;">Bitte füllen Sie alle <strong>rot</strong>
-                umrandeten Felder aus.
+            <div class="formRow empty">
+                <span class="placeholder">Name</span>
+                <input type="text" class="text mandatory" id="ctrl_50" name="PLZ">
             </div>
+            <div class="formRow empty">
+                <span class="placeholder">Vorname</span>
+                <input type="text" class="text mandatory" id="ctrl_50" name="PLZ">
+            </div>
+
+            <div class="formRow empty">
+                <span class="placeholder">Strasse/Hausnummer</span>
+                <input type="text" class="text mandatory" id="ctrl_50" name="PLZ">
+            </div>
+
+            <div class="formRow empty">
+                <span class="placeholder">Ort / PLZ</span>
+                <input type="text" class="text mandatory" id="ctrl_50" name="PLZ">
+            </div>
+
+
+
+
+            <div class="formRow empty">
+                <span class="placeholder">E-Mail-Adresse</span>
+                <input type="email" class="text mandatory" id="ctrl_50" name="PLZ">
+            </div>
+
+
+
+
+            <div class="formRow empty">
+                <span class="placeholder">Telefon</span>
+                <input type="tel" class="text mandatory" id="ctrl_50" name="PLZ">
+            </div>
+
+
+<hr>
 
             <div class="formRow" id="gender">
 
@@ -260,7 +296,6 @@
                         class="fa fa-female" aria-hidden="true"></i></label>
             </div>
 
-
             <div class="formRow">
                 <label for="ctrl_72">Firma</label> <input type="text" value="" placeholder="Firma" class="text"
                                                           id="ctrl_72" name="firma">
@@ -269,41 +304,7 @@
                 <label for="ctrl_248">USt-IdNr.</label> <input type="text" value="" placeholder="USt-IdNr. (optional)"
                                                                class="text" id="ctrl_248" name="umstid">
             </div>
-            <div class="formRow">
-                <label class="mandatory" for="ctrl_57"><span class="invisible">Pflichtfeld</span> Name<span
-                        class="mandatory">*</span></label> <input type="text" value="Esken" class="text mandatory"
-                                                                  id="ctrl_57" placeholder="Name" name="Name">
-            </div>
-            <div class="formRow">
-                <label class="mandatory" for="ctrl_67"><span class="invisible">Pflichtfeld</span> Vorname<span
-                        class="mandatory">*</span></label> <input type="text" value="Dennis" class="text mandatory"
-                                                                  id="ctrl_67" placeholder="Vorname" name="Vorname">
-            </div>
-            <div class="formRow">
-                <label class="mandatory" for="ctrl_69"><span class="invisible">Pflichtfeld</span> Straße /
-                    Hausnummer<span class="mandatory">*</span></label> <input type="text" value="Mörserstrasse 21"
-                                                                              class="text mandatory"
-                                                                              placeholder="Strasse/Hausnummer"
-                                                                              id="ctrl_69" name="strasse_rechnung">
-            </div>
-            <div class="formRow">
-                <label class="mandatory" for="ctrl_70"><span class="invisible">Pflichtfeld</span> Ort / PLZ<span
-                        class="mandatory">*</span></label> <input type="text" value="348832 Mensche"
-                                                                  class="text mandatory" id="ctrl_70"
-                                                                  placeholder="Ort/PLZ" name="ort_rechnung">
-            </div>
-            <div class="formRow">
-                <label class="mandatory" for="ctrl_58"><span class="invisible">Pflichtfeld</span> eMail<span
-                        class="mandatory">*</span></label> <input type="email" value="bestHVB@projektorientiert.de"
-                                                                  class="text mandatory" id="ctrl_58"
-                                                                  placeholder="E-Mail-Adresse" name="email">
-            </div>
-            <div class="formRow">
-                <label class="mandatory" for="ctrl_59"><span class="invisible">Pflichtfeld</span> Telefon<span
-                        class="mandatory">*</span></label> <input type="tel" value="0234234" class="text mandatory"
-                                                                  id="ctrl_59" placeholder="Telefon tagsüber"
-                                                                  name="Telefon">
-            </div>
+
         </fieldset>
 
     </div>
