@@ -80,6 +80,7 @@ body {
 .ta_wrapper {
     display: flex;
     width: 80%;
+    width: 65%;
     margin: 0 auto;
     box-shadow: 0 6px 8px -4px rgba(0, 0, 0, 0.14);
 }
@@ -138,7 +139,7 @@ h3#hvzlistdropdown {
     position: absolute;
     top: 15px;
     left: 14px;
-    font-family: "Font Awesome 5 Pro";
+    font-family: "FontAwesome","Font Awesome 5 Pro";
     z-index: 999999;
     width: 30px;
     height: 30px;
