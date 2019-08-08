@@ -52,8 +52,6 @@
                 <input type="text" class="text mandatory" id="ctrl_51" name="Strasse">
             </div>
         </fieldset>
-
-
         <fieldset id="hvzDatum">
             <legend>Wann soll die Halteverbotszone gestellt werden</legend>
             <div class="formRow empty">
@@ -81,7 +79,7 @@
                 <div class="select-container">
                     <span class="placeholder">Zeitraum</span>
                     <select id="main-ingredient" class="select">
-                        <option value="" disabled>Anzal der Tage</option>
+                        <option value="" disabled>Anzahl der Tage</option>
                         <option value="1" selected="">1 Tag</option>
                         <option value="2">2 Tage</option>
                         <option value="3">3 Tage</option>
@@ -147,8 +145,6 @@
 
             </div>
         </fieldset>
-
-
         <fieldset id="hvzDetails">
             <legend>Halteverbot Details</legend>
 
@@ -162,7 +158,6 @@
                         <option value="sonstiges">Sonstiges</option>
                     </select>
                 </div>
-
                 <div style="display: none">
                     <div id="grundAddon">
                         <p>
@@ -194,58 +189,64 @@
             </div>
 
 
-            <div class="formRow" id="grund">
-
-
-                <div class="checkbox-container">
-                    <input type="checkbox" id="example-form_input12" class="input-checkbox">
-                    <label for="example-form_input12" class="label-checkbox">Please accept this. Or not. Your choice.
-                        (But we'd appreciate it.)</label>
+            <div class="formRow">
+                <div class="select-container">
+                    <span class="placeholder">Fahrzeugtyp</span>
+                    <select id="main-ingredient" class="select">
+                        <option value="5"><span> Fahrzeug bis 3,5t <i class="fas fa-car-side"></i></span></option>
+                        <option value="10">Fahrzeug größer 3,5t <i class="fas fa-truck-moving"></i></option>
+                    </select>
                 </div>
+            </div>
 
-                <div class="formRow floatme" id="fahrzeug">
-
-                    <ul class="radio-list">
-                        <li class="radio-container">
-                            <input type="radio" class="input-radio" id="apple-2" name="fruit-2" checked="">
-                            <label for="apple-2" class="label-radio"><span> Fahrzeug bis 3,5t <i class="fas fa-car-side"></i></span></label>
-                        </li>
-                        <li class="radio-container">
-                            <input type="radio" class="input-radio" id="banana-2" name="fruit-2">
-                            <label for="banana-2" class="label-radio"> Fahrzeug größer 3,5t <i class="fas fa-truck-moving"></i></label>
-                        </li>
-                    </ul>
-
-
-                    <span class="expl">für welche Fahrzeugart</span>
-
+            <div class="formRow">
+                <div class="select-container">
+                    <span class="placeholder">Beschilderung</span>
+                    <select id="main-ingredient" class="select">
+                        <option value="5">einseitig</option>
+                        <option value="10">beidseitig</option>
+                    </select>
                 </div>
+            </div>
 
-
-
-                <div class="formRow">
-                    <label class="zusatzinfo" for="ctrl_66">Zusatzinformationen</label> <textarea cols="40" rows="6"
-                                                                                                  class="textarea"
-                                                                                                  id="ctrl_66"
-                                                                                                  placeholder="evtl. weitere Informationen zur Aufstellung"
-                                                                                                  name="Zusatzinformationen"></textarea>
-                </div>
-                <div class="formRow gutscheinRow">
-                    <label class="mandatory" for="ctrl_122"> Gutscheincode</label> <input type="text" value="hvz18spfgp"
-                                                                                          class="text mandatory"
-                                                                                          id="ctrl_122"
-                                                                                          placeholder="Gutscheincode"
-                                                                                          name="gutscheincode">
-                </div>
-                <p class="rabattInfo">Mit dem von Ihnen eingegeben Gutscheincode erhalten Sie <strong>5% Rabatt</strong>
-                </p>
         </fieldset>
 
 
+        <fieldset id="hvzAdditionalInfos">
+            <legend>Zusatzinformationen</legend>
+            <textarea cols="40" rows="6" class="textarea" id="ctrl_66"
+                      placeholder="evtl. weitere Informationen zur Aufstellung" name="Zusatzinformationen"></textarea>
+        </fieldset>
 
         <fieldset id="rechnungsadresse">
             <legend>Rechnungsadresse</legend>
+            <div class="formRow">
+                <div class="select-container">
+                    <span class="placeholder gender">Anrede</span>
+                    <i id="genderIcon" class="fas fa-genderless input-unity"></i>
 
+                    <script>
+                        $("#gender").on("change",function () {
+                            let el = $("#genderIcon")
+                                el.removeClass('fa-genderless');
+                            if($(this).val() == 'Herr'){
+                                el.addClass('fa-male');
+                                el.removeClass('fa-female');
+                            }else {
+                                el.addClass('fa-female');
+                                el.removeClass('fa-male');
+                            }
+                        })
+
+                    </script>
+
+                    <select id="gender" class="select">
+                        <option value="" selected disabled>Bitte wählen:</option>
+                        <option value="Herr"><i class="fa fa-male" aria-hidden="true"></i>Herr</option>
+                        <option value="Frau"><i class="fa fa-female" aria-hidden="true"></i>Frau</option>
+                    </select>
+                </div>
+            </div>
             <div class="formRow empty">
                 <span class="placeholder">Name</span>
                 <input type="text" class="text mandatory" id="ctrl_50" name="PLZ">
@@ -266,14 +267,10 @@
             </div>
 
 
-
-
             <div class="formRow empty">
                 <span class="placeholder">E-Mail-Adresse</span>
                 <input type="email" class="text mandatory" id="ctrl_50" name="PLZ">
             </div>
-
-
 
 
             <div class="formRow empty">
@@ -281,31 +278,23 @@
                 <input type="tel" class="text mandatory" id="ctrl_50" name="PLZ">
             </div>
 
-
-<hr>
-
-            <div class="formRow" id="gender">
-
-                <label for="opt_68_0" id="lbl_68_0" class="btn male"><input type="radio" value="Herr" checked="checked"
-                                                                            class="radio" id="opt_68_0"
-                                                                            name="Geschlecht">Herr<i class="fa fa-male"
-                                                                                                     aria-hidden="true"></i></label>
-
-                <label for="opt_68_1" id="lbl_68_1" class="btn female"><input type="radio" value="Frau" class="radio"
-                                                                              id="opt_68_1" name="Geschlecht">Frau<i
-                        class="fa fa-female" aria-hidden="true"></i></label>
+            <div class="formRow empty">
+                <span class="placeholder">Firma</span>
+                <input type="text" value="" class="text" id="ctrl_72" name="firma">
             </div>
 
-            <div class="formRow">
-                <label for="ctrl_72">Firma</label> <input type="text" value="" placeholder="Firma" class="text"
-                                                          id="ctrl_72" name="firma">
-            </div>
-            <div class="formRow " id="umstElement" style="display: none;">
-                <label for="ctrl_248">USt-IdNr.</label> <input type="text" value="" placeholder="USt-IdNr. (optional)"
-                                                               class="text" id="ctrl_248" name="umstid">
+            <div class="formRow empty" id="umstElement" style="display: none;">
+                <span class="placeholder">USt-IdNr.</span>
+                <input type="text" value="" placeholder="USt-IdNr. (optional)" class="text" id="ctrl_248" name="umstid">
             </div>
 
         </fieldset>
+
+
+        <div class="checkbox-container">
+            <input type="checkbox" id="example-form_input12" class="input-checkbox">
+            <label for="example-form_input12" class="label-checkbox">Ich erkläre mich mit den <a target="_blank" href="/agb.html">AGB</a> und den <a target="_blank" href="/datenschutzerklaerung.html">Datenschutzrichtlinien</a> einverstanden</label>
+        </div>
 
     </div>
 </form>
