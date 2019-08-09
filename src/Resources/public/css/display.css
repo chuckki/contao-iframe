@@ -92,6 +92,24 @@ body {
     appearance: none;
 }
 
+.formbody select{
+    text-indent: -2px;
+}
+
+.select-container .input-unity ~ .placeholder{
+    left: 32px;
+}
+.input-unity ~ .placeholder ~ select{
+    padding-left:32px;
+}
+
+.fa-info-circle.input-unity{
+    top: 0;
+    left: 0;
+    padding: 18px 9px;
+    cursor: pointer;
+}
+
 .tt-menu {
     width: 100%;
     background: #ffffff;
@@ -244,7 +262,7 @@ legend {
 .formbody .select {
     height: 50px;
     padding-top: 18px;
-    padding-left: 8px;
+    padding-left:13px;
     border: 1px solid #e0e0e0;
 }
 

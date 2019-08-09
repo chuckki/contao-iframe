@@ -43,13 +43,13 @@
             <div class="formRow empty">
                 <span class="placeholder">PLZ von {{ ort|raw }}</span>
                 <i class="fas fa-map-marker-alt input-unity"></i>
-                <input type="tel" class="text mandatory" id="ctrl_50" name="PLZ">
+                <input type="tel" class="text mandatory" id="ctrl_50" name="PLF" autocomplete="postal-code">
             </div>
             <div class="formRow empty">
                 <span class="placeholder">Straße und Hausnummer</span>
                 <!--<i class="fas fa-road input-unity"></i>-->
                 <i class="fas fa-map-marked-alt input-unity"></i>
-                <input type="text" class="text mandatory" id="ctrl_51" name="Strasse">
+                <input type="text" class="text mandatory" id="ctrl_51" name="address-line1" autocomplete="address-line1">
             </div>
         </fieldset>
         <fieldset id="hvzDatum">
@@ -77,6 +77,12 @@
             </div>
             <div class="formRow">
                 <div class="select-container">
+                    <button class="fas fa-info-circle input-unity"
+                            data-toggle="popover"
+                            data-placement="auto"
+                            data-original-title="Zeitraum"
+                            data-content="Der oben angegebene Preis bezieht sich auf die Gültigkeit eines Tages. Ab dem zweiten Tag werden pro Tag Zusatzkosten in Höhe von <strong>{{ extraTag }} €</strong> erhoben."
+                    ></button>
                     <span class="placeholder">Zeitraum</span>
                     <select id="main-ingredient" class="select">
                         <option value="" disabled>Anzahl der Tage</option>
@@ -150,6 +156,12 @@
 
             <div class="formRow">
                 <div class="select-container">
+                    <i class="fas fa-info-circle input-unity"
+                       data-toggle="popover"
+                       data-placement="auto"
+                       data-original-title="Grund für die Stellung"
+                       data-content="Grund"
+                    ></i>
                     <span class="placeholder">Grund für die Stellung</span>
                     <select id="main-ingredient" class="select">
                         <option value="umzug" selected="">Umzug</option>
@@ -201,6 +213,12 @@
 
             <div class="formRow">
                 <div class="select-container">
+                    <i class="fas fa-info-circle input-unity"
+                       data-toggle="popover"
+                       data-placement="auto"
+                       data-original-title="Grund für die Stellung"
+                       data-content="Extrakosten <strong>+{{ extraKostenDoppelseitig}} €</strong>"
+                    ></i>
                     <span class="placeholder">Beschilderung</span>
                     <select id="main-ingredient" class="select">
                         <option value="5">einseitig</option>
@@ -249,21 +267,21 @@
             </div>
             <div class="formRow empty">
                 <span class="placeholder">Name</span>
-                <input type="text" class="text mandatory" id="ctrl_50" name="PLZ">
+                <input type="text" class="text mandatory" id="ctrl_50" name="name" autocomplete="family-name">
             </div>
             <div class="formRow empty">
                 <span class="placeholder">Vorname</span>
-                <input type="text" class="text mandatory" id="ctrl_50" name="PLZ">
+                <input type="text" class="text mandatory" name="given-name" autocomplete="given-name">
             </div>
 
             <div class="formRow empty">
                 <span class="placeholder">Strasse/Hausnummer</span>
-                <input type="text" class="text mandatory" id="ctrl_50" name="PLZ">
+                <input type="text" class="text mandatory" id="ctrl_50" name="address-line1" autocomplete="address-line1">
             </div>
 
             <div class="formRow empty">
                 <span class="placeholder">Ort / PLZ</span>
-                <input type="text" class="text mandatory" id="ctrl_50" name="PLZ">
+                <input type="text" class="text mandatory" id="ctrl_50" name="PLZ" autocomplete="postal-code city">
             </div>
 
 
@@ -275,12 +293,12 @@
 
             <div class="formRow empty">
                 <span class="placeholder">Telefon</span>
-                <input type="tel" class="text mandatory" id="ctrl_50" name="PLZ">
+                <input type="tel" class="text mandatory" id="ctrl_50" name="PLZ" autocomplete="home tel">
             </div>
 
             <div class="formRow empty">
                 <span class="placeholder">Firma</span>
-                <input type="text" value="" class="text" id="ctrl_72" name="firma">
+                <input type="text" value="" class="text" id="ctrl_72" name="firma" autocomplete="city">
             </div>
 
             <div class="formRow empty" id="umstElement" style="display: none;">

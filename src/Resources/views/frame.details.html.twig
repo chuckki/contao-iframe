@@ -15,7 +15,7 @@
 </div>
 
 <div id="orderForm">
-    {{ include('@ChuckkiHvzIframe/form.html.twig', {request_token: 'bar', ort: hvz.question }) }}
+    {{ include('@ChuckkiHvzIframe/form.html.twig', {request_token: 'bar', ort: hvz.question , extraTag: hvz.extraTag, extraKostenDoppelseitig: hvz.ExtraKostenDoppelseitig}) }}
 </div>
 
 <script>
@@ -25,6 +25,7 @@
 
             jQuery(function () {
                 jQuery('[data-toggle="tooltip"]').tooltip({container: 'body'});
+                jQuery.popoverTrigger('[data-toggle="popover"]');
             });
 
 
