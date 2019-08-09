@@ -35,6 +35,8 @@
                 picker.show();
                 picker.focus();
             })
+
+
         </script>
 
 
@@ -49,7 +51,8 @@
                 <span class="placeholder">Straße und Hausnummer</span>
                 <!--<i class="fas fa-road input-unity"></i>-->
                 <i class="fas fa-map-marked-alt input-unity"></i>
-                <input type="text" class="text mandatory" id="ctrl_51" name="address-line1" autocomplete="address-line1">
+                <input type="text" class="text mandatory" id="ctrl_51" name="address-line1"
+                       autocomplete="address-line1">
             </div>
         </fieldset>
         <fieldset id="hvzDatum">
@@ -217,7 +220,7 @@
                        data-toggle="popover"
                        data-placement="auto"
                        data-original-title="Grund für die Stellung"
-                       data-content="Extrakosten <strong>+{{ extraKostenDoppelseitig}} €</strong>"
+                       data-content="Extrakosten <strong>+{{ extraKostenDoppelseitig }} €</strong>"
                     ></i>
                     <span class="placeholder">Beschilderung</span>
                     <select id="main-ingredient" class="select">
@@ -244,17 +247,37 @@
                     <i id="genderIcon" class="fas fa-genderless input-unity"></i>
 
                     <script>
-                        $("#gender").on("change",function () {
+                        $("#gender").on("change", function () {
                             let el = $("#genderIcon")
-                                el.removeClass('fa-genderless');
-                            if($(this).val() == 'Herr'){
+                            el.removeClass('fa-genderless');
+                            if ($(this).val() == 'Herr') {
                                 el.addClass('fa-male');
                                 el.removeClass('fa-female');
-                            }else {
+                            } else {
                                 el.addClass('fa-female');
                                 el.removeClass('fa-male');
                             }
                         })
+
+                        //Preis berechnen
+
+
+                        let priceData = {
+                            'hvzId': '12',
+                            'extraTag': $('#extraTag').val(),
+                            'hvzType': $('#hvzType').val()
+                        };
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/extern/getprice/',
+                            data: priceData,
+                            success: function (data) {
+                                console.log(data);
+                                alert(data);
+                            }
+                        });
+
 
                     </script>
 
@@ -276,7 +299,8 @@
 
             <div class="formRow empty">
                 <span class="placeholder">Strasse/Hausnummer</span>
-                <input type="text" class="text mandatory" id="ctrl_50" name="address-line1" autocomplete="address-line1">
+                <input type="text" class="text mandatory" id="ctrl_50" name="address-line1"
+                       autocomplete="address-line1">
             </div>
 
             <div class="formRow empty">
@@ -308,11 +332,22 @@
 
         </fieldset>
 
+        <fieldset id="rechnungsadresse">
 
-        <div class="checkbox-container">
-            <input type="checkbox" id="example-form_input12" class="input-checkbox">
-            <label for="example-form_input12" class="label-checkbox">Ich erkläre mich mit den <a target="_blank" href="/agb.html">AGB</a> und den <a target="_blank" href="/datenschutzerklaerung.html">Datenschutzrichtlinien</a> einverstanden</label>
-        </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="example-form_input12" class="input-checkbox">
+                <label for="example-form_input12" class="label-checkbox">Ich erkläre mich mit den <a target="_blank"
+                                                                                                     href="/agb.html">AGB</a>
+                    und den <a target="_blank" href="/datenschutzerklaerung.html">Datenschutzrichtlinien</a>
+                    einverstanden</label>
+            </div>
 
+            <div class="formRow empty" style="width: 100%;">
+                <input type="submit" class="button-primary font-bold float-right" value="Submit">
+            </div>
+
+        </fieldset>
     </div>
 </form>
+
+

@@ -15,7 +15,7 @@
 </div>
 
 <div id="orderForm">
-    {{ include('@ChuckkiHvzIframe/form.html.twig', {request_token: 'bar', ort: hvz.question , extraTag: hvz.extraTag, extraKostenDoppelseitig: hvz.ExtraKostenDoppelseitig}) }}
+    {{ include('@ChuckkiHvzIframe/form.html.twig', {request_token: 'bar', ort: hvz.question , extraTag: hvz.hvz_extra_tag|number_format(2, '.', ','), extraKostenDoppelseitig: (hvz.hvz_double - hvz.hvz_single)|number_format(2, '.', ',') }) }}
 </div>
 
 <script>
@@ -27,7 +27,6 @@
                 jQuery('[data-toggle="tooltip"]').tooltip({container: 'body'});
                 jQuery.popoverTrigger('[data-toggle="popover"]');
             });
-
 
             var form = $(document.querySelector('input[name="FORM_SUBMIT"][value="{{ formId }}"]').form);
             form.submit(function () {
