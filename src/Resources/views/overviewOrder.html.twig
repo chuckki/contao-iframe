@@ -3,7 +3,7 @@
         <h4>Bestellübersicht</h4>
         <div id="orderList">
             <div id="orderDetails">
-                Halteverbotszone in {{ order.ort }}<br>
+                Halteverbotszone in {{ order.ort|raw }}<br>
                 von {{ order.startDateName }} den {{ order.startDateValue }} bis einschließlich {{ order.endDateName }}
                 den {{ order.endDateValue }} ({{ order.durationDay }} {{ order.day }})
             </div>

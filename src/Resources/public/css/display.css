@@ -92,8 +92,13 @@ body {
     appearance: none;
 }
 
+@-moz-document url-prefix() {
 .formbody select{
     text-indent: -2px;
+}
+}
+.tooltip-icon:before{
+    vertical-align: top;
 }
 
 .select-container .input-unity ~ .placeholder{
@@ -590,4 +595,35 @@ h4{
 
 tr.sumPreis{
     border-top: 1px solid;
+}
+
+
+.ui-datepicker .ui-datepicker-prev {
+
+    height: 1.8em;
+    left: 2px;
+    position: absolute;
+    top: 2px;
+    width: 1.8em;
+
+}
+
+.ui-datepicker .ui-datepicker-next {
+
+    height: 1.8em;
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    width: 1.8em;
+
+}
+.ui-icon {
+
+    background-repeat: no-repeat;
+    display: block;
+    height: 16px;
+    overflow: hidden;
+    text-indent: -99999px;
+    width: 16px;
+
 }
