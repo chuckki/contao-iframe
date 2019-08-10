@@ -14,6 +14,14 @@ formProceed:
         _token_check: true
     methods: [POST]
 
+hvzPrice:
+    path: /extern/getprice/{id}
+    defaults:
+        _controller: Chuckki\HvzIframeBundle\Controller\FrameController:getHvbPrice
+        _scope: frontend
+        _token_check: true
+    methods: [POST]
+
 hvzContent:
     path: /extern/hvb/{id}
     defaults:

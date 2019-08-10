@@ -1,0 +1,35 @@
+<div class="" id="orderOverview" style="width: 100%;">
+    <div class="border-vertical" data-qa-regression="borders_drawing_vertical">
+        <h4>Bestellübersicht</h4>
+        <div id="orderList">
+            <div id="orderDetails">
+                Halteverbotszone in {{ order.ort }}<br>
+                von {{ order.startDateName }} den {{ order.startDateValue }} bis einschließlich {{ order.endDateName }}
+                den {{ order.endDateValue }} ({{ order.durationDay }} {{ order.day }})
+            </div>
+            <div id="priceList">
+
+                <table>
+                    <tbody>
+                    <tr>
+                        <td class="hvzName">Einfache HVZ mit Genehmigung</td>
+                        <td class="hvzPreis">{{ order.priceHvz|number_format(2, ',') }} €</td>
+                    </tr>
+                    <tr class="tagPreis">
+                        <td class="tageDesc">Zuschlag für Zusatztag pro Tag 25 € x 3 Tage</td>
+                        <td class="tagePreis">+ 75.00 €</td>
+                    </tr>
+                    <tr class="sumPreis">
+                        <td><strong>Endpreis</strong>
+                            <small>(19% MwSt enthalten)</small>
+                        </td>
+                        <td class="gesamtPreis"><strong>{{ order.priceFull|number_format(2, ',') }} € </strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+</div>

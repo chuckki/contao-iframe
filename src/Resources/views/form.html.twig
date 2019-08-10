@@ -84,15 +84,15 @@
                             data-toggle="popover"
                             data-placement="auto"
                             data-original-title="Zeitraum"
-                            data-content="Der oben angegebene Preis bezieht sich auf die Gültigkeit eines Tages. Ab dem zweiten Tag werden pro Tag Zusatzkosten in Höhe von <strong>{{ extraTag }} €</strong> erhoben."
+                            data-content="Der oben angegebene Preis bezieht sich auf die Gültigkeit eines Tages. Ab dem zweiten Tag werden pro Tag Zusatzkosten in Höhe von <strong>{{ extraTag|number_format(2, ',') }} €</strong> erhoben."
                     ></button>
                     <span class="placeholder">Zeitraum</span>
-                    <select id="main-ingredient" class="select">
+                    <select id="extraTag" class="select">
                         <option value="" disabled>Anzahl der Tage</option>
                         <option value="1" selected="">1 Tag</option>
-                        <option value="2">2 Tage</option>
-                        <option value="3">3 Tage</option>
-                        <option value="4">4 Tage</option>
+                        <option value="2">2 Tage (+ {{ (1 * extraTag)|number_format(2, ',') }}€)</option>
+                        <option value="3">3 Tage {{ (2 * extraTag)|number_format(2, ',') }}</option>
+                        <option value="4">4 Tage {{ (3 * extraTag)|number_format(2, ',') }}</option>
                         <option value="5">5 Tage</option>
                         <option value="6">6 Tage</option>
                         <option value="7">7 Tage</option>
@@ -208,7 +208,7 @@
                 <div class="select-container">
                     <span class="placeholder">Fahrzeugtyp</span>
                     <select id="main-ingredient" class="select">
-                        <option value="5"><span> Fahrzeug bis 3,5t <i class="fas fa-car-side"></i></span></option>
+                        <option value="5" selected><span> Fahrzeug bis 3,5t <i class="fas fa-car-side"></i></span></option>
                         <option value="10">Fahrzeug größer 3,5t <i class="fas fa-truck-moving"></i></option>
                     </select>
                 </div>
@@ -223,9 +223,9 @@
                        data-content="Extrakosten <strong>+{{ extraKostenDoppelseitig }} €</strong>"
                     ></i>
                     <span class="placeholder">Beschilderung</span>
-                    <select id="main-ingredient" class="select">
-                        <option value="5">einseitig</option>
-                        <option value="10">beidseitig</option>
+                    <select id="hvzType" class="select">
+                        <option value="einseitig" selected>einseitig</option>
+                        <option value="beidseitig">beidseitig</option>
                     </select>
                 </div>
             </div>
@@ -258,25 +258,6 @@
                                 el.removeClass('fa-male');
                             }
                         })
-
-                        //Preis berechnen
-
-
-                        let priceData = {
-                            'hvzId': '12',
-                            'extraTag': $('#extraTag').val(),
-                            'hvzType': $('#hvzType').val()
-                        };
-
-                        $.ajax({
-                            type: 'POST',
-                            url: '/extern/getprice/',
-                            data: priceData,
-                            success: function (data) {
-                                console.log(data);
-                                alert(data);
-                            }
-                        });
 
 
                     </script>
@@ -342,9 +323,56 @@
                     einverstanden</label>
             </div>
 
-            <div class="formRow empty" style="width: 100%;">
-                <input type="submit" class="button-primary font-bold float-right" value="Submit">
+            <div class="" id="orderOverview" style="width: 100%;">
             </div>
+
+            <div class=""  style="width: 100%;">
+                <input id="orderBtn" type="submit" class="button-primary font-bold float-right" value="Submit">
+            </div>
+
+            <script>
+
+                //Preis berechnen
+
+
+                $("#extraTag").on('change', function (e) {
+                    updatePrice();
+                });
+
+                $("#hvzType").on('change', function (e) {
+                    updatePrice();
+                });
+
+
+
+
+                function updatePrice(){
+                    let priceData = {
+                        'hvzId': '{{ hvz.id }}',
+                        'extraTag': $( "#extraTag option:selected" ).val(),
+                        'hvzType': $( "#hvzType option:selected" ).val(),
+                        'startDate': $('#startDateInput').val()
+                    };
+
+                    if($('#startDateInput').val() !== ''){
+                        $( "#orderOverview" ).load( "/extern/getprice/{{ hvz.id }}", priceData, function(data) {
+                            console.log(data);
+                        });
+                    }
+                };
+
+
+
+                function computeDate(start, n) {
+                    var targetDate = start.getDate();
+                    targetDate.setDate(targetDate.getDate() + (parseInt(n) - 1));
+                    var res = new Array(2);
+                    res[0] = ('0' + targetDate.getDate()).slice(-2) + '.' + ('0' + (targetDate.getMonth() + 1)).slice(-2) + '.' + targetDate.getFullYear();
+                    res[1] = getNameOfDay(targetDate);
+                    return res;
+                }
+
+            </script>
 
         </fieldset>
     </div>

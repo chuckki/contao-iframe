@@ -15,7 +15,7 @@
 </div>
 
 <div id="orderForm">
-    {{ include('@ChuckkiHvzIframe/form.html.twig', {request_token: 'bar', ort: hvz.question , extraTag: hvz.hvz_extra_tag|number_format(2, '.', ','), extraKostenDoppelseitig: (hvz.hvz_double - hvz.hvz_single)|number_format(2, '.', ',') }) }}
+    {{ include('@ChuckkiHvzIframe/form.html.twig', {request_token: 'bar', ort: hvz.question , extraTag: hvz.hvz_extra_tag, extraKostenDoppelseitig: (hvz.hvz_double - hvz.hvz_single)|number_format(2, '.', ',') }) }}
 </div>
 
 <script>
