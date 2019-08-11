@@ -79,7 +79,6 @@ body {
 
 .ta_wrapper {
     display: flex;
-    width: 80%;
     width: 65%;
     margin: 0 auto;
     box-shadow: 0 6px 8px -4px rgba(0, 0, 0, 0.14);
@@ -113,6 +112,10 @@ body {
     left: 0;
     padding: 18px 9px;
     cursor: pointer;
+}
+
+.fa-info-circle.input-unity:hover{
+    color:#757575;
 }
 
 .tt-menu {
@@ -342,128 +345,24 @@ select:-moz-focusring {
 }
 
 
-.datepicker__modal {
-    position: fixed;
-    overflow-y: scroll;
-    background-color: rgba(52, 52, 52, 0.7);
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 200;
-    height: 100%;
-    font-family: 'Open Sans', Verdana, 'DejaVu Sans', Arial, Helvetica, sans-serif;
-    font-size: 12px;
-    line-height: 1.6;
-    display: none;
+
+#removal-lead-engine-component div, #removal-lead-engine-component span, #removal-lead-engine-component object, #removal-lead-engine-component iframe, #removal-lead-engine-component h1, #removal-lead-engine-component h2, #removal-lead-engine-component h3, #removal-lead-engine-component h4, #removal-lead-engine-component h5, #removal-lead-engine-component h6, #removal-lead-engine-component p, #removal-lead-engine-component blockquote, #removal-lead-engine-component pre, #removal-lead-engine-component a, #removal-lead-engine-component abbr, #removal-lead-engine-component address, #removal-lead-engine-component cite, #removal-lead-engine-component code, #removal-lead-engine-component del, #removal-lead-engine-component dfn, #removal-lead-engine-component em, #removal-lead-engine-component img, #removal-lead-engine-component ins, #removal-lead-engine-component kbd, #removal-lead-engine-component q, #removal-lead-engine-component samp, #removal-lead-engine-component small, #removal-lead-engine-component strong, #removal-lead-engine-component sub, #removal-lead-engine-component sup, #removal-lead-engine-component var, #removal-lead-engine-component b, #removal-lead-engine-component i, #removal-lead-engine-component dl, #removal-lead-engine-component dt, #removal-lead-engine-component dd, #removal-lead-engine-component ol, #removal-lead-engine-component ul, #removal-lead-engine-component li, #removal-lead-engine-component form, #removal-lead-engine-component fieldset, #removal-lead-engine-component legend, #removal-lead-engine-component label, #removal-lead-engine-component input, #removal-lead-engine-component select, #removal-lead-engine-component textarea, #removal-lead-engine-component table, #removal-lead-engine-component caption, #removal-lead-engine-component tbody, #removal-lead-engine-component tfoot, #removal-lead-engine-component thead, #removal-lead-engine-component tr, #removal-lead-engine-component th, #removal-lead-engine-component td, #removal-lead-engine-component article, #removal-lead-engine-component aside, #removal-lead-engine-component canvas, #removal-lead-engine-component details, #removal-lead-engine-component figure, #removal-lead-engine-component figcaption, #removal-lead-engine-component footer, #removal-lead-engine-component header, #removal-lead-engine-component main, #removal-lead-engine-component menu, #removal-lead-engine-component nav, #removal-lead-engine-component section, #removal-lead-engine-component summary, #removal-lead-engine-component time, #removal-lead-engine-component mark, #removal-lead-engine-component audio, #removal-lead-engine-component video {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
 }
 
-.datepicker__modal #datepicker__centered-container {
-    max-width: 328px;
-    margin: auto;
-}
-
-.datepicker__modal #datepicker__centered-container .datepicker__tip-message {
-
-    background-color: #FF7500;
-    color: #FFFFFF;
-    height: 120px;
-    padding: 7px 26px;
-    text-align: center;
-    line-height: normal;
-
-}
-
-.datepicker__modal #datepicker__centered-container .spot-for-datepicker {
-
-    height: auto;
-    background-color: #FFFFFF;
-
-}
-
-.datepicker__modal #datepicker__centered-container .datepicker__button-pane {
-
-    height: 40px;
-    background-color: #FFFFFF;
-    font-size: 12px;
-    text-align: right;
-
-}
 
 #removal-lead-engine-component .padding-right-l, #removal-lead-engine-component .padding-horizontal-l {
 
     padding-right: 24px !important;
 
-}
-
-.datepicker__modal #datepicker__centered-container .datepicker__button-pane button {
-    cursor: pointer;
-    text-transform: uppercase;
-    font-weight: 500;
-    color: #FF7500;
-    border: 0;
-    outline: 0;
-    background-color: transparent;
-    padding: 1px 7px 2px;
-}
-
-.datepicker__modal #datepicker__centered-container {
-    max-width: 328px;
-    margin: auto;
-}
-
-@media screen and (min-height: 440px) {
-    .datepicker__modal #datepicker__centered-container {
-        margin-top: calc(50vh - 220px);
-    }
-}
-
-
-.datepicker__modal #datepicker__centered-container .spot-for-datepicker .ui-datepicker {
-
-    background-color: #FFFFFF;
-    height: auto;
-    margin: auto;
-    width: 100%;
-
-}
-
-.datepicker__modal #datepicker__centered-container .datepicker__tip-message .tip-message__headline {
-
-    background-color: #FFFFFF;
-    color: #FF7500;
-    font-weight: bold;
-    display: inline-block;
-    padding: 2px 9px;
-    border-radius: 14px;
-    margin-top: 10px;
-    margin-bottom: 9px;
-
-}
-
-.datepicker__modal #datepicker__centered-container .spot-for-datepicker .ui-datepicker .ui-datepicker-calendar .ui-state-default {
-
-    height: 40px;
-    width: 40px;
-    text-align: center;
-    margin: auto;
-    line-height: 40px;
-    font-size: 12px;
-    color: black;
-    background-color: #FFFFFF;
-
-}
-
-.datepicker__modal #datepicker__centered-container .spot-for-datepicker .ui-datepicker .ui-datepicker-calendar .ui-datepicker-current-day .ui-state-default {
-
-    color: #FFFFFF !important;
-    background-color: #FF7500 !important;
-    border-radius: 50%;
-
-}
-
-.ui-datepicker .ui-datepicker-calendar th {
-    font-weight: normal;
 }
 
 .ui-widget-header {
@@ -473,13 +372,6 @@ select:-moz-focusring {
 
 }
 
-.datepicker__modal #datepicker__centered-container .spot-for-datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-title {
-
-    font-size: 14px;
-    line-height: 50px;
-    background-color: #FFFFFF;
-
-}
 
 h2 {
     font-size: 24px;
@@ -527,47 +419,6 @@ h3 {
     left: 32px;
 }
 
-.datepicker__modal #datepicker__centered-container .spot-for-datepicker .ui-datepicker .ui-datepicker-header .ui-corner-all {
-    height: 50px;
-    top: 0;
-}
-#removal-lead-engine-component a, #removal-lead-engine-component a:link {
-    text-decoration: none;
-    color: #2a7cca;
-}
-.datepicker__modal #datepicker__centered-container .spot-for-datepicker .ui-datepicker .ui-datepicker-header .ui-corner-all .ui-icon {
-    cursor: pointer;
-    height: 50px;
-    background-size: 16px;
-    top: 0;
-    left: 0;
-    background-position: center;
-}
-
-.datepicker__modal #datepicker__centered-container .spot-for-datepicker .ui-datepicker .ui-datepicker-header .ui-icon.ui-icon-circle-triangle-w {
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICAgIDxwYXRoIGZpbGw9IiMwMDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTE5LjggMi44TDE3IDAgNSAxMmwxMiAxMiAyLjgtMi44LTkuMi05LjJ6Ii8+Cjwvc3ZnPgo=);
-}
-
-.datepicker__modal #datepicker__centered-container .spot-for-datepicker .ui-datepicker .ui-datepicker-header .ui-icon.ui-icon-circle-triangle-e {
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICAgIDxwYXRoIGZpbGw9IiMwMDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTUgMi44TDcuOCAwbDEyIDEyLTEyIDEyTDUgMjEuMmw5LjItOS4yeiIvPgo8L3N2Zz4K);
-}
-
-.ui-datepicker .ui-datepicker-next span {
-    display: block;
-    left: 50%;
-    margin-left: -8px;
-    margin-top: -8px;
-    position: absolute;
-    top: 50%;
-}
-.ui-datepicker .ui-datepicker-prev span {
-    display: block;
-    left: 50%;
-    margin-left: -8px;
-    margin-top: -8px;
-    position: absolute;
-    top: 50%;
-}
 
 .formbody input[type=submit]{
     font-size: 1rem;
@@ -597,33 +448,3 @@ tr.sumPreis{
     border-top: 1px solid;
 }
 
-
-.ui-datepicker .ui-datepicker-prev {
-
-    height: 1.8em;
-    left: 2px;
-    position: absolute;
-    top: 2px;
-    width: 1.8em;
-
-}
-
-.ui-datepicker .ui-datepicker-next {
-
-    height: 1.8em;
-    position: absolute;
-    right: 2px;
-    top: 2px;
-    width: 1.8em;
-
-}
-.ui-icon {
-
-    background-repeat: no-repeat;
-    display: block;
-    height: 16px;
-    overflow: hidden;
-    text-indent: -99999px;
-    width: 16px;
-
-}

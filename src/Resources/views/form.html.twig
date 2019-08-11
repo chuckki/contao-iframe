@@ -43,15 +43,15 @@
         <fieldset id="hvzAdresse">
             <legend>Adresse für das Halteverbot in {{ ort|raw }}</legend>
             <div class="formRow empty">
-                <span class="placeholder">PLZ von {{ ort|raw }}</span>
+                <label for="hvzPlz" class="placeholder">PLZ von {{ ort|raw }}</label>
                 <i class="fas fa-map-marker-alt input-unity"></i>
-                <input type="tel" class="text mandatory" id="ctrl_50" name="PLF" autocomplete="postal-code">
+                <input type="tel" class="text mandatory" id="hvzPlz" name="PLF" required autocomplete="postal-code">
             </div>
             <div class="formRow empty">
                 <span class="placeholder">Straße und Hausnummer</span>
                 <!--<i class="fas fa-road input-unity"></i>-->
                 <i class="fas fa-map-marked-alt input-unity"></i>
-                <input type="text" class="text mandatory" id="ctrl_51" name="address-line1"
+                <input type="text" class="text mandatory" id="ctrl_51" required name="address-line1"
                        autocomplete="address-line1">
             </div>
         </fieldset>
@@ -60,7 +60,7 @@
             <div class="formRow empty">
                 <span class="placeholder">Datum</span>
                 <i class="far fa-calendar input-unity"></i>
-                <input type="text" class="text mandatory" id="startDateInput" value="" name="vom">
+                <input type="text" class="text mandatory" id="startDateInput" value="" required readonly name="vom">
             </div>
             <div class="datepicker__modal" id="vondatum_datepicker">
                 <div id="datepicker__centered-container">
@@ -271,34 +271,34 @@
             </div>
             <div class="formRow empty">
                 <span class="placeholder">Name</span>
-                <input type="text" class="text mandatory" id="ctrl_50" name="name" autocomplete="family-name">
+                <input type="text" class="text mandatory" required id="ctrl_50" name="name" autocomplete="family-name">
             </div>
             <div class="formRow empty">
                 <span class="placeholder">Vorname</span>
-                <input type="text" class="text mandatory" name="given-name" autocomplete="given-name">
+                <input type="text" class="text mandatory" required name="given-name" autocomplete="given-name">
             </div>
 
             <div class="formRow empty">
                 <span class="placeholder">Strasse/Hausnummer</span>
-                <input type="text" class="text mandatory" id="ctrl_50" name="address-line1"
+                <input type="text" class="text mandatory" required id="ctrl_50" name="address-line1"
                        autocomplete="address-line1">
             </div>
 
             <div class="formRow empty">
                 <span class="placeholder">Ort / PLZ</span>
-                <input type="text" class="text mandatory" id="ctrl_50" name="PLZ" autocomplete="postal-code city">
+                <input type="text" class="text mandatory" required id="ctrl_50" name="PLZ" autocomplete="postal-code city">
             </div>
 
 
             <div class="formRow empty">
                 <span class="placeholder">E-Mail-Adresse</span>
-                <input type="email" class="text mandatory" id="ctrl_50" name="PLZ">
+                <input type="email" class="text mandatory" required id="ctrl_50" name="PLZ">
             </div>
 
 
             <div class="formRow empty">
                 <span class="placeholder">Telefon</span>
-                <input type="tel" class="text mandatory" id="ctrl_50" name="PLZ" autocomplete="home tel">
+                <input type="tel" class="text mandatory" required id="ctrl_50" name="PLZ" autocomplete="home tel">
             </div>
 
             <div class="formRow empty">
@@ -316,7 +316,7 @@
         <fieldset id="rechnungsadresse">
 
             <div class="checkbox-container">
-                <input type="checkbox" id="example-form_input12" class="input-checkbox">
+                <input type="checkbox" required id="example-form_input12" class="input-checkbox">
                 <label for="example-form_input12" class="label-checkbox">Ich erkläre mich mit den <a target="_blank"
                                                                                                      href="/agb.html">AGB</a>
                     und den <a target="_blank" href="/datenschutzerklaerung.html">Datenschutzrichtlinien</a>
