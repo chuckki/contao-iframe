@@ -1,5 +1,5 @@
 frameStarter:
-    path: /extern
+    path: /extern/
     defaults:
         _controller: Chuckki\HvzIframeBundle\Controller\FrameController:loadFrameAction
         _scope: frontend
@@ -7,7 +7,7 @@ frameStarter:
     methods: [GET]
 
 formProceed:
-    path: /extern
+    path: /extern/
     defaults:
         _controller: Chuckki\HvzIframeBundle\Controller\FrameController:checkFormAction
         _scope: frontend
@@ -23,8 +23,16 @@ hvzPrice:
     methods: [POST]
 
 hvzContent:
-    path: /extern/hvb/{id}
+    path: /extern/hvb/{id}/
     defaults:
         _controller: Chuckki\HvzIframeBundle\Controller\FrameController:getHvbInfo
+        _scope: frontend
+        _token_check: false
+
+
+hvzFramePages:
+    path: /extern/page/{alias}/
+    defaults:
+        _controller: Chuckki\HvzIframeBundle\Controller\FramePages:showPageInFrameAction
         _scope: frontend
         _token_check: false

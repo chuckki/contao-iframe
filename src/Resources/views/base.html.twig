@@ -236,128 +236,15 @@
 
 
 {% block content %}
-    <form action="bestellen/?aff=isvz#top" method="get" class="form-inline">
-        <fieldset>
-            <input type="hidden" name="aff" value="isvz"/>
-            <legend>Preise für ein Halteverbot in Ihrer Stadt</legend>
-            <p>Hier können Sie eine Halteverbotszone für Ihren Umzugswagen bestellen. Das Halteverbot wird für Sie
-                fertig
-                eingerichtet, natürlich mit allen behördlichen Genehmigungen.
-                <br/>
-                Um zu erfahren, welche Kosten bei der Einrichtung einer Halteverbotszone für Sie entstehen, wählen Sie
-                bitte
-                in einem ersten Schritt Ihre Stadt aus. Anschließend können Sie mit der Bestellung beginnen.
-            </p>
 
-            <div class="form-group">
-                <label><strong>Stadt wählen:</strong></label>
-                <select name="city" id="town3" class="form-control">
-                    <option value="0">wählen...</option>
-                    <option value="Aachen" class=" hinweis">Aachen</option>
-                    <option value="Ahrensburg" class=" verwendung extrabreit">Ahrensburg</option>
-                    <option value="Ammersbek" class=" verwendung extrabreit">Ammersbek</option>
-                    <option value="Bad-Oldesloe" class=" verwendung extrabreit">Bad Oldesloe</option>
-                    <option value="Bargteheide" class=" extrabreit">Bargteheide</option>
-                    <option value="Barmstedt" class=" extrabreit">Barmstedt</option>
-                    <option value="Barsbuettel" class=" verwendung extrabreit">Barsbüttel</option>
-                    <option value="Berlin" class=" hinweis verwendung extrabreit">Berlin</option>
-                    <option value="Bielefeld" class=" verwendung extrabreit">Bielefeld</option>
-                    <option value="Bochum" class=" hinweis extrabreit">Bochum</option>
-                    <option value="Bonn" class=" hinweis verwendung extrabreit">Bonn</option>
-                    <option value="Boenningstedt" class=" verwendung extrabreit">Bönningstedt</option>
-                    <option value="Braunschweig" class=" extrabreit">Braunschweig</option>
-                    <option value="Bremen" rel="kunde" class=" verwendung extrabreit">Bremen</option>
-                    <option value="Chemnitz" class=" extrabreit">Chemnitz</option>
-                    <option value="Cottbus" rel="kunde" class=" hinweis verwendung extrabreit">Cottbus</option>
-                    <option value="Darmstadt" class="">Darmstadt</option>
-                    <option value="Dortmund" class=" hinweis">Dortmund</option>
-                    <option value="Dresden" class=" hinweis verwendung extrabreit">Dresden</option>
-                    <option value="Duisburg" class=" hinweis extrabreit">Duisburg</option>
-                    <option value="Duesseldorf" class=" hinweis extrabreit">Düsseldorf</option>
-                    <option value="Ellerbek" class=" verwendung extrabreit">Ellerbek</option>
-                    <option value="Elmshorn" class=" verwendung extrabreit">Elmshorn</option>
-                    <option value="Erfurt" class=" hinweis extrabreit">Erfurt</option>
-                    <option value="Erlangen" class=" extrabreit">Erlangen</option>
-                    <option value="Essen" class=" hinweis extrabreit">Essen</option>
-                    <option value="Frankfurt-Main" class=" hinweis zusatzfrage extrabreit">Frankfurt-Main</option>
-                    <option value="Freiburg" class="">Freiburg</option>
-                    <option value="Fuerth" class=" hinweis zusatzfrage">Fürth</option>
-                    <option value="Geesthacht" class=" hinweis extrabreit">Geesthacht</option>
-                    <option value="Glinde" class=" verwendung extrabreit">Glinde</option>
-                    <option value="Goettingen" class="">Göttingen</option>
-                    <option value="Grosshansdorf" class="">Großhansdorf</option>
-                    <option value="Hagen" class=" hinweis zusatzfrage extrabreit">Hagen</option>
-                    <option value="Halle-Saale" class=" hinweis extrabreit">Halle (Saale)</option>
-                    <option value="Halstenbek" class=" hinweis verwendung extrabreit">Halstenbek</option>
-                    <option value="Hamburg" class=" verwendung extrabreit">Hamburg</option>
-                    <option value="Hannover" class=" extrabreit">Hannover</option>
-                    <option value="Hasloh" class=" verwendung extrabreit">Hasloh</option>
-                    <option value="Heidelberg" class=" hinweis extrabreit">Heidelberg</option>
-                    <option value="Heilbronn" class=" extrabreit">Heilbronn</option>
-                    <option value="Henstedt-Ulzburg" class=" hinweis extrabreit">Henstedt-Ulzburg</option>
-                    <option value="Hildesheim" class="">Hildesheim</option>
-                    <option value="Hoisdorf" class="">Hoisdorf</option>
-                    <option value="Ingolstadt" class=" hinweis zusatzfrage">Ingolstadt</option>
-                    <option value="Kaltenkirchen" class=" extrabreit">Kaltenkirchen</option>
-                    <option value="Karlsruhe" class=" extrabreit">Karlsruhe</option>
-                    <option value="Kassel" class=" verwendung extrabreit">Kassel</option>
-                    <option value="Kiel" class=" extrabreit">Kiel</option>
-                    <option value="Koblenz" class="">Koblenz</option>
-                    <option value="Koeln" class=" hinweis extrabreit">Köln</option>
-                    <option value="Krefeld" class=" hinweis extrabreit">Krefeld</option>
-                    <option value="Leipzig" class=" hinweis extrabreit">Leipzig</option>
-                    <option value="Leverkusen" class=" extrabreit">Leverkusen</option>
-                    <option value="Luebeck" class=" hinweis extrabreit">Lübeck</option>
-                    <option value="Lueneburg" class=" extrabreit">Lüneburg</option>
-                    <option value="Mainz" class=" hinweis extrabreit">Mainz</option>
-                    <option value="Mannheim" class=" hinweis">Mannheim</option>
-                    <option value="Moenchengladbach" class=" hinweis verwendung extrabreit">Mönchengladbach</option>
-                    <option value="Muenchen" class=" hinweis extrabreit">München</option>
-                    <option value="Muenster" class=" hinweis zusatzfrage extrabreit">Münster</option>
-                    <option value="Neu-Wulmstorf" class=" verwendung extrabreit">Neu Wulmstorf</option>
-                    <option value="Neuss" class=" hinweis extrabreit">Neuss</option>
-                    <option value="Norderstedt" class=" hinweis zusatzfrage verwendung extrabreit">Norderstedt</option>
-                    <option value="Nuernberg" class=" hinweis zusatzfrage">Nürnberg</option>
-                    <option value="Oberhausen" class="">Oberhausen</option>
-                    <option value="Offenbach" class="">Offenbach</option>
-                    <option value="Osnabrueck" class=" hinweis">Osnabrück</option>
-                    <option value="Oststeinbek" class=" extrabreit">Oststeinbek</option>
-                    <option value="Pinneberg" class=" hinweis verwendung extrabreit">Pinneberg</option>
-                    <option value="Potsdam" class=" extrabreit">Potsdam</option>
-                    <option value="Quickborn" class=" hinweis extrabreit">Quickborn</option>
-                    <option value="Regensburg" rel="kunde" class=" hinweis">Regensburg</option>
-                    <option value="Reinbek" class=" extrabreit">Reinbek</option>
-                    <option value="Rellingen" class=" verwendung extrabreit">Rellingen</option>
-                    <option value="Rostock" class=" hinweis extrabreit">Rostock</option>
-                    <option value="Saarbruecken" class="">Saarbrücken</option>
-                    <option value="Schenefeld" class=" hinweis verwendung extrabreit">Schenefeld</option>
-                    <option value="Seevetal-Meckelfeld" class=" verwendung extrabreit">Seevetal-Meckelfeld</option>
-                    <option value="Stuttgart" class=" hinweis extrabreit">Stuttgart</option>
-                    <option value="Trittau" class=" extrabreit">Trittau</option>
-                    <option value="Ulm" class=" hinweis extrabreit">Ulm</option>
-                    <option value="Wedel" class=" extrabreit">Wedel</option>
-                    <option value="Wentorf" class=" verwendung extrabreit">Wentorf</option>
-                    <option value="Wiesbaden" class=" hinweis extrabreit">Wiesbaden</option>
-                    <option value="Winsen-Luhe" class=" verwendung extrabreit">Winsen/Luhe</option>
-                    <option value="Wohltorf" class=" verwendung extrabreit">Wohltorf</option>
-                    <option value="Wuppertal" class=" hinweis extrabreit">Wuppertal</option>
-                </select>
-                <button type="submit" class="btn btn-default" name="" id="show-prices" value="Preise anzeigen">Preise
-                    anzeigen
-                </button>
-            </div>
-
-        </fieldset>
-    </form>
 {% endblock %}
 
 {% block footer %}
     <div id="footer">
-        <a href="./agb/#top" class="agb-link">AGB</a> |
-        <a href="./datenschutzerklaerung/#top" class="agb-link">Datenschutz</a> |
-        <a href="./impressum/#top" class="imprint-link">Impressum</a> |
-        <a href="./faq/#top" class="faq-link">FAQ</a> |
-        <a href="./widerruf/#top" class="widerruf-link">Widerrufsrecht</a>
+        <a href="extern/page/agb/#top" class="agb-link">AGB</a> |
+        <a href="extern/page/widerruf/#top" class="agb-link">Widerruf</a> |
+        <a href="extern/page/datenschutzerklaerung" class="agb-link">Datenschutz</a> |
+        <a href="extern/page/impressum/#top" class="imprint-link">Impressum</a>
     </div>
 {% endblock %}
 

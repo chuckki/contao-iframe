@@ -83,6 +83,7 @@
                     }).on("change", function () {
                         $("#startDateForHvz").datepicker("option", "altField", "#startDateInput");
                         cancelSelection();
+                        updatePrice();
                     });
                 });
             }

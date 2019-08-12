@@ -14,3 +14,11 @@ services:
             - "@session"
             - "@contao.framework"
         tags: ['controller.service_arguments']
+
+
+    Chuckki\HvzIframeBundle\Controller\FramePages:
+        arguments:
+            - '%kernel.project_dir%'
+            - "@session"
+            - "@contao.framework"
+        tags: ['controller.service_arguments']

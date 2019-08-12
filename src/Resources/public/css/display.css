@@ -284,7 +284,9 @@ legend {
     left: 13px;
 }
 
-span.placeholder {
+
+
+.placeholder {
     white-space: nowrap;
     position: absolute;
     top: 8px;
@@ -305,7 +307,7 @@ span.placeholder {
     overflow: hidden;
 }
 
-.empty span {
+.empty .placeholder {
     top: 18px;
     left: 33px;
     font-size: 14px;

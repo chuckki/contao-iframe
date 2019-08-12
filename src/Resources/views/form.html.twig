@@ -1,44 +1,81 @@
 <script src="{{ asset('bundles/chuckkihvziframe/js/datepicker-de.js') }}"></script>
 
+
+<script>
+
+    let inputEl = $(".formbody input");
+    let dateInputEl = $("#startDateInput");
+    let picker = $(".datepicker__modal");
+
+    inputEl.focus(function () {
+        $(this).parent().removeClass('empty');
+    });
+    inputEl.focusout(function () {
+        if (!$(this).val()) {
+            $(this).parent().addClass('empty');
+        }
+    });
+
+    dateInputEl.focus(function () {
+        $(this).parent().addClass('notempty');
+    });
+
+    inputEl.on("change, focusout, blur", function () {
+        if ($(this).val() === "") {
+            $(this).parent().addClass('empty');
+        }
+    });
+
+    function cancelSelection() {
+        picker.hide();
+    }
+
+    dateInputEl.click(function () {
+        picker.show();
+        picker.focus();
+    });
+
+
+    $("#gender").on("change", function () {
+        let el = $("#genderIcon");
+        el.removeClass('fa-genderless');
+        if ($(this).val() === 'Herr') {
+            el.addClass('fa-male');
+            el.removeClass('fa-female');
+        } else {
+            el.addClass('fa-female');
+            el.removeClass('fa-male');
+        }
+    });
+
+    //Preis berechnen
+
+    $('#extraTag, #hvzType').on('change',function () {
+        updatePrice()
+    });
+
+    function updatePrice(){
+        let startDate = $("#startDateInput");
+        let priceData = {
+            'hvzId': '{{ hvz.id }}',
+            'extraTag': $( "#extraTag option:selected" ).val(),
+            'hvzType': $( "#hvzType option:selected" ).val(),
+            'startDate': startDate.val()
+        };
+
+        if(startDate.val() !== ''){
+            $( "#orderOverview" ).load( "/extern/getprice/{{ hvz.id }}", priceData, function(data) {
+                //console.log(data);
+            });
+        }
+    }
+
+</script>
+
 <form action="" method="POST" enctype="application/x-www-form-urlencoded">
     <div class="formbody">
         <input type="hidden" name="FORM_SUBMIT" value="hvzOrderform">
         <input type="hidden" name="REQUEST_TOKEN" value="{{ request_token }}">
-
-        <script>
-            let inputEl = $(".formbody input");
-            inputEl.focus(function () {
-                $(this).parent().removeClass('empty');
-            });
-            inputEl.focusout(function () {
-                if (!$(this).val()) {
-                    $(this).parent().addClass('empty');
-                }
-            })
-
-            $("#startDateInput").focus(function () {
-                $(this).parent().addClass('notempty');
-            });
-
-            inputEl.on("change, focusout, blur", function () {
-                if ($(this).val() == "") {
-                    $(this).parent().addClass('empty');
-                }
-            });
-
-            function cancelSelection() {
-                $(".datepicker__modal").hide();
-            }
-
-            $("#startDateInput").click(function () {
-                let picker = $(".datepicker__modal");
-                picker.show();
-                picker.focus();
-            })
-
-
-        </script>
-
 
         <fieldset id="hvzAdresse">
             <legend>Adresse für das Halteverbot in {{ ort|raw }}</legend>
@@ -48,17 +85,17 @@
                 <input type="tel" class="text mandatory" id="hvzPlz" name="PLF" required autocomplete="postal-code">
             </div>
             <div class="formRow empty">
-                <span class="placeholder">Straße und Hausnummer</span>
+                <label for="hzvAdress" class="placeholder">Straße und Hausnummer</label>
                 <!--<i class="fas fa-road input-unity"></i>-->
                 <i class="fas fa-map-marked-alt input-unity"></i>
-                <input type="text" class="text mandatory" id="ctrl_51" required name="address-line1"
+                <input type="text" class="text mandatory" id="hzvAdress" required name="address-line1"
                        autocomplete="address-line1">
             </div>
         </fieldset>
         <fieldset id="hvzDatum">
             <legend>Wann soll die Halteverbotszone gestellt werden</legend>
             <div class="formRow empty">
-                <span class="placeholder">Datum</span>
+                <label for="startDateInput" class="placeholder">Datum</label>
                 <i class="far fa-calendar input-unity"></i>
                 <input type="text" class="text mandatory" id="startDateInput" value="" required readonly name="vom">
             </div>
@@ -86,7 +123,7 @@
                             data-original-title="Zeitraum"
                             data-content="Der oben angegebene Preis bezieht sich auf die Gültigkeit eines Tages. Ab dem zweiten Tag werden pro Tag Zusatzkosten in Höhe von <strong>{{ extraTag|number_format(2, ',') }} €</strong> erhoben."
                     ></button>
-                    <span class="placeholder">Zeitraum</span>
+                    <label for="extraTag" class="placeholder">Zeitraum</label>
                     <select id="extraTag" class="select">
                         <option value="" disabled>Anzahl der Tage</option>
                         <option value="1" selected="">1 Tag</option>
@@ -103,15 +140,14 @@
                         <option value="12">12 Tage (+ {{ (11 * extraTag)|number_format(2, ',') }}€)</option>
                         <option value="13">13 Tage (+ {{ (12 * extraTag)|number_format(2, ',') }}€)</option>
                         <option value="14">14 Tage (+ {{ (13 * extraTag)|number_format(2, ',') }}€)</option>
-                        </optgroup>
                     </select>
                 </div>
             </div>
             <div class="formRow">
 
                 <div class="select-container">
-                    <span class="placeholder">täglich von</span>
-                    <select id="main-ingredient" class="select">
+                    <label for="startTime" class="placeholder">täglich von</label>
+                    <select id="startTime" class="select">
                         <option value="7" selected=""> 7 Uhr</option>
                         <option value="8"> 8 Uhr</option>
                         <option value="9"> 9 Uhr</option>
@@ -132,8 +168,8 @@
             </div>
             <div class="formRow">
                 <div class="select-container">
-                    <span class="placeholder">täglich bis</span>
-                    <select id="main-ingredient" class="select">
+                    <label for="endTime" class="placeholder">täglich bis</label>
+                    <select id="endTime" class="select">
                         <option value="7"> 7 Uhr</option>
                         <option value="8"> 8 Uhr</option>
                         <option value="9"> 9 Uhr</option>
@@ -165,8 +201,8 @@
                        data-original-title="Grund für die Stellung"
                        data-content="Grund"
                     ></i>
-                    <span class="placeholder">Grund für die Stellung</span>
-                    <select id="main-ingredient" class="select">
+                    <label for="hvzReason" class="placeholder">Grund für die Stellung</label>
+                    <select id="hvzReason" class="select">
                         <option value="umzug" selected="">Umzug</option>
                         <option value="containergestellung">Containergestellung</option>
                         <option value="baustelle">Baustelle</option>
@@ -193,8 +229,8 @@
 
             <div class="formRow">
                 <div class="select-container">
-                    <span class="placeholder">Länge</span>
-                    <select id="main-ingredient" class="select">
+                    <label for="hvzLength" class="placeholder">Länge</label>
+                    <select id="hvzLength" class="select">
                         <option value="5">5m</option>
                         <option value="10">10m</option>
                         <option selected="" value="15">15m</option>
@@ -206,10 +242,10 @@
 
             <div class="formRow">
                 <div class="select-container">
-                    <span class="placeholder">Fahrzeugtyp</span>
-                    <select id="main-ingredient" class="select">
-                        <option value="5" selected><span> Fahrzeug bis 3,5t <i class="fas fa-car-side"></i></span></option>
-                        <option value="10">Fahrzeug größer 3,5t <i class="fas fa-truck-moving"></i></option>
+                    <label for="hvzCatType" class="placeholder">Fahrzeugtyp</label>
+                    <select id="hvzCatType" class="select">
+                        <option value="5" selected>Fahrzeug bis 3,5t </option>
+                        <option value="10">Fahrzeug größer 3,5t</option>
                     </select>
                 </div>
             </div>
@@ -222,7 +258,7 @@
                        data-original-title="Grund für die Stellung"
                        data-content="Extrakosten <strong>+{{ extraKostenDoppelseitig }} €</strong>"
                     ></i>
-                    <span class="placeholder">Beschilderung</span>
+                    <label for="hvzType" class="placeholder">Beschilderung</label>
                     <select id="hvzType" class="select">
                         <option value="einseitig" selected>einseitig</option>
                         <option value="beidseitig">beidseitig</option>
@@ -234,81 +270,65 @@
 
 
         <fieldset id="hvzAdditionalInfos">
-            <legend>Zusatzinformationen</legend>
-            <textarea cols="40" rows="6" class="textarea" id="ctrl_66"
+            <legend><label for="hvzAdditionalText">Zusatzinformationen</label></legend>
+            <textarea cols="40" rows="6" class="textarea" id="hvzAdditionalText"
                       placeholder="evtl. weitere Informationen zur Aufstellung" name="Zusatzinformationen"></textarea>
         </fieldset>
 
         <fieldset id="rechnungsadresse">
             <legend>Rechnungsadresse</legend>
+
             <div class="formRow">
                 <div class="select-container">
-                    <span class="placeholder gender">Anrede</span>
+                    <label for="gender" class="placeholder gender">Anrede</label>
                     <i id="genderIcon" class="fas fa-genderless input-unity"></i>
-
-                    <script>
-                        $("#gender").on("change", function () {
-                            let el = $("#genderIcon")
-                            el.removeClass('fa-genderless');
-                            if ($(this).val() == 'Herr') {
-                                el.addClass('fa-male');
-                                el.removeClass('fa-female');
-                            } else {
-                                el.addClass('fa-female');
-                                el.removeClass('fa-male');
-                            }
-                        })
-
-
-                    </script>
-
                     <select id="gender" class="select">
                         <option value="" selected disabled>Bitte wählen:</option>
-                        <option value="Herr"><i class="fa fa-male" aria-hidden="true"></i>Herr</option>
-                        <option value="Frau"><i class="fa fa-female" aria-hidden="true"></i>Frau</option>
+                        <option value="Herr">Herr</option>
+                        <option value="Frau">Frau</option>
                     </select>
                 </div>
             </div>
             <div class="formRow empty">
-                <span class="placeholder">Name</span>
-                <input type="text" class="text mandatory" required id="ctrl_50" name="name" autocomplete="family-name">
+                <label for="familyName" class="placeholder">Name</label>
+                <input type="text" id="familyName" class="text mandatory" required name="name" autocomplete="family-name">
             </div>
             <div class="formRow empty">
-                <span class="placeholder">Vorname</span>
-                <input type="text" class="text mandatory" required name="given-name" autocomplete="given-name">
+                <label for="givenName" class="placeholder">Vorname</label>
+                <input type="text" id="givenName" class="text mandatory" required name="given-name" autocomplete="given-name">
             </div>
 
             <div class="formRow empty">
-                <span class="placeholder">Strasse/Hausnummer</span>
-                <input type="text" class="text mandatory" required id="ctrl_50" name="address-line1"
+                <label for="billingStreet" class="placeholder">Strasse/Hausnummer</label>
+                <input type="text" class="text mandatory" required id="billingStreet" name="address-line1"
                        autocomplete="address-line1">
             </div>
 
             <div class="formRow empty">
-                <span class="placeholder">Ort / PLZ</span>
-                <input type="text" class="text mandatory" required id="ctrl_50" name="PLZ" autocomplete="postal-code city">
+                <label for="billingCity" class="placeholder">Ort / PLZ</label>
+                <input type="text" class="text mandatory" required id="billingCity" name="PLZ" autocomplete="postal-code city">
             </div>
 
 
             <div class="formRow empty">
-                <span class="placeholder">E-Mail-Adresse</span>
-                <input type="email" class="text mandatory" required id="ctrl_50" name="PLZ">
+                <label for="eMail" class="placeholder">E-Mail-Adresse</label>
+                <input type="email" class="text mandatory" required id="eMail" name="PLZ">
             </div>
 
 
             <div class="formRow empty">
-                <span class="placeholder">Telefon</span>
-                <input type="tel" class="text mandatory" required id="ctrl_50" name="PLZ" autocomplete="home tel">
+                <label for="billingPlz" class="placeholder">Telefon</label>
+                <input type="tel" class="text mandatory" required id="billingPlz" name="PLZ" autocomplete="home tel">
             </div>
 
             <div class="formRow empty">
-                <span class="placeholder">Firma</span>
-                <input type="text" value="" class="text" id="ctrl_72" name="firma" autocomplete="city">
+                <label for="billingCompany" class="placeholder">Firma</label>
+                <input type="text" value="" class="text" id="billingCompany" name="firma" autocomplete="city">
             </div>
 
             <div class="formRow empty" id="umstElement" style="display: none;">
-                <span class="placeholder">USt-IdNr.</span>
-                <input type="text" value="" placeholder="USt-IdNr. (optional)" class="text" id="ctrl_248" name="umstid">
+                <label for="umstid" class="placeholder">USt-IdNr.</label>
+                <input type="text" value="" placeholder="USt-IdNr. (optional)" class="text" id="umstid" name="umstid">
             </div>
 
         </fieldset>
@@ -318,8 +338,8 @@
             <div class="checkbox-container">
                 <input type="checkbox" required id="example-form_input12" class="input-checkbox">
                 <label for="example-form_input12" class="label-checkbox">Ich erkläre mich mit den <a target="_blank"
-                                                                                                     href="/agb.html">AGB</a>
-                    und den <a target="_blank" href="/datenschutzerklaerung.html">Datenschutzrichtlinien</a>
+                                                                                                     href="/extern/page/agb/#top">AGB</a>
+                    und den <a target="_blank" href="/extern/page/datenschutzerklaerung/#top">Datenschutzrichtlinien</a>
                     einverstanden</label>
             </div>
 
@@ -327,52 +347,8 @@
             </div>
 
             <div class=""  style="width: 100%;">
-                <input id="orderBtn" type="submit" class="button-primary font-bold float-right" value="Submit">
+                <input id="orderBtn" type="submit" class="button-primary font-bold float-right" value="Halteverbot bestellen">
             </div>
-
-            <script>
-
-                //Preis berechnen
-
-
-                $("#extraTag").on('change', function (e) {
-                    updatePrice();
-                });
-
-                $("#hvzType").on('change', function (e) {
-                    updatePrice();
-                });
-
-
-
-
-                function updatePrice(){
-                    let priceData = {
-                        'hvzId': '{{ hvz.id }}',
-                        'extraTag': $( "#extraTag option:selected" ).val(),
-                        'hvzType': $( "#hvzType option:selected" ).val(),
-                        'startDate': $('#startDateInput').val()
-                    };
-
-                    if($('#startDateInput').val() !== ''){
-                        $( "#orderOverview" ).load( "/extern/getprice/{{ hvz.id }}", priceData, function(data) {
-                            console.log(data);
-                        });
-                    }
-                };
-
-
-
-                function computeDate(start, n) {
-                    var targetDate = start.getDate();
-                    targetDate.setDate(targetDate.getDate() + (parseInt(n) - 1));
-                    var res = new Array(2);
-                    res[0] = ('0' + targetDate.getDate()).slice(-2) + '.' + ('0' + (targetDate.getMonth() + 1)).slice(-2) + '.' + targetDate.getFullYear();
-                    res[1] = getNameOfDay(targetDate);
-                    return res;
-                }
-
-            </script>
 
         </fieldset>
     </div>
