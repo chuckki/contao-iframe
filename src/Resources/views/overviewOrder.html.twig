@@ -3,7 +3,7 @@
         <h4>Bestellübersicht</h4>
         <div id="orderList">
             <div id="orderDetails">
-                Halteverbotszone in {{ order.ort|raw }}<br>
+                {{ order.hvzTitel }}e in {{ order.ort|raw }}<br>
                 von {{ order.startDateName }} den {{ order.startDateValue }} bis einschließlich {{ order.endDateName }}
                 den {{ order.endDateValue }} ({{ order.durationDay }} {{ order.day }})
             </div>
@@ -12,7 +12,7 @@
                 <table>
                     <tbody>
                     <tr>
-                        <td class="hvzName">Einfache HVZ mit Genehmigung</td>
+                        <td class="hvzName">{{ order.hvzTitel }}es Halteverbot inkl. Genehmigung und Beschilderung</td>
                         <td class="hvzPreis">{{ order.priceHvz|number_format(2, ',') }} €</td>
                     </tr>
                     <tr class="tagPreis">

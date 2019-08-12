@@ -8,23 +8,17 @@
 
     <base href="{{ app.request.getSchemeAndHttpHost() }}"/>
 
-    <link rel="stylesheet" href="{{ asset('bundles/chuckkihvziframe/css/normalize.css') }}" type="text/css"/>
-    <link rel="stylesheet" type="text/css" href="https://www.static-immobilienscout24.de/fro/core/3.0.1-0/css/core.min.css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/chuckkihvziframe/css/normalize.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="https://www.static-immobilienscout24.de/fro/core/3.0.1-0/css/core.min.css"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/chuckkihvziframe/css/display.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/chuckkihvziframe/css/datepicker.css') }}"/>
 
-<!--    <link rel="stylesheet" href="{{ asset('bundles/chuckkihvziframe/css/jquery-ui.min.css') }}" type="text/css"/>-->
-    <link rel="stylesheet" href="{{ asset('bundles/chuckkihvziframe/css/display.css') }}" type="text/css"/>
-    <link rel="stylesheet" href="{{ asset('bundles/chuckkihvziframe/css/datepicker.css') }}" type="text/css"/>
+    <script type="text/javascript" src="https://kit.fontawesome.com/92df57eace.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.2.1/typeahead.bundle.min.js" integrity="sha256-VCsWOz+0GuHdS/sIICtQNTFJdbaDI80rxvoB7BXabrU=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://www.static-immobilienscout24.de/fro/core/3.0.1-0/js/core.min.js"></script>
 
-    <script src="https://kit.fontawesome.com/92df57eace.js"></script>
-
-
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.2.1/typeahead.bundle.min.js" integrity="sha256-VCsWOz+0GuHdS/sIICtQNTFJdbaDI80rxvoB7BXabrU=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="//www.static-immobilienscout24.de/fro/core/3.0.1-0/js/core.min.js"></script>
-<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
--->
     <script type="text/javascript">
 
         function checkForm() {
@@ -249,220 +243,8 @@
 {% endblock %}
 
 {% block jsbottom %}
-<script type="text/javascript">
 
-    $('#town').live('change', function () {
-
-        var town = $(this).val();
-
-        /* neu genehmigungsfeld */
-        if ($("option:selected", this).attr("rel") == "kunde") {
-
-            $('#police-nope').click();
-            $('#gen_alle').hide();
-            $('#gen_kunde').show();
-            $('#genehmigungsinfo').hide();
-            $('#kunde_upload').show();
-
-        } else {
-            $('#police-yes').click();
-            $('#gen_alle').show();
-            $('#gen_kunde').hide();
-            $('#genehmigungsinfo').show();
-            $('#kunde_upload').hide();
-
-        }
-
-        /* neu hinweisfeld */
-        if ($("option:selected", this).hasClass("hinweis")) {
-            $.post('/ajax/getHinweis.php', {town: town}, function (res) {
-                $('.stadthinweis').html(res);
-                $('.stadthinweis').show();
-            });
-        } else {
-            $('.stadthinweis').hide();
-        }
-
-        /* neu zusatzfrage */
-        if ($("option:selected", this).hasClass("zusatzfrage")) {
-            $.post('/ajax/getZusatz.php', {town: town}, function (res) {
-                var ar = res.split('::::');
-                var name = ar[0];
-                var frage = ar[1];
-                var err = ar[2];
-                $('#zusatzheadline').html(name);
-                $('#zusatz_rechts').html(frage);
-                $('#zusatzfrage_fehler').html(err);
-                $('#zusatzfrage_fehler').hide();
-
-                $('#zusatzfrage').show();
-            });
-        } else {
-            $('#zusatzfrage_antwort').html('');
-            $('#zusatz_links').html();
-            $('#zusatzfrage').hide();
-            $('#zusatzheadline').html('');
-        }
-
-        /* neu verwendung */
-        if ($("option:selected", this).hasClass("verwendung")) {
-            $('.vumzug').attr("checked", "checked");
-            $('#verwendung_online').show();
-        } else {
-            $('.vumzug').attr("checked", "checked");
-            $('#verwendung_online').hide();
-        }
-
-        /* neu car_type */
-        if ($("option:selected", this).hasClass("extrabreit")) {
-            $('#car_choose').show();
-            $('.transporter').attr("checked", "checked");
-            $('#extrabreit option:first').attr("selected", "selected");
-            $('#extrabreit').hide();
-            $('#extratext').hide();
-        } else {
-            $('#car_choose').hide();
-            $('.transporter').attr("checked", "checked");
-            $('#extrabreit option:first').attr("selected", "selected");
-            $('#extratext').hide();
-        }
-
-        /* neu preislink */
-        if ($("option:selected", this).val() == "notown") {
-            $('#preisliste').html('Zur <a href="/Halteverbot/">Preisliste</a>.');
-        } else {
-            $('#preisliste').html('Zur Preisliste für <a href="/Halteverbot/' + $("option:selected", this).val() + '/">' + $("option:selected", this).val() + '</a>.');
-        }
-
-
-        var town = $("option:selected", this).val();
-
-        /* neu preis plus */
-        if ($("option:selected", this).val() == "notown") {
-            $('.pallgemein').show();
-            $('.pstadt').hide();
-        } else {
-            $('.pallgemein').hide();
-            $.post('/ajax/getPlus.php', {town: town}, function (res) {
-
-                if (res != '-')
-                    $('.pstadt').html("<strong>kostenpflichtig; " + res + " EUR</strong>");
-                else
-                    $('.pstadt').html("<strong>im Preis des Halteverbots enthalten</strong>");
-
-                $('.pstadt').show();
-                // -- Stadt in Select oben setzen
-                $("select#town3 option").filter(function () {
-                    return $(this).val() == town;
-                }).attr('selected', true);
-                $('#town4').html($("option:selected", 'select#town3').text());
-            });
-
-        }
-
-
-        /* neu iFrame price table */
-        var town = $(this).val();
-        $.post('/iframes/getPriceTable.inc.php', {city: town, ajax: true}, function (res) {
-            $('#prices').replaceWith(res);
-        });
-
-
-    });
-
-    $(document).on('change', '#police-yes', function () {
-
-        $('#ajaxprice').html('<img src="/img/ajax-loader-ball.gif" />');
-
-        var town = $('#town').val();
-        var police = $(this).val();
-
-        $.post('/ajax/calcPrice.php', {town: town, police: police}, function (res) {
-            $('#ajaxprice').html('&euro; ' + res + ',-');
-        });
-
-        $('#hinweisgenehmigung').hide();
-        $('#kunde_upload').hide();
-        $('#genehmigungsinfo').show();
-    });
-
-    $(document).on('change', '#police-nope', function () {
-
-        $('#ajaxprice').html('<img src="/img/ajax-loader-ball.gif" />');
-
-        var town = $('#town').val();
-        var police = $(this).val();
-
-        $.post('/ajax/calcPrice.php', {town: town, police: police}, function (res) {
-            $('#ajaxprice').html('&euro; ' + res + ',-');
-        });
-
-        $('#hinweisgenehmigung').show();
-        $('#kunde_upload').show();
-        $('#genehmigungsinfo').hide();
-    });
-
-
-    $('.verwendung').live('change', function () {
-
-        if ($(this).val() == "umzug") {
-            $('#detailtext').removeClass('required_for_submit');
-        } else if ($(this).val() == "baustelle") {
-            $('#detailtext').removeClass('required_for_submit');
-            $('#detailtext').addClass('required_for_submit');
-        } else if ($(this).val() == "sonstiges") {
-            $('#detailtext').removeClass('required_for_submit');
-            $('#detailtext').addClass('required_for_submit');
-        }
-    });
-
-
-    $('.car_type').live('click', function () {
-
-        if ($(this).val() == "transporter") {
-            $('#extrabreit option:first').attr("selected", "selected");
-            $('#extrabreit').hide();
-            $('#extratext').hide();
-        } else {
-            $('#extrabreit').show();
-            $('#extratext').show();
-        }
-    });
-
-
-    // checkbox sammelrechnung
-    var sizecart = 1;
-    if ($('#firma_address').val() == "" || sizecart < 2) {
-
-        $('.sammel').hide();
-    }
-
-    $('#firma_address').live('keyup', function () {
-
-        if ($('#firma_address').val() != "") {
-
-            if (sizecart > 1) {
-
-                $('.sammel').fadeIn();
-            }
-        } else {
-            $('.sammel').fadeOut();
-        }
-    });
-
-
-    function ScrollTop() {
-        if (document.all) {
-            document.body.scrollLeft = 0;
-            document.body.scrollTop = 0;
-        } else {
-            //window.scrollTo(0,top);
-        }
-    }
-
-</script>
 {% endblock %}
-
 
 </body>
 </html>

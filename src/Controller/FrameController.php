@@ -47,10 +47,15 @@ class FrameController extends Controller
 
     public function getHvbPrice($id): Response
     {
-        $startDateString = Input::post('startDate');
+        $hvzObj = HvzModel::findById($id);
 
-        $extraTag  = (int)Input::post('extraTag') - 1;
-        $hvzType   = Input::post('hvzType');
+        if (!$hvzObj) {
+            throw new NotFoundException('Hvz not found');
+        }
+
+        $startDateString = Input::post('startDate');
+        $extraTag        = (int)Input::post('extraTag') - 1;
+        $hvzType         = Input::post('hvzType');
 
         setlocale(LC_ALL, 'de_DE');
         $startDate = \DateTime::createFromFormat('d.m.Y', $startDateString);
@@ -58,29 +63,19 @@ class FrameController extends Controller
         $endDate   = $endDate->modify('+' . $extraTag . ' days');
         $startTag  = strftime('%A', $startDate->getTimestamp());
         $endTag    = strftime('%A', $endDate->getTimestamp());
-        $hvzObj    = HvzModel::findById($id);
-
-        if (!$hvzObj) {
-            throw new NotFoundException('Hvz not found');
-        }
-
-        $price = $hvzObj->hvz_single;
-
-        if ($hvzType === 'beidseitig') {
-            $price = $hvzObj->hvz_double;
-        }
-
+        $price     = ($hvzType === 'beidseitig') ? $hvzObj->hvz_double : $hvzObj->hvz_single;
 
         $order = [
             'ort'            => $hvzObj->question,
+            'hvzTitel'       => ucfirst($hvzType),
             'startDateName'  => $startTag,
             'startDateValue' => $startDate->format('d.m.Y'),
             'endDateName'    => $endTag,
             'endDateValue'   => $endDate->format('d.m.Y'),
             'durationDay'    => $extraTag + 1,
-            'priceHvz' =>$price,
-            'priceFull' => $price + ($hvzObj->hvz_extra_tag * $extraTag),
-            'hvz'   => $hvzObj,
+            'priceHvz'       => $price,
+            'priceFull'      => $price + ($hvzObj->hvz_extra_tag * $extraTag),
+            'hvz'            => $hvzObj,
             'day'            => (($extraTag + 1) === 1) ? 'Tag' : 'Tage'
         ];
 
