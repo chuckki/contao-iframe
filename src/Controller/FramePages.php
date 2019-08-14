@@ -6,15 +6,12 @@ namespace Chuckki\HvzIframeBundle\Controller;
 
 use Contao\ArticleModel;
 use Contao\ContentModel;
-use Contao\CoreBundle\Controller\FrontendController;
 use Contao\CoreBundle\Exception\PageNotFoundException;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\PageModel;
 use Contao\StringUtil;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class FramePages extends Controller
 {

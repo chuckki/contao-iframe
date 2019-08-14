@@ -450,3 +450,25 @@ tr.sumPreis{
     border-top: 1px solid;
 }
 
+input:required:valid {
+    border: 1px solid forestgreen;
+}
+
+.formRow input.hasValue:required:invalid{
+    background-color: #fae6e6;
+    border-color: #d60e0e;
+}
+
+@media (min-width:669px) {
+
+    body{
+        background-color: #0eb255;
+    }
+}
+
+@media (min-width:1014px) {
+
+    body{
+        background-color: sienna;
+    }
+}

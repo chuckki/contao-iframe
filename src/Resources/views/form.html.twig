@@ -1,5 +1,7 @@
 <script src="{{ asset('bundles/chuckkihvziframe/js/datepicker-de.js') }}"></script>
 
+<script type="text/javascript" src="{{ asset('bundles/chuckkihvziframe/js/form-prefiller.js') }}"></script>
+
 
 <script>
 
@@ -10,23 +12,31 @@
     inputEl.focus(function () {
         $(this).parent().removeClass('empty');
     });
+
     inputEl.focusout(function () {
-        if (!$(this).val()) {
+        if (!$(this).val() ||  $(this).val() ==='') {
             $(this).parent().addClass('empty');
+            $(this).removeClass('hasValue');
+        }else{
+            $(this).parent().removeClass('empty');
+            $(this).addClass('hasValue');
         }
     });
 
-    dateInputEl.focus(function () {
-        $(this).parent().addClass('notempty');
-    });
-
-    inputEl.on("change, focusout, blur", function () {
+    inputEl.on("change, focusout, blur, input", function () {
         if ($(this).val() === "") {
             $(this).parent().addClass('empty');
+        }else {
+            $(this).parent().removeClass('empty');
         }
     });
 
+
+
     function cancelSelection() {
+        if(dateInputEl.val() !== ''){
+            dateInputEl.parent().removeClass('empty');
+        }
         picker.hide();
     }
 
@@ -36,7 +46,7 @@
     });
 
 
-    $("#gender").on("change", function () {
+    $("#gender").on("input", function () {
         let el = $("#genderIcon");
         el.removeClass('fa-genderless');
         if ($(this).val() === 'Herr') {
@@ -64,9 +74,7 @@
         };
 
         if(startDate.val() !== ''){
-            $( "#orderOverview" ).load( "/extern/getprice/{{ hvz.id }}", priceData, function(data) {
-                //console.log(data);
-            });
+            $( "#orderOverview" ).load( "/extern/getprice/{{ hvz.id }}", priceData);
         }
     }
 
@@ -82,13 +90,13 @@
             <div class="formRow empty">
                 <label for="hvzPlz" class="placeholder">PLZ von {{ ort|raw }}</label>
                 <i class="fas fa-map-marker-alt input-unity"></i>
-                <input type="tel" class="text mandatory" id="hvzPlz" name="PLF" required autocomplete="postal-code">
+                <input type="tel" class="text mandatory" id="hvzPlz" pattern="[0-9]{4,5}" name="PLF" title="Tragen Sie hier die für das Halteverbot geltende Postleitzahl ein." required autocomplete="postal-code">
             </div>
             <div class="formRow empty">
                 <label for="hzvAdress" class="placeholder">Straße und Hausnummer</label>
                 <!--<i class="fas fa-road input-unity"></i>-->
                 <i class="fas fa-map-marked-alt input-unity"></i>
-                <input type="text" class="text mandatory" id="hzvAdress" required name="address-line1"
+                <input type="text" class="text mandatory" id="hvzAdress" pattern="[0-9A-Za-z '#\.-]{3,}" title="Tragen Sie hier die für das Halteverbot relevante Strasse und Hausnummer ein." required name="address-line1"
                        autocomplete="address-line1">
             </div>
         </fieldset>
@@ -97,7 +105,7 @@
             <div class="formRow empty">
                 <label for="startDateInput" class="placeholder">Datum</label>
                 <i class="far fa-calendar input-unity"></i>
-                <input type="text" class="text mandatory" id="startDateInput" value="" required readonly name="vom">
+                <input type="text" class="text mandatory" id="startDateInput" value="" title="Ab wann soll die Halteverbotszone gültig sein:" required name="vom">
             </div>
             <div class="datepicker__modal" id="vondatum_datepicker">
                 <div id="datepicker__centered-container">
