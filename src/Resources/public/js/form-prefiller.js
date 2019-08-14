@@ -1,9 +1,9 @@
 var PrefillMachine = {
 
     prefillCorrectly: function() {
-        $("#hvzPlz").val("34554");
-        $("#hvzAdress").val("Mehrweg 34");
-        $("#startDateInput").val("23.10.2019");
+        $("#ctrl_hvzPlz").val("34554");
+        $("#ctrl_hvzAdress").val("Mehrweg 34");
+        $("#ctrl_startDateInput").val("23.10.2019");
 
         $("#gender option[value='Herr']").attr('selected',true);
 

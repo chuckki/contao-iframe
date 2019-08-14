@@ -36,10 +36,9 @@ class FrameController extends Controller
     {
         $orderObj   = HvzModel::findById($id);
         $formString = $this->buildForm($orderObj);
-
         return $this->render('@ChuckkiHvzIframe/frame.details.html.twig', [
             'hvz'          => $orderObj,
-            'hvzForm'      => $formString->generate(),
+            'hvzForm'      => $formString,
             'requestToken' => \RequestToken::get(),
             'formId'       => 'hvzOrderform'
         ]);
@@ -136,6 +135,8 @@ class FrameController extends Controller
 
     public function checkFormAction(): Response
     {
+        dump($_POST);
+        die;
         $hvzId   = \Input::post('hvzId');
         $objHvz  = HvzModel::findById($hvzId);
         $objForm = $this->buildForm($objHvz);

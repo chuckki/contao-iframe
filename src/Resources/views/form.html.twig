@@ -6,7 +6,7 @@
 <script>
 
     let inputEl = $(".formbody input");
-    let dateInputEl = $("#startDateInput");
+    let dateInputEl = $("#ctrl_startDateInput");
     let picker = $(".datepicker__modal");
 
     inputEl.focus(function () {
@@ -14,10 +14,10 @@
     });
 
     inputEl.focusout(function () {
-        if (!$(this).val() ||  $(this).val() ==='') {
+        if (!$(this).val() || $(this).val() === '') {
             $(this).parent().addClass('empty');
             $(this).removeClass('hasValue');
-        }else{
+        } else {
             $(this).parent().removeClass('empty');
             $(this).addClass('hasValue');
         }
@@ -26,15 +26,14 @@
     inputEl.on("change, focusout, blur, input", function () {
         if ($(this).val() === "") {
             $(this).parent().addClass('empty');
-        }else {
+        } else {
             $(this).parent().removeClass('empty');
         }
     });
 
 
-
     function cancelSelection() {
-        if(dateInputEl.val() !== ''){
+        if (dateInputEl.val() !== '') {
             dateInputEl.parent().removeClass('empty');
         }
         picker.hide();
@@ -60,27 +59,27 @@
 
     //Preis berechnen
 
-    $('#extraTag, #hvzType').on('change',function () {
+    $('#extraTag, #hvzType').on('change', function () {
         updatePrice()
     });
 
-    function updatePrice(){
-        let startDate = $("#startDateInput");
+    function updatePrice() {
+        let startDate = $("#ctrl_startDateInput");
         let priceData = {
             'hvzId': '{{ hvz.id }}',
-            'extraTag': $( "#extraTag option:selected" ).val(),
-            'hvzType': $( "#hvzType option:selected" ).val(),
+            'extraTag': $("#extraTag option:selected").val(),
+            'hvzType': $("#hvzType option:selected").val(),
             'startDate': startDate.val()
         };
 
-        if(startDate.val() !== ''){
-            $( "#orderOverview" ).load( "/extern/getprice/{{ hvz.id }}", priceData);
+        if (startDate.val() !== '') {
+            $("#orderOverview").load("/extern/getprice/{{ hvz.id }}", priceData);
         }
     }
 
 </script>
 
-<form action="" method="POST" enctype="application/x-www-form-urlencoded">
+<form method="POST" enctype="application/x-www-form-urlencoded">
     <div class="formbody">
         <input type="hidden" name="FORM_SUBMIT" value="hvzOrderform">
         <input type="hidden" name="REQUEST_TOKEN" value="{{ request_token }}">
@@ -88,53 +87,42 @@
         <fieldset id="hvzAdresse">
             <legend>Adresse für das Halteverbot in {{ ort|raw }}</legend>
             <div class="formRow empty">
-                <label for="hvzPlz" class="placeholder">PLZ von {{ ort|raw }}</label>
-                <i class="fas fa-map-marker-alt input-unity"></i>
-                <input type="tel" class="text mandatory" id="hvzPlz" pattern="[0-9]{4,5}" name="PLF" title="Tragen Sie hier die für das Halteverbot geltende Postleitzahl ein." required autocomplete="postal-code">
+                <label for="ctrl_hvzAdresse" class="placeholder">Straße und Hausnummer</label>
+                <i class="fas fa-map-marked-alt input-unity"></i>
+                <input type="text" class="text mandatory" id="ctrl_hvzAdresse" maxlength="100" minlength="3"
+                       pattern="[0-9A-Za-z '#\.-]{3,}" required name="address-line1" autocomplete="address-line1"
+                       title="Tragen Sie hier die für das Halteverbot relevante Strasse und Hausnummer ein">
             </div>
             <div class="formRow empty">
-                <label for="hzvAdress" class="placeholder">Straße und Hausnummer</label>
-                <!--<i class="fas fa-road input-unity"></i>-->
-                <i class="fas fa-map-marked-alt input-unity"></i>
-                <input type="text" class="text mandatory" id="hvzAdress" pattern="[0-9A-Za-z '#\.-]{3,}" title="Tragen Sie hier die für das Halteverbot relevante Strasse und Hausnummer ein." required name="address-line1"
-                       autocomplete="address-line1">
+                <label for="ctrl_hvzPlz" class="placeholder">PLZ von {{ ort|raw }}</label>
+                <i class="fas fa-map-marker-alt input-unity"></i>
+                <input type="tel" class="text mandatory" id="ctrl_hvzPlz" maxlength="5" minlength="4"
+                       pattern="[0-9]{4,5}" name="postal-code" required autocomplete="postal-code"
+                       title="Tragen Sie hier die für das Halteverbot geltende Postleitzahl ein">
             </div>
         </fieldset>
+
         <fieldset id="hvzDatum">
             <legend>Wann soll die Halteverbotszone gestellt werden</legend>
             <div class="formRow empty">
-                <label for="startDateInput" class="placeholder">Datum</label>
+                <label for="ctrl_startDateInput" class="placeholder">Datum</label>
                 <i class="far fa-calendar input-unity"></i>
-                <input type="text" class="text mandatory" id="startDateInput" value="" title="Ab wann soll die Halteverbotszone gültig sein:" required name="vom">
-            </div>
-            <div class="datepicker__modal" id="vondatum_datepicker">
-                <div id="datepicker__centered-container">
-                    <div class="datepicker__tip-message">
-                        <span class="tip-message__headline">TIPP</span>
-                        <p class="tip-message__text">
-                            Wählen Sie ein Startdatum für Ihre Halteverbotszone in {{ ort|raw }}. <br>Nachfolgend können
-                            Sie noch die Dauer bzw. die Anzahl der gültigen Tage bestimmen.
-                        </p>
-                    </div>
-                    <div id="startDateForHvz" class="spot-for-datepicker padding-horizontal-m padding-vertical-s">
-                    </div>
-                    <div class="datepicker__button-pane padding-right-l">
-                        <button onclick="cancelSelection()" type="button">Schliessen</button>
-                    </div>
-                </div>
+                <input type="text" class="text mandatory" id="ctrl_startDateInput" value=""
+                       pattern="\d{1,2}.\d{1,2}.20\d{2}" required name="vom"
+                       title="Datum (dd.mm.yyyy) ab wann soll die Halteverbotszone gültig sein">
             </div>
             <div class="formRow">
                 <div class="select-container">
                     <button class="fas fa-info-circle input-unity"
                             data-toggle="popover"
                             data-placement="auto"
-                            data-original-title="Zeitraum"
+                            data-original-title="Gültigkeitsdauer"
                             data-content="Der oben angegebene Preis bezieht sich auf die Gültigkeit eines Tages. Ab dem zweiten Tag werden pro Tag Zusatzkosten in Höhe von <strong>{{ extraTag|number_format(2, ',') }} €</strong> erhoben."
                     ></button>
-                    <label for="extraTag" class="placeholder">Zeitraum</label>
-                    <select id="extraTag" class="select">
+                    <label for="ctrl_extraTag" class="placeholder">Gültigkeitsdauer</label>
+                    <select id="ctrl_extraTag" class="select" required name="extraTag">
                         <option value="" disabled>Anzahl der Tage</option>
-                        <option value="1" selected="">1 Tag</option>
+                        <option value="1" selected="selected">1 Tag</option>
                         <option value="2">2 Tage (+ {{ (1 * extraTag)|number_format(2, ',') }}€)</option>
                         <option value="3">3 Tage (+ {{ (2 * extraTag)|number_format(2, ',') }}€)</option>
                         <option value="4">4 Tage (+ {{ (3 * extraTag)|number_format(2, ',') }}€)</option>
@@ -152,11 +140,10 @@
                 </div>
             </div>
             <div class="formRow">
-
                 <div class="select-container">
-                    <label for="startTime" class="placeholder">täglich von</label>
-                    <select id="startTime" class="select">
-                        <option value="7" selected=""> 7 Uhr</option>
+                    <label for="ctrl_startTime" class="placeholder">täglich von</label>
+                    <select id="ctrl_startTime" class="select" name="startTime">
+                        <option value="7" selected="selected"> 7 Uhr</option>
                         <option value="8"> 8 Uhr</option>
                         <option value="9"> 9 Uhr</option>
                         <option value="10">10 Uhr</option>
@@ -176,8 +163,8 @@
             </div>
             <div class="formRow">
                 <div class="select-container">
-                    <label for="endTime" class="placeholder">täglich bis</label>
-                    <select id="endTime" class="select">
+                    <label for="ctrl_endTime" class="placeholder">täglich bis</label>
+                    <select id="ctrl_endTime" class="select" name="endTime">
                         <option value="7"> 7 Uhr</option>
                         <option value="8"> 8 Uhr</option>
                         <option value="9"> 9 Uhr</option>
@@ -190,12 +177,26 @@
                         <option value="16">16 Uhr</option>
                         <option value="17">17 Uhr</option>
                         <option value="18">18 Uhr</option>
-                        <option value="19" selected="">19 Uhr</option>
+                        <option value="19" selected="selected">19 Uhr</option>
                         <option value="20">20 Uhr</option>
                     </select>
                 </div>
-
-
+            </div>
+            <div class="datepicker__modal" id="vondatum_datepicker">
+                <div id="datepicker__centered-container">
+                    <div class="datepicker__tip-message">
+                        <span class="tip-message__headline">TIPP</span>
+                        <p class="tip-message__text">
+                            Wählen Sie ein Startdatum für Ihre Halteverbotszone in {{ ort|raw }}. <br>Nachfolgend können
+                            Sie noch die Dauer bzw. die Anzahl der gültigen Tage bestimmen.
+                        </p>
+                    </div>
+                    <div id="startDateForHvz" class="spot-for-datepicker padding-horizontal-m padding-vertical-s">
+                    </div>
+                    <div class="datepicker__button-pane padding-right-l">
+                        <button onclick="cancelSelection()" type="button">Schliessen</button>
+                    </div>
+                </div>
             </div>
         </fieldset>
         <fieldset id="hvzDetails">
@@ -209,9 +210,9 @@
                        data-original-title="Grund für die Stellung"
                        data-content="Grund"
                     ></i>
-                    <label for="hvzReason" class="placeholder">Grund für die Stellung</label>
-                    <select id="hvzReason" class="select">
-                        <option value="umzug" selected="">Umzug</option>
+                    <label for="ctrl_hvzReason" class="placeholder">Grund für die Stellung</label>
+                    <select id="ctrl_hvzReason" class="select" name="hvzReason">
+                        <option value="umzug" selected="selected">Umzug</option>
                         <option value="containergestellung">Containergestellung</option>
                         <option value="baustelle">Baustelle</option>
                         <option value="sonstiges">Sonstiges</option>
@@ -237,11 +238,11 @@
 
             <div class="formRow">
                 <div class="select-container">
-                    <label for="hvzLength" class="placeholder">Länge</label>
-                    <select id="hvzLength" class="select">
+                    <label for="ctrl_hvzLength" class="placeholder">Länge</label>
+                    <select id="ctrl_hvzLength" class="select" name="hvzLength">
                         <option value="5">5m</option>
                         <option value="10">10m</option>
-                        <option selected="" value="15">15m</option>
+                        <option selected="selected" value="15">15m</option>
                         <option value="20">20m</option>
                     </select>
                 </div>
@@ -250,9 +251,9 @@
 
             <div class="formRow">
                 <div class="select-container">
-                    <label for="hvzCatType" class="placeholder">Fahrzeugtyp</label>
-                    <select id="hvzCatType" class="select">
-                        <option value="5" selected>Fahrzeug bis 3,5t </option>
+                    <label for="ctrl_hvzCarType" class="placeholder">Fahrzeugtyp</label>
+                    <select id="ctrl_hvzCarType" class="select" name="hvzCarType">
+                        <option value="5" selected="selected">Fahrzeug bis 3,5t</option>
                         <option value="10">Fahrzeug größer 3,5t</option>
                     </select>
                 </div>
@@ -266,10 +267,10 @@
                        data-original-title="Grund für die Stellung"
                        data-content="Extrakosten <strong>+{{ extraKostenDoppelseitig }} €</strong>"
                     ></i>
-                    <label for="hvzType" class="placeholder">Beschilderung</label>
-                    <select id="hvzType" class="select">
-                        <option value="einseitig" selected>einseitig</option>
-                        <option value="beidseitig">beidseitig</option>
+                    <label for="ctrl_hvzType" class="placeholder">Beschilderung</label>
+                    <select id="ctrl_hvzType" class="select" name="hvzType">
+                        <option value="einseitig" selected="selected">einseitig</option>
+                        <option value="beidseitig">beidseitig (+ {{ extraKostenDoppelseitig|number_format(2, ',') }}€)</option>
                     </select>
                 </div>
             </div>
@@ -278,60 +279,63 @@
 
 
         <fieldset id="hvzAdditionalInfos">
-            <legend><label for="hvzAdditionalText">Zusatzinformationen</label></legend>
-            <textarea cols="40" rows="6" class="textarea" id="hvzAdditionalText"
+            <legend><label for="ctrl_hvzAdditionalText">Zusatzinformationen</label></legend>
+            <textarea cols="40" rows="6" class="textarea" id="ctrl_hvzAdditionalText"
                       placeholder="evtl. weitere Informationen zur Aufstellung" name="Zusatzinformationen"></textarea>
         </fieldset>
 
-        <fieldset id="rechnungsadresse">
+        <fieldset id="billingData">
             <legend>Rechnungsadresse</legend>
 
             <div class="formRow">
                 <div class="select-container">
-                    <label for="gender" class="placeholder gender">Anrede</label>
+                    <label for="ctrl_gender" class="placeholder gender">Anrede</label>
                     <i id="genderIcon" class="fas fa-genderless input-unity"></i>
-                    <select id="gender" class="select">
-                        <option value="" selected disabled>Bitte wählen:</option>
+                    <select id="ctrl_gender" class="select">
+                        <option value="" selected="selected" disabled>Bitte wählen:</option>
                         <option value="Herr">Herr</option>
                         <option value="Frau">Frau</option>
                     </select>
                 </div>
             </div>
             <div class="formRow empty">
-                <label for="familyName" class="placeholder">Name</label>
-                <input type="text" id="familyName" class="text mandatory" required name="name" autocomplete="family-name">
+                <label for="ctrl_familyName" class="placeholder">Name</label>
+                <input type="text" id="ctrl_familyName" class="text mandatory" required name="name"
+                       autocomplete="family-name">
             </div>
             <div class="formRow empty">
-                <label for="givenName" class="placeholder">Vorname</label>
-                <input type="text" id="givenName" class="text mandatory" required name="given-name" autocomplete="given-name">
+                <label for="ctrl_givenName" class="placeholder">Vorname</label>
+                <input type="text" id="ctrl_givenName" class="text mandatory" required name="given-name"
+                       autocomplete="given-name">
             </div>
 
             <div class="formRow empty">
-                <label for="billingStreet" class="placeholder">Strasse/Hausnummer</label>
-                <input type="text" class="text mandatory" required id="billingStreet" name="address-line1"
+                <label for="ctrl_billingStreet" class="placeholder">Strasse/Hausnummer</label>
+                <input type="text" class="text mandatory" required id="ctrl_billingStreet" name="address-line1"
                        autocomplete="address-line1">
             </div>
 
             <div class="formRow empty">
-                <label for="billingCity" class="placeholder">Ort / PLZ</label>
-                <input type="text" class="text mandatory" required id="billingCity" name="PLZ" autocomplete="postal-code city">
+                <label for="ctrl_billingCity" class="placeholder">Ort / PLZ</label>
+                <input type="text" class="text mandatory" required id="ctrl_billingCity" name="postal-code city"
+                       autocomplete="postal-code city">
             </div>
 
 
             <div class="formRow empty">
-                <label for="eMail" class="placeholder">E-Mail-Adresse</label>
-                <input type="email" class="text mandatory" required id="eMail" name="PLZ">
+                <label for="ctrl_eMail" class="placeholder">E-Mail-Adresse</label>
+                <input type="email" class="text mandatory" required id="ctrl_eMail" name="email" autocomplete="email">
             </div>
 
 
             <div class="formRow empty">
-                <label for="billingPlz" class="placeholder">Telefon</label>
-                <input type="tel" class="text mandatory" required id="billingPlz" name="PLZ" autocomplete="home tel">
+                <label for="ctrl_billingTel" class="placeholder">Telefon</label>
+                <input type="tel" class="text mandatory" required id="ctrl_billingTel" name="home tel" autocomplete="home tel">
             </div>
 
             <div class="formRow empty">
-                <label for="billingCompany" class="placeholder">Firma</label>
-                <input type="text" value="" class="text" id="billingCompany" name="firma" autocomplete="city">
+                <label for="ctrl_billingCompany" class="placeholder">Firma</label>
+                <input type="text" value="" class="text" id="ctrl_billingCompany" name="firma" autocomplete="company">
             </div>
 
             <div class="formRow empty" id="umstElement" style="display: none;">
@@ -341,11 +345,11 @@
 
         </fieldset>
 
-        <fieldset id="rechnungsadresse">
+        <fieldset id="agbChecking">
 
             <div class="checkbox-container">
-                <input type="checkbox" required id="example-form_input12" class="input-checkbox">
-                <label for="example-form_input12" class="label-checkbox">Ich erkläre mich mit den <a target="_blank"
+                <input type="checkbox" required id="ctrl_agb" class="input-checkbox">
+                <label for="ctrl_agb" class="label-checkbox">Ich erkläre mich mit den <a target="_blank"
                                                                                                      href="/extern/page/agb/#top">AGB</a>
                     und den <a target="_blank" href="/extern/page/datenschutzerklaerung/#top">Datenschutzrichtlinien</a>
                     einverstanden</label>
@@ -354,8 +358,9 @@
             <div class="" id="orderOverview" style="width: 100%;">
             </div>
 
-            <div class=""  style="width: 100%;">
-                <input id="orderBtn" type="submit" class="button-primary font-bold float-right" value="Halteverbot bestellen">
+            <div class="" style="width: 100%;">
+                <input id="orderBtn" type="submit" class="button-primary font-bold float-right"
+                       value="Halteverbot bestellen">
             </div>
 
         </fieldset>

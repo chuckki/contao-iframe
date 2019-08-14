@@ -6,7 +6,7 @@
         <h3 id="hvzlistdropdown">Preise für Ihre Halteverbotszone in:</h3>
 
         <div class="ta_wrapper">
-            <input type="text" name="" placeholder="Name oder PLZ der Stadt eingeben" value="" autocomplete="off"  id="tags">
+            <input autofocus type="search" name="hvzLoopUp" placeholder="Name oder PLZ der Stadt eingeben" value="" autocomplete="off"  id="tags">
             <button id="searchButton" class="searchBtn">
                 <span class="">Suchen</span>
             </button>
@@ -78,10 +78,10 @@
                         altFormat: "dd.mm.yy",
                         minDate: "+7d",
                         beforeShow: function () {
-                            $("#startDateInput").parent().addClass('notempty');
+                            $("#ctrl_startDateInput").parent().addClass('notempty');
                         }
                     }).on("change", function () {
-                        $("#startDateForHvz").datepicker("option", "altField", "#startDateInput");
+                        $("#startDateForHvz").datepicker("option", "altField", "#ctrl_startDateInput");
                         cancelSelection();
                         updatePrice();
                     });
