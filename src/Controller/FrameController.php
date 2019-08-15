@@ -65,17 +65,20 @@ class FrameController extends Controller
         $price     = ($hvzType === 'beidseitig') ? $hvzObj->hvz_double : $hvzObj->hvz_single;
 
         $order = [
-            'ort'            => $hvzObj->question,
-            'hvzTitel'       => ucfirst($hvzType),
-            'startDateName'  => $startTag,
-            'startDateValue' => $startDate->format('d.m.Y'),
-            'endDateName'    => $endTag,
-            'endDateValue'   => $endDate->format('d.m.Y'),
-            'durationDay'    => $extraTag + 1,
-            'priceHvz'       => $price,
-            'priceFull'      => $price + ($hvzObj->hvz_extra_tag * $extraTag),
-            'hvz'            => $hvzObj,
-            'day'            => (($extraTag + 1) === 1) ? 'Tag' : 'Tage'
+            'ort'               => $hvzObj->question,
+            'hvzTitel'          => ucfirst($hvzType),
+            'startDateName'     => $startTag,
+            'startDateValue'    => $startDate->format('d.m.Y'),
+            'endDateName'       => $endTag,
+            'endDateValue'      => $endDate->format('d.m.Y'),
+            'durationDay'       => $extraTag + 1,
+            'priceHvz'          => $price,
+            'priceFull'         => $price + ($hvzObj->hvz_extra_tag * $extraTag),
+            'hvz'               => $hvzObj,
+            'extraTag'          => $extraTag,
+            'calcPriceExtraTag' => $hvzObj->hvz_extra_tag * $extraTag,
+            'priceExtraTag'     => $hvzObj->hvz_extra_tag,
+            'day'               => (($extraTag + 1) === 1) ? 'Tag' : 'Tage'
         ];
 
         return $this->render('@ChuckkiHvzIframe/overviewOrder.html.twig', [

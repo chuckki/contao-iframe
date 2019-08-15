@@ -3,7 +3,7 @@
         <h4>Bestellübersicht</h4>
         <div id="orderList">
             <div id="orderDetails">
-                {{ order.hvzTitel }}e in {{ order.ort|raw }}<br>
+                {{ order.hvzTitel }}e Halteverbotszone in {{ order.ort|raw }}<br>
                 von {{ order.startDateName }} den {{ order.startDateValue }} bis einschließlich {{ order.endDateName }}
                 den {{ order.endDateValue }} ({{ order.durationDay }} {{ order.day }})
             </div>
@@ -16,8 +16,8 @@
                         <td class="hvzPreis">{{ order.priceHvz|number_format(2, ',') }} €</td>
                     </tr>
                     <tr class="tagPreis">
-                        <td class="tageDesc">Zuschlag für Zusatztag pro Tag 25 € x 3 Tage</td>
-                        <td class="tagePreis">+ 75.00 €</td>
+                        <td class="tageDesc">Zuschlag für Zusatztag pro Tag {{ order.priceExtraTag }} € x {{ order.extraTag }} Tage</td>
+                        <td class="tagePreis">+ {{ order.calcPriceExtraTag|number_format(2, ',') }} €</td>
                     </tr>
                     <tr class="sumPreis">
                         <td><strong>Endpreis</strong>

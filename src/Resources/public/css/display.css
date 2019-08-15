@@ -103,6 +103,8 @@ body {
 .select-container .input-unity ~ .placeholder{
     left: 32px;
 }
+
+.placeholder ~ select,
 .input-unity ~ .placeholder ~ select{
     padding-left:32px;
 }
@@ -265,6 +267,7 @@ legend {
     font-family: 'Open Sans', Verdana, 'DejaVu Sans', Arial, Helvetica, sans-serif;
     background-color: #ffffff;
     font-size: 15px;
+    width: 100%;
 }
 
 .formbody .select {
@@ -472,4 +475,44 @@ input:required:valid {
     body{
         background-color: sienna;
     }
+}
+
+.hvzAdresse{
+    flex: 3 1 auto;
+}
+.hvzPlz{
+    flex: 1 1 auto;
+}
+
+.oneRow .formRow + .formRow{
+    margin-left: 20px;
+}
+
+.formRow{
+    flex: 1 1 auto;
+}
+
+.twoInOne .formRow{
+    flex: 1 1 40%;
+}
+
+
+.twoInOne{
+    flex-wrap: wrap;
+}
+.twoInOne .formRow{
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.twoInOne .formRow:nth-child(2n +1){
+    margin-left: 20px;
+}
+
+#agbChecking{
+    display: block;
+}
+
+#orderOverview{
+    margin: 20px 0;
 }

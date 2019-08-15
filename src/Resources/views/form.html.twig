@@ -45,7 +45,7 @@
     });
 
 
-    $("#gender").on("input", function () {
+    $("#ctrl_gender").on("input", function () {
         let el = $("#genderIcon");
         el.removeClass('fa-genderless');
         if ($(this).val() === 'Herr') {
@@ -59,7 +59,7 @@
 
     //Preis berechnen
 
-    $('#extraTag, #hvzType').on('change', function () {
+    $('#ctrl_extraTag, #ctrl_hvzType').on('change', function () {
         updatePrice()
     });
 
@@ -67,8 +67,8 @@
         let startDate = $("#ctrl_startDateInput");
         let priceData = {
             'hvzId': '{{ hvz.id }}',
-            'extraTag': $("#extraTag option:selected").val(),
-            'hvzType': $("#hvzType option:selected").val(),
+            'extraTag': $("#ctrl_extraTag option:selected").val(),
+            'hvzType': $("#ctrl_hvzType option:selected").val(),
             'startDate': startDate.val()
         };
 
@@ -84,16 +84,16 @@
         <input type="hidden" name="FORM_SUBMIT" value="hvzOrderform">
         <input type="hidden" name="REQUEST_TOKEN" value="{{ request_token }}">
 
-        <fieldset id="hvzAdresse">
+        <fieldset id="hvzAdresse" class="oneRow">
             <legend>Adresse für das Halteverbot in {{ ort|raw }}</legend>
-            <div class="formRow empty">
+            <div class="formRow empty hvzAdresse">
                 <label for="ctrl_hvzAdresse" class="placeholder">Straße und Hausnummer</label>
                 <i class="fas fa-map-marked-alt input-unity"></i>
                 <input type="text" class="text mandatory" id="ctrl_hvzAdresse" maxlength="100" minlength="3"
                        pattern="[0-9A-Za-z '#\.-]{3,}" required name="address-line1" autocomplete="address-line1"
                        title="Tragen Sie hier die für das Halteverbot relevante Strasse und Hausnummer ein">
             </div>
-            <div class="formRow empty">
+            <div class="formRow empty hvzPlz">
                 <label for="ctrl_hvzPlz" class="placeholder">Postleitzahl</label>
                 <i class="fas fa-map-marker-alt input-unity"></i>
                 <input type="tel" class="text mandatory" id="ctrl_hvzPlz" maxlength="5" minlength="4"
@@ -102,7 +102,7 @@
             </div>
         </fieldset>
 
-        <fieldset id="hvzDatum">
+        <fieldset id="hvzDatum" class="oneRow">
             <legend>Wann soll die Halteverbotszone gestellt werden</legend>
             <div class="formRow empty">
                 <label for="ctrl_startDateInput" class="placeholder">Datum</label>
@@ -199,7 +199,7 @@
                 </div>
             </div>
         </fieldset>
-        <fieldset id="hvzDetails">
+        <fieldset id="hvzDetails" class="oneRow">
             <legend>Halteverbot Details</legend>
 
             <div class="formRow">
@@ -284,13 +284,13 @@
                       placeholder="evtl. weitere Informationen zur Aufstellung" name="Zusatzinformationen"></textarea>
         </fieldset>
 
-        <fieldset id="billingData">
+        <fieldset id="billingData" class="twoInOne">
             <legend>Rechnungsadresse</legend>
 
             <div class="formRow">
                 <div class="select-container">
-                    <label for="ctrl_gender" class="placeholder gender">Anrede</label>
                     <i id="genderIcon" class="fas fa-genderless input-unity"></i>
+                    <label for="ctrl_gender" class="placeholder gender">Anrede</label>
                     <select id="ctrl_gender" class="select">
                         <option value="" selected="selected" disabled>Bitte wählen:</option>
                         <option value="Herr">Herr</option>
@@ -298,6 +298,18 @@
                     </select>
                 </div>
             </div>
+
+            <div class="formRow empty">
+                <label for="ctrl_billingOrganization" class="placeholder">Firma</label>
+                <input type="text" value="" class="text" id="ctrl_billingOrganization" name="organization" autocomplete="organization">
+            </div>
+<!--
+            <div class="" id="umstElement" style="display: none;">
+                <label for="umstid" class="placeholder">USt-IdNr.</label>
+                <input type="text" value="" placeholder="USt-IdNr. (optional)" class="text" id="umstid" name="umstid">
+            </div>
+-->
+
             <div class="formRow empty">
                 <label for="ctrl_familyName" class="placeholder">Name</label>
                 <input type="text" id="ctrl_familyName" class="text mandatory" required name="family-name"
@@ -310,12 +322,14 @@
             </div>
 
             <div class="formRow empty">
+                <i class="fas fa-map-marked-alt input-unity"></i>
                 <label for="ctrl_billingStreet" class="placeholder">Strasse/Hausnummer</label>
                 <input type="text" class="text mandatory" required id="ctrl_billingStreet" name="address-line1"
                        autocomplete="address-line1">
             </div>
 
             <div class="formRow empty">
+                <i class="fas fa-map-marker-alt input-unity"></i>
                 <label for="ctrl_billingCity" class="placeholder">Ort / PLZ</label>
                 <input type="text" class="text mandatory" required id="ctrl_billingCity" name="postal-code_address-level2"
                        autocomplete="postal-code address-level2">
@@ -323,24 +337,16 @@
 
 
             <div class="formRow empty">
+                <i class="fas fa-at input-unity"></i>
                 <label for="ctrl_eMail" class="placeholder">E-Mail-Adresse</label>
                 <input type="email" class="text mandatory" required id="ctrl_eMail" name="email" autocomplete="email">
             </div>
 
 
             <div class="formRow empty">
+                <i class="fas fa-phone-alt input-unity"></i>
                 <label for="ctrl_billingTel" class="placeholder">Telefon</label>
                 <input type="tel" class="text mandatory" required id="ctrl_billingTel" name="home tel" autocomplete="home tel">
-            </div>
-
-            <div class="formRow empty">
-                <label for="ctrl_billingOrganization" class="placeholder">Firma</label>
-                <input type="text" value="" class="text" id="ctrl_billingOrganization" name="organization" autocomplete="organization">
-            </div>
-
-            <div class="formRow empty" id="umstElement" style="display: none;">
-                <label for="umstid" class="placeholder">USt-IdNr.</label>
-                <input type="text" value="" placeholder="USt-IdNr. (optional)" class="text" id="umstid" name="umstid">
             </div>
 
         </fieldset>

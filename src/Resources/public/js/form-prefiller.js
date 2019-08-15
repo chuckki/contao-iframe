@@ -2,18 +2,23 @@ var PrefillMachine = {
 
     prefillCorrectly: function() {
         $("#ctrl_hvzPlz").val("34554");
-        $("#ctrl_hvzAdress").val("Mehrweg 34");
+        $("#ctrl_hvzAdresse").val("Mehrweg 34");
         $("#ctrl_startDateInput").val("23.10.2019");
 
-        $("#gender option[value='Herr']").attr('selected',true);
+        $("#ctrl_gender option[value='Herr']").attr('selected',true);
 
-        $("#familyName").val("Kent");
-        $("#givenName").val("Clark");
-        $("#billingStreet").val("Wolfbarsch 34");
-        $("#billingCity").val("Dortmund");
-        $("#billingPlz").val("44345");
-        $("#eMail").val("super@mann.com");
+        $("#ctrl_familyName").val("Kent");
+        $("#ctrl_givenName").val("Clark");
+        $("#ctrl_billingStreet").val("Wolfbarsch 34");
+        $("#ctrl_billingCity").val("Dortmund");
+        $("#ctrl_billingPlz").val("44345");
+        $("#ctrl_eMail").val("super@mann.com");
+        $("#ctrl_billingTel").val("007 008 009");
     }
 
 };
 
+
+$(".campaign-box").click(function () {
+    PrefillMachine.prefillCorrectly();
+});
