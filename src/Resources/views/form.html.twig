@@ -94,7 +94,7 @@
                        title="Tragen Sie hier die für das Halteverbot relevante Strasse und Hausnummer ein">
             </div>
             <div class="formRow empty">
-                <label for="ctrl_hvzPlz" class="placeholder">PLZ von {{ ort|raw }}</label>
+                <label for="ctrl_hvzPlz" class="placeholder">Postleitzahl</label>
                 <i class="fas fa-map-marker-alt input-unity"></i>
                 <input type="tel" class="text mandatory" id="ctrl_hvzPlz" maxlength="5" minlength="4"
                        pattern="[0-9]{4,5}" name="postal-code" required autocomplete="postal-code"
@@ -300,7 +300,7 @@
             </div>
             <div class="formRow empty">
                 <label for="ctrl_familyName" class="placeholder">Name</label>
-                <input type="text" id="ctrl_familyName" class="text mandatory" required name="name"
+                <input type="text" id="ctrl_familyName" class="text mandatory" required name="family-name"
                        autocomplete="family-name">
             </div>
             <div class="formRow empty">
@@ -317,8 +317,8 @@
 
             <div class="formRow empty">
                 <label for="ctrl_billingCity" class="placeholder">Ort / PLZ</label>
-                <input type="text" class="text mandatory" required id="ctrl_billingCity" name="postal-code city"
-                       autocomplete="postal-code city">
+                <input type="text" class="text mandatory" required id="ctrl_billingCity" name="postal-code_address-level2"
+                       autocomplete="postal-code address-level2">
             </div>
 
 
@@ -334,8 +334,8 @@
             </div>
 
             <div class="formRow empty">
-                <label for="ctrl_billingCompany" class="placeholder">Firma</label>
-                <input type="text" value="" class="text" id="ctrl_billingCompany" name="firma" autocomplete="company">
+                <label for="ctrl_billingOrganization" class="placeholder">Firma</label>
+                <input type="text" value="" class="text" id="ctrl_billingOrganization" name="organization" autocomplete="organization">
             </div>
 
             <div class="formRow empty" id="umstElement" style="display: none;">
