@@ -138,6 +138,11 @@ class FrameController extends Controller
 
     public function checkFormAction(): Response
     {
+        return $this->render('@ChuckkiHvzIframe/orderConfirm.html.twig', [
+            'customermail' => 'supermann@nix.de',
+            'ordernumber' => '76acf67s'
+        ]);
+
         dump($_POST);
         die;
         $hvzId   = \Input::post('hvzId');

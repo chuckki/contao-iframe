@@ -11,6 +11,7 @@
     width: 1px;
 }
 
+/*
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, form, fieldset, legend, label, input, select, textarea, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figure, figcaption, footer, header, main, menu, nav, section, summary, time, mark, audio, video {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -22,7 +23,7 @@ html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pr
     border: 0;
     outline: 0;
 }
-
+*/
 html {
     font-size: 100%;
 }
@@ -92,32 +93,33 @@ body {
 }
 
 @-moz-document url-prefix() {
-.formbody select{
-    text-indent: -2px;
+    .formbody select {
+        text-indent: -2px;
+    }
 }
-}
-.tooltip-icon:before{
+
+.tooltip-icon:before {
     vertical-align: top;
 }
 
-.select-container .input-unity ~ .placeholder{
+.select-container .input-unity ~ .placeholder {
     left: 32px;
 }
 
 .placeholder ~ select,
-.input-unity ~ .placeholder ~ select{
-    padding-left:32px;
+.input-unity ~ .placeholder ~ select {
+    padding-left: 32px;
 }
 
-.fa-info-circle.input-unity{
+.fa-info-circle.input-unity {
     top: 0;
     left: 0;
     padding: 18px 9px;
     cursor: pointer;
 }
 
-.fa-info-circle.input-unity:hover{
-    color:#757575;
+.fa-info-circle.input-unity:hover {
+    color: #757575;
 }
 
 .tt-menu {
@@ -167,7 +169,7 @@ h3#hvzlistdropdown {
     position: absolute;
     top: 15px;
     left: 14px;
-    font-family: "FontAwesome","Font Awesome 5 Pro";
+    font-family: "FontAwesome", "Font Awesome 5 Pro";
     z-index: 999999;
     width: 30px;
     height: 30px;
@@ -273,7 +275,7 @@ legend {
 .formbody .select {
     height: 50px;
     padding-top: 18px;
-    padding-left:13px;
+    padding-left: 13px;
     border: 1px solid #e0e0e0;
 }
 
@@ -286,7 +288,6 @@ legend {
 .select-container .placeholder {
     left: 13px;
 }
-
 
 
 .placeholder {
@@ -348,7 +349,6 @@ select:-moz-focusring {
     color: transparent;
     text-shadow: 0 0 0 #000;
 }
-
 
 
 #removal-lead-engine-component div, #removal-lead-engine-component span, #removal-lead-engine-component object, #removal-lead-engine-component iframe, #removal-lead-engine-component h1, #removal-lead-engine-component h2, #removal-lead-engine-component h3, #removal-lead-engine-component h4, #removal-lead-engine-component h5, #removal-lead-engine-component h6, #removal-lead-engine-component p, #removal-lead-engine-component blockquote, #removal-lead-engine-component pre, #removal-lead-engine-component a, #removal-lead-engine-component abbr, #removal-lead-engine-component address, #removal-lead-engine-component cite, #removal-lead-engine-component code, #removal-lead-engine-component del, #removal-lead-engine-component dfn, #removal-lead-engine-component em, #removal-lead-engine-component img, #removal-lead-engine-component ins, #removal-lead-engine-component kbd, #removal-lead-engine-component q, #removal-lead-engine-component samp, #removal-lead-engine-component small, #removal-lead-engine-component strong, #removal-lead-engine-component sub, #removal-lead-engine-component sup, #removal-lead-engine-component var, #removal-lead-engine-component b, #removal-lead-engine-component i, #removal-lead-engine-component dl, #removal-lead-engine-component dt, #removal-lead-engine-component dd, #removal-lead-engine-component ol, #removal-lead-engine-component ul, #removal-lead-engine-component li, #removal-lead-engine-component form, #removal-lead-engine-component fieldset, #removal-lead-engine-component legend, #removal-lead-engine-component label, #removal-lead-engine-component input, #removal-lead-engine-component select, #removal-lead-engine-component textarea, #removal-lead-engine-component table, #removal-lead-engine-component caption, #removal-lead-engine-component tbody, #removal-lead-engine-component tfoot, #removal-lead-engine-component thead, #removal-lead-engine-component tr, #removal-lead-engine-component th, #removal-lead-engine-component td, #removal-lead-engine-component article, #removal-lead-engine-component aside, #removal-lead-engine-component canvas, #removal-lead-engine-component details, #removal-lead-engine-component figure, #removal-lead-engine-component figcaption, #removal-lead-engine-component footer, #removal-lead-engine-component header, #removal-lead-engine-component main, #removal-lead-engine-component menu, #removal-lead-engine-component nav, #removal-lead-engine-component section, #removal-lead-engine-component summary, #removal-lead-engine-component time, #removal-lead-engine-component mark, #removal-lead-engine-component audio, #removal-lead-engine-component video {
@@ -426,21 +426,24 @@ h3 {
 }
 
 
-.formbody input[type=submit]{
+.formbody input[type=submit] {
     font-size: 1rem;
 }
-h4{
+
+h4 {
     font-size: 1.1rem;
 }
 
-#priceList{
+#priceList {
     display: flex;
-    justify-content: right;
+    justify-content: center;
+    margin-bottom: .4em;
 }
 
 #priceList tr td:nth-child(2) {
     padding-left: 10px;
 }
+
 #priceList td.gesamtPreis, #priceList td:nth-child(2n) {
     white-space: nowrap;
 }
@@ -450,7 +453,7 @@ h4{
     vertical-align: top;
 }
 
-tr.sumPreis{
+tr.sumPreis {
     border-top: 1px solid;
 }
 
@@ -458,61 +461,156 @@ input:required:valid {
     border: 1px solid forestgreen;
 }
 
-.formRow input.hasValue:required:invalid{
+.formRow input.hasValue:required:invalid {
     background-color: #fae6e6;
     border-color: #d60e0e;
 }
 
-@media (min-width:669px) {
 
-    body{
-        background-color: #0eb255;
-    }
-}
-
-@media (min-width:1014px) {
-
-    body{
-        background-color: sienna;
-    }
-}
-
-.hvzAdresse{
+.hvzAdresse {
     flex: 3 1 auto;
 }
-.hvzPlz{
+
+.hvzPlz {
     flex: 1 1 auto;
 }
 
-.oneRow .formRow + .formRow{
+.oneRow .formRow + .formRow {
     margin-left: 20px;
 }
 
-.formRow{
+.formRow {
     flex: 1 1 auto;
 }
 
-.twoInOne .formRow{
+.twoInOne .formRow {
     flex: 1 1 40%;
 }
 
 
-.twoInOne{
+.twoInOne {
     flex-wrap: wrap;
 }
-.twoInOne .formRow{
+
+.twoInOne .formRow {
     margin-bottom: 20px;
     box-sizing: border-box;
 }
 
-.twoInOne .formRow:nth-child(2n +1){
+.twoInOne .formRow:nth-child(2n +1) {
     margin-left: 20px;
 }
 
-#agbChecking{
+#agbChecking {
     display: block;
 }
 
-#orderOverview{
+#orderOverview {
     margin: 20px 0;
+}
+
+
+#orderOverview h4 {
+    text-align: center;
+    font-size: 1.6rem;
+    margin-bottom: .4em;
+}
+
+#orderList {
+    text-align: center;
+}
+
+#orderDetails {
+    margin-bottom: .4em;
+}
+
+#orderDetails strong {
+    display: block;
+}
+
+#orderDetails span {
+    text-decoration: underline;
+}
+
+.submit-wrapper{
+    width: 100%;
+}
+
+@media (max-width: 1014px) {
+
+    .formRow {
+        flex: 1 1 43%;
+        margin-bottom: 20px;
+    }
+
+    .oneRow {
+        flex-wrap: wrap;
+    }
+
+    .oneRow .formRow + .formRow {
+        margin-left: 0;
+    }
+
+    .oneRow .formRow:nth-child(2n +1) {
+        margin-left: 20px;
+    }
+}
+
+
+@media (max-width: 669px) {
+
+    .input-text, .select, .textarea {
+        font-size: 16px;
+    }
+
+    .twoInOne .formRow,
+    .formRow {
+        flex: 1 1 100%;
+        margin-bottom: 20px;
+    }
+
+    .twoInOne .formRow:nth-child(2n+1),
+    .oneRow .formRow:nth-child(2n+1),
+    .oneRow .formRow {
+        margin-left: 0;
+    }
+
+    .input-unity {
+        font-size: 20px;
+        left: 0px;
+        width: 50px !important;
+        text-align: center;
+    }
+
+    .fa-info-circle.input-unity {
+        padding: 18px 0px;
+    }
+
+    .placeholder ~ select,
+    .input-unity ~ .placeholder ~ select,
+    .formbody .select,
+    .formbody input[type="text"],
+    .formbody input[type="tel"],
+    .formbody input[type="email"] {
+        padding-left: 50px;
+    }
+
+    .select-container .input-unity ~ .placeholder,
+    .empty .placeholder,
+    .placeholder,
+    .select-container .placeholder {
+        left: 50px;
+    }
+
+    .ta_wrapper,
+    .campaign-box {
+        width: 85%;
+    }
+.formbody input[type="submit"] {
+    font-size: 1.4rem;
+}
+    .submit-wrapper{
+        display: flex;
+        justify-content: center;
+    }
 }

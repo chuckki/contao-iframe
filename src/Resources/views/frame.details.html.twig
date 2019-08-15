@@ -15,7 +15,7 @@
 </div>
 
 <div id="orderForm">
-    {{ include('@ChuckkiHvzIframe/form.html.twig', {request_token: 'bar', ort: hvz.question , extraTag: hvz.hvz_extra_tag, extraKostenDoppelseitig: (hvz.hvz_double - hvz.hvz_single)|number_format(2, '.', ',') }) }}
+    {{ include('@ChuckkiHvzIframe/form.html.twig', {request_token: requestToken, ort: hvz.question , extraTag: hvz.hvz_extra_tag, extraKostenDoppelseitig: (hvz.hvz_double - hvz.hvz_single)|number_format(2, '.', ',') }) }}
 </div>
 
 <script>
@@ -37,6 +37,9 @@
                     contentType: false,
                     processData: false,
                     success: function (data) {
+
+                        $(".citysearch").html(data);
+                        return;
                         if (data == 'true') {
                             form.off('submit').submit();
                             return;

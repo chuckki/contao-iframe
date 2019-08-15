@@ -13,7 +13,7 @@
         $(this).parent().removeClass('empty');
     });
 
-    inputEl.focusout(function () {
+    inputEl.on("change focusout",function () {
         if (!$(this).val() || $(this).val() === '') {
             $(this).parent().addClass('empty');
             $(this).removeClass('hasValue');
@@ -22,7 +22,7 @@
             $(this).addClass('hasValue');
         }
     });
-
+/*
     inputEl.on("change, focusout, blur, input", function () {
         if ($(this).val() === "") {
             $(this).parent().addClass('empty');
@@ -30,7 +30,7 @@
             $(this).parent().removeClass('empty');
         }
     });
-
+*/
 
     function cancelSelection() {
         if (dateInputEl.val() !== '') {
@@ -364,7 +364,7 @@
             <div class="" id="orderOverview" style="width: 100%;">
             </div>
 
-            <div class="" style="width: 100%;">
+            <div class="submit-wrapper" style="width: 100%;">
                 <input id="orderBtn" type="submit" class="button-primary font-bold float-right"
                        value="Halteverbot bestellen">
             </div>

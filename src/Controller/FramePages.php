@@ -8,6 +8,7 @@ use Contao\ArticleModel;
 use Contao\ContentModel;
 use Contao\CoreBundle\Exception\PageNotFoundException;
 use Contao\CoreBundle\Framework\ContaoFramework;
+use Contao\InsertTags;
 use Contao\PageModel;
 use Contao\StringUtil;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -58,7 +59,8 @@ class FramePages extends Controller
             $txt .= $this->buildHeadLine($objElement->headline). $objElement->text;
         }
 
-
+        $insertTags = new InsertTags();
+        $txt    = $insertTags->replace($txt, false);
         return $this->render('@ChuckkiHvzIframe/frame.page.html.twig', [
             'content'          => $txt
         ]);
