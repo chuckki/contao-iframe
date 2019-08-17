@@ -22,7 +22,7 @@ var PrefillMachine = {
         $("#ctrl_billingStreet").val("Wolfbarsch 34");
         $("#ctrl_billingCity").val("Dortmund");
         $("#ctrl_billingPlz").val("44345");
-        $("#ctrl_eMail").val("super@mann.com");
+        $("#ctrl_eMail").val("super.mann@projektorientiert.de");
         $("#ctrl_billingTel").val("007 008 009");
         $(".formbody input").change();
         $("#ctrl_extraTag").change();
