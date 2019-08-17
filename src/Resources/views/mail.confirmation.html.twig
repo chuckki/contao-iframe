@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Demystifying Email Design</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body style="margin: 0; padding: 0;">
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td style="padding: 10px 0 30px 0;">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border: 1px solid #cccccc; border-collapse: collapse;">
+                <tr>
+                    <td align="center" bgcolor="#00adee" style="color: #153643; padding: 10px 0 20px 0; font-size: 28px; font-weight: bold; font-family: Arial, sans-serif;">
+                        <img src="https://www.halteverbot-beantragen.de/files/halteverbot-theme/img/halteverbot-beantragen.png" alt="Logo halteverbot-beantragen.de" width="301" height="116" style="display: block;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                                <td style="color: #153643; font-family: Arial, sans-serif; font-size: 24px;">
+                                    <b>Ihre bestellte Halteverbotszone in {{ hvzorder.question|raw }}</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
+                                    {{ grussFormel }}<br>
+                                    <br>
+                                    vielen Dank für Ihre Bestellung. <br>Ihre Auftragsnummer lautet: <b>{{ customer.uniqueRef }}</b>.
+                                    <br>
+                                    <br>
+                                    Folgende Auftragsdaten wurden uns mitgeteilt: <br><br>
+
+
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                        <tr>
+                                            <td style="padding:5%;border:1px solid #bb232b; border-radius: 15px; font-family: Arial, sans-serif; font-size: 14px;" width="100%">
+
+                                                <b>{{ customer.hvzType|capitalize }}e Halteverbotszone mit Genehmigung</b><br>
+
+                                                <b>{{ customer.hvzAdresse }}, in {{ customer.hvzPlz }} {{ hvzorder.question|raw }}</b><br><br>
+                                                für den <b>{{ customer.startDateInput }}</b> bis einschließlich zum <b>{{ customer.endDateInput }}</b><br>
+                                                Täglich von {{ customer.startTime }}:00 Uhr bis {{ customer.endTime }}:00 Uhr<br><br>
+                                                Die Länge der Halteverbotszone beträgt {{ customer.hvzLength }} Meter.<br>
+                                                {{ additionalInfo|raw}}
+
+
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    <br>
+                                    Kontaktieren können wir Sie unter folgender E-Mail: {{ customer.billingEmail }} oder telefonisch unter {{ customer.billingTel }}<br>
+                                    <br>
+                                    Wir werden Ihre Bestellung umgehend bearbeiten.
+
+                                    Die Rechnung in Höhe von {{ customer.fullPrice|number_format(2, ',', '.') }} EUR wird Ihnen innerhalb der nächsten Tage per E-Mail zugesandt.<br>
+                                    Benötigte Unterlagen, erhalten Sie bis einen Tag vor Gültigkeit Ihres Halteverbotes via E-Mail. Wir weisen freundlich darauf hin, dass eine Übermittlung der Unterlagen erst nach Zahlungseingang erfolgen kann.
+                                    <br><br>
+                                    Sollten die obigen Angaben Fehler enthalten, so bitten wir Sie sich umgehend mit uns in Verbindung zu setzen: <a href="mailto:info@halteverbot-beantragen.de">info@halteverbot-beantragen.de</a>
+
+                                    <br><br><br>
+                                    Viele Grüße<br>
+                                    Ihr Team von halteverbot-beantragen.de
+
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#00adee" style="padding: 30px 30px 30px 30px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                                <td style="color: #ffffff; font-family: Arial, sans-serif; font-size: 14px;" width="100%">
+                                    <a href="https://www.halteverbot-beantragen.de" style="color: #263777;"><em style="color:#263777;">www.halteverbot-beantragen.de</em></a><br>
+                                    Moerser Landstraße 555-557<br>
+                                    D- 47802 Krefeld<br>
+                                    Tel: 02151-789 23 82<br>
+                                    Mail: <a href="mailto:info@halteverbot-beantragen.de" style="color: #ffffff; text-decoration: none;"><em style="color:#ffffff;font-style: normal">info@halteverbot-beantragen.de</em></a><br><br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="color: #ffffff; font-family: Arial, sans-serif; font-size: 14px;" width="100%">
+                                    <a href="https://www.halteverbot-beantragen.de/agb.html" style="color: #ffffff;"><em
+                                            style="color:#ffffff;">AGB</em></a> |
+                                    <a href="https://www.halteverbot-beantragen.de/widerruf.html"
+                                       style="color: #ffffff;"><em style="color:#ffffff;">Widerruf</em></a> |
+                                    <a href="https://www.halteverbot-beantragen.de/datenschutzerklaerung.html"
+                                       style="color: #ffffff;"><em style="color:#ffffff;">Datenschutzerklärung</em></a><br><br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="color: #ffffff; font-family: Arial, sans-serif; font-size: 14px;" width="100%">
+                                    Ein Unternehmen der Confido Gruppe GmbH & Co. KG<br>
+                                    Sitz der Gesellschaft ist Krefeld<br>
+                                    Registergericht: Amtsgericht Krefeld, HRA 5530<br>
+                                    Ust-IdNr.: DE254816375<br>
+                                    Komplementärin: Confido Beteiligungs GmbH, HRB 16742<br>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

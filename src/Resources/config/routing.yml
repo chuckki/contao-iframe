@@ -7,7 +7,7 @@ frameStarter:
     methods: [GET]
 
 formProceed:
-    path: /extern/
+    path: /extern/submit/{id}
     defaults:
         _controller: Chuckki\HvzIframeBundle\Controller\FrameController:checkFormAction
         _scope: frontend

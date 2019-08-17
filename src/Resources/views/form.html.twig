@@ -5,15 +5,25 @@
 
 <script>
 
+
     let inputEl = $(".formbody input");
     let dateInputEl = $("#ctrl_startDateInput");
     let picker = $(".datepicker__modal");
+
+    $(function () {
+        inputEl.each(function (e) {
+            if ($(this).val() && $(this).val() !== '') {
+                $(this).parent().removeClass('empty');
+                $(this).addClass('hasValue');
+            }
+        })
+    });
 
     inputEl.focus(function () {
         $(this).parent().removeClass('empty');
     });
 
-    inputEl.on("change focusout",function () {
+    inputEl.on("change focusout", function () {
         if (!$(this).val() || $(this).val() === '') {
             $(this).parent().addClass('empty');
             $(this).removeClass('hasValue');
@@ -22,15 +32,6 @@
             $(this).addClass('hasValue');
         }
     });
-/*
-    inputEl.on("change, focusout, blur, input", function () {
-        if ($(this).val() === "") {
-            $(this).parent().addClass('empty');
-        } else {
-            $(this).parent().removeClass('empty');
-        }
-    });
-*/
 
     function cancelSelection() {
         if (dateInputEl.val() !== '') {
@@ -57,6 +58,20 @@
         }
     });
 
+
+    $("#ctrl_hvzCarType").on("input", function () {
+        let el = $("#hvzCarType");
+        el.removeClass('fa-truck-moving');
+        if ($(this).val() === 'pkw') {
+            el.addClass('fa-car-side');
+            el.removeClass('fa-truck-moving');
+        } else {
+            el.addClass('fa-truck-moving');
+            el.removeClass('fa-car-side');
+        }
+    });
+
+
     //Preis berechnen
 
     $('#ctrl_extraTag, #ctrl_hvzType').on('change', function () {
@@ -81,37 +96,48 @@
 
 <form method="POST" enctype="application/x-www-form-urlencoded">
     <div class="formbody">
-        <input type="hidden" name="FORM_SUBMIT" value="hvzOrderform">
+        <input type="hidden" name="FORM_SUBMIT" value="{{ hvzForm.FormId }}">
         <input type="hidden" name="REQUEST_TOKEN" value="{{ request_token }}">
 
         <fieldset id="hvzAdresse" class="oneRow">
             <legend>Adresse für das Halteverbot in {{ ort|raw }}</legend>
-            <div class="formRow empty hvzAdresse">
-                <label for="ctrl_hvzAdresse" class="placeholder">Straße und Hausnummer</label>
+
+            <div class="formRow empty hvzAdresse {{ hvzForm.widget('hvzAdresse').class }}">
+                <label for="ctrl_hvzAdresse" class="placeholder">{{ hvzForm.widget('hvzAdresse').label|raw }}</label>
                 <i class="fas fa-map-marked-alt input-unity"></i>
                 <input type="text" class="text mandatory" id="ctrl_hvzAdresse" maxlength="100" minlength="3"
-                       pattern="[0-9A-Za-z '#\.-]{3,}" required name="address-line1" autocomplete="address-line1"
+                       pattern="[0-9A-Za-z '#\.-]{3,}" required name="{{ hvzForm.widget('hvzAdresse').name }}"
+                       value="{{ hvzForm.widget('hvzAdresse').value }}" autocomplete="address-line1"
                        title="Tragen Sie hier die für das Halteverbot relevante Strasse und Hausnummer ein">
+                {{ hvzForm.widget('hvzAdresse').ErrorAsHTML|raw }}
             </div>
-            <div class="formRow empty hvzPlz">
-                <label for="ctrl_hvzPlz" class="placeholder">Postleitzahl</label>
+
+            <div class="formRow empty hvzPlz {{ hvzForm.widget('hvzPlz').class }}">
+                <label for="ctrl_hvzPlz" class="placeholder">{{ hvzForm.widget('hvzPlz').label|raw }}</label>
                 <i class="fas fa-map-marker-alt input-unity"></i>
                 <input type="tel" class="text mandatory" id="ctrl_hvzPlz" maxlength="5" minlength="4"
-                       pattern="[0-9]{4,5}" name="postal-code" required autocomplete="postal-code"
+                       pattern="[0-9]{4,5}" required name="{{ hvzForm.widget('hvzPlz').name }}"
+                       value="{{ hvzForm.widget('hvzPlz').value }}" autocomplete="postal-code"
                        title="Tragen Sie hier die für das Halteverbot geltende Postleitzahl ein">
+                {{ hvzForm.widget('hvzPlz').ErrorAsHTML|raw }}
             </div>
         </fieldset>
 
         <fieldset id="hvzDatum" class="oneRow">
             <legend>Wann soll die Halteverbotszone gestellt werden</legend>
-            <div class="formRow empty">
-                <label for="ctrl_startDateInput" class="placeholder">Datum</label>
+
+            <div class="formRow empty {{ hvzForm.widget('startDateInput').class }}">
+                <label for="ctrl_startDateInput"
+                       class="placeholder">{{ hvzForm.widget('startDateInput').label|raw }}</label>
                 <i class="far fa-calendar input-unity"></i>
-                <input type="text" class="text mandatory" id="ctrl_startDateInput" value=""
-                       pattern="\d{1,2}.\d{1,2}.20\d{2}" required name="vom"
+                <input type="text" class="text mandatory" id="ctrl_startDateInput"
+                       pattern="\d{1,2}.\d{1,2}.20\d{2}" required name="{{ hvzForm.widget('startDateInput').name }}"
+                       value="{{ hvzForm.widget('startDateInput').value }}"
                        title="Datum (dd.mm.yyyy) ab wann soll die Halteverbotszone gültig sein">
+                {{ hvzForm.widget('startDateInput').ErrorAsHTML|raw }}
             </div>
-            <div class="formRow">
+
+            <div class="formRow {{ hvzForm.widget('extraTag').class }}">
                 <div class="select-container">
                     <button class="fas fa-info-circle input-unity"
                             data-toggle="popover"
@@ -119,8 +145,8 @@
                             data-original-title="Gültigkeitsdauer"
                             data-content="Der oben angegebene Preis bezieht sich auf die Gültigkeit eines Tages. Ab dem zweiten Tag werden pro Tag Zusatzkosten in Höhe von <strong>{{ extraTag|number_format(2, ',') }} €</strong> erhoben."
                     ></button>
-                    <label for="ctrl_extraTag" class="placeholder">Gültigkeitsdauer</label>
-                    <select id="ctrl_extraTag" class="select" required name="extraTag">
+                    <label for="ctrl_extraTag" class="placeholder">{{ hvzForm.widget('extraTag').label }}</label>
+                    <select id="ctrl_extraTag" class="select" required name="{{ hvzForm.widget('extraTag').name }}">
                         <option value="" disabled>Anzahl der Tage</option>
                         <option value="1" selected="selected">1 Tag</option>
                         <option value="2">2 Tage (+ {{ (1 * extraTag)|number_format(2, ',') }}€)</option>
@@ -138,11 +164,13 @@
                         <option value="14">14 Tage (+ {{ (13 * extraTag)|number_format(2, ',') }}€)</option>
                     </select>
                 </div>
+                {{ hvzForm.widget('extraTag').ErrorAsHTML|raw }}
             </div>
-            <div class="formRow">
+
+            <div class="formRow {{ hvzForm.widget('startTime').class }}">
                 <div class="select-container">
-                    <label for="ctrl_startTime" class="placeholder">täglich von</label>
-                    <select id="ctrl_startTime" class="select" name="startTime">
+                    <label for="ctrl_startTime" class="placeholder">{{ hvzForm.widget('startTime').label }}</label>
+                    <select id="ctrl_startTime" class="select" name="{{ hvzForm.widget('startTime').name }}">
                         <option value="7" selected="selected"> 7 Uhr</option>
                         <option value="8"> 8 Uhr</option>
                         <option value="9"> 9 Uhr</option>
@@ -159,12 +187,14 @@
                         <option value="20">20 Uhr</option>
                     </select>
                 </div>
+                {{ hvzForm.widget('startTime').ErrorAsHTML|raw }}
 
             </div>
-            <div class="formRow">
+
+            <div class="formRow {{ hvzForm.widget('endTime').class }}">
                 <div class="select-container">
-                    <label for="ctrl_endTime" class="placeholder">täglich bis</label>
-                    <select id="ctrl_endTime" class="select" name="endTime">
+                    <label for="ctrl_endTime" class="placeholder">{{ hvzForm.widget('endTime').label }}</label>
+                    <select id="ctrl_endTime" class="select" name="{{ hvzForm.widget('endTime').name }}">
                         <option value="7"> 7 Uhr</option>
                         <option value="8"> 8 Uhr</option>
                         <option value="9"> 9 Uhr</option>
@@ -181,6 +211,7 @@
                         <option value="20">20 Uhr</option>
                     </select>
                 </div>
+                {{ hvzForm.widget('endTime').ErrorAsHTML|raw }}
             </div>
             <div class="datepicker__modal" id="vondatum_datepicker">
                 <div id="datepicker__centered-container">
@@ -202,7 +233,7 @@
         <fieldset id="hvzDetails" class="oneRow">
             <legend>Halteverbot Details</legend>
 
-            <div class="formRow">
+            <div class="formRow {{ hvzForm.widget('hvzReason').class }}">
                 <div class="select-container">
                     <i class="fas fa-info-circle input-unity"
                        data-toggle="popover"
@@ -210,14 +241,16 @@
                        data-original-title="Grund für die Stellung"
                        data-content="Grund"
                     ></i>
-                    <label for="ctrl_hvzReason" class="placeholder">Grund für die Stellung</label>
-                    <select id="ctrl_hvzReason" class="select" name="hvzReason">
+                    <label for="ctrl_hvzReason" class="placeholder">{{ hvzForm.widget('hvzReason').label }}</label>
+                    <select id="ctrl_hvzReason" class="select" name="{{ hvzForm.widget('hvzReason').name }}">
                         <option value="umzug" selected="selected">Umzug</option>
                         <option value="containergestellung">Containergestellung</option>
                         <option value="baustelle">Baustelle</option>
                         <option value="sonstiges">Sonstiges</option>
                     </select>
                 </div>
+                {{ hvzForm.widget('hvzReason').ErrorAsHTML|raw }}
+
                 <div style="display: none">
                     <div id="grundAddon">
                         <p>
@@ -236,30 +269,34 @@
                 </div>
             </div>
 
-            <div class="formRow">
+            <div class="formRow {{ hvzForm.widget('hvzLength').class }}">
                 <div class="select-container">
-                    <label for="ctrl_hvzLength" class="placeholder">Länge</label>
-                    <select id="ctrl_hvzLength" class="select" name="hvzLength">
+                    <i class="fas fa-arrows-alt-h input-unity"></i>
+                    <label for="ctrl_hvzLength" class="placeholder">{{ hvzForm.widget('hvzLength').label }}</label>
+                    <select id="ctrl_hvzLength" class="select" name="{{ hvzForm.widget('hvzLength').name }}">
                         <option value="5">5m</option>
                         <option value="10">10m</option>
                         <option selected="selected" value="15">15m</option>
                         <option value="20">20m</option>
                     </select>
                 </div>
+                {{ hvzForm.widget('hvzLength').ErrorAsHTML|raw }}
             </div>
 
 
-            <div class="formRow">
+            <div class="formRow {{ hvzForm.widget('hvzCarType').class }}">
                 <div class="select-container">
-                    <label for="ctrl_hvzCarType" class="placeholder">Fahrzeugtyp</label>
-                    <select id="ctrl_hvzCarType" class="select" name="hvzCarType">
-                        <option value="5" selected="selected">Fahrzeug bis 3,5t</option>
-                        <option value="10">Fahrzeug größer 3,5t</option>
+                    <i id="hvzCarType" class="fas fa-car-side input-unity"></i>
+                    <label for="ctrl_hvzCarType" class="placeholder">{{ hvzForm.widget('hvzCarType').label }}</label>
+                    <select id="ctrl_hvzCarType" class="select" name="{{ hvzForm.widget('hvzCarType').name }}">
+                        <option value="pkw" selected="selected">Fahrzeug bis 3,5t</option>
+                        <option value="lkw">Fahrzeug größer 3,5t</option>
                     </select>
                 </div>
+                {{ hvzForm.widget('hvzCarType').ErrorAsHTML|raw }}
             </div>
 
-            <div class="formRow">
+            <div class="formRow {{ hvzForm.widget('hvzType').class }}">
                 <div class="select-container">
                     <i class="fas fa-info-circle input-unity"
                        data-toggle="popover"
@@ -267,98 +304,119 @@
                        data-original-title="Grund für die Stellung"
                        data-content="Extrakosten <strong>+{{ extraKostenDoppelseitig }} €</strong>"
                     ></i>
-                    <label for="ctrl_hvzType" class="placeholder">Beschilderung</label>
-                    <select id="ctrl_hvzType" class="select" name="hvzType">
+                    <label for="ctrl_hvzType" class="placeholder">{{ hvzForm.widget('hvzType').label }}</label>
+                    <select id="ctrl_hvzType" class="select" name="{{ hvzForm.widget('hvzType').name }}">
                         <option value="einseitig" selected="selected">einseitig</option>
-                        <option value="beidseitig">beidseitig (+ {{ extraKostenDoppelseitig|number_format(2, ',') }}€)</option>
+                        <option value="beidseitig">beidseitig (+ {{ extraKostenDoppelseitig|number_format(2, ',') }}€)
+                        </option>
                     </select>
                 </div>
+                {{ hvzForm.widget('hvzType').ErrorAsHTML|raw }}
             </div>
 
         </fieldset>
 
-
         <fieldset id="hvzAdditionalInfos">
-            <legend><label for="ctrl_hvzAdditionalText">Zusatzinformationen</label></legend>
+            <legend>
+                <label for="ctrl_hvzAdditionalText">{{ hvzForm.widget('hvzAdditionalInfos').label }}</label>
+            </legend>
             <textarea cols="40" rows="6" class="textarea" id="ctrl_hvzAdditionalText"
-                      placeholder="evtl. weitere Informationen zur Aufstellung" name="Zusatzinformationen"></textarea>
+                      placeholder="evtl. weitere Informationen zur Aufstellung"
+                      name="{{ hvzForm.widget('hvzAdditionalInfos').name }}">{{ hvzForm.widget('hvzAdditionalInfos').value }}</textarea>
         </fieldset>
 
         <fieldset id="billingData" class="twoInOne">
             <legend>Rechnungsadresse</legend>
 
-            <div class="formRow">
+            <div class="formRow {{ hvzForm.widget('gender').class }}">
                 <div class="select-container">
                     <i id="genderIcon" class="fas fa-genderless input-unity"></i>
-                    <label for="ctrl_gender" class="placeholder gender">Anrede</label>
-                    <select id="ctrl_gender" class="select">
+                    <label for="ctrl_gender" class="placeholder gender">{{ hvzForm.widget('gender').label }}</label>
+                    <select id="ctrl_gender" class="select" name="{{ hvzForm.widget('gender').name }}">
                         <option value="" selected="selected" disabled>Bitte wählen:</option>
                         <option value="Herr">Herr</option>
                         <option value="Frau">Frau</option>
                     </select>
                 </div>
+                {{ hvzForm.widget('gender').ErrorAsHTML|raw }}
             </div>
 
             <div class="formRow empty">
-                <label for="ctrl_billingOrganization" class="placeholder">Firma</label>
-                <input type="text" value="" class="text" id="ctrl_billingOrganization" name="organization" autocomplete="organization">
+                <label for="ctrl_billingOrganization"
+                       class="placeholder">{{ hvzForm.widget('organization').label }}</label>
+                <input type="text" value="{{ hvzForm.widget('organization').value }}" class="text"
+                       id="ctrl_billingOrganization" name="{{ hvzForm.widget('organization').name }}"
+                       autocomplete="organization">
             </div>
-<!--
-            <div class="" id="umstElement" style="display: none;">
-                <label for="umstid" class="placeholder">USt-IdNr.</label>
-                <input type="text" value="" placeholder="USt-IdNr. (optional)" class="text" id="umstid" name="umstid">
-            </div>
--->
+            <!--
+                        <div class="" id="umstElement" style="display: none;">
+                            <label for="umstid" class="placeholder">USt-IdNr.</label>
+                            <input type="text" value="" placeholder="USt-IdNr. (optional)" class="text" id="umstid" name="umstid">
+                        </div>
+            -->
 
-            <div class="formRow empty">
-                <label for="ctrl_familyName" class="placeholder">Name</label>
-                <input type="text" id="ctrl_familyName" class="text mandatory" required name="family-name"
-                       autocomplete="family-name">
-            </div>
-            <div class="formRow empty">
-                <label for="ctrl_givenName" class="placeholder">Vorname</label>
-                <input type="text" id="ctrl_givenName" class="text mandatory" required name="given-name"
-                       autocomplete="given-name">
+            <div class="formRow empty {{ hvzForm.widget('familyName').class }}">
+                <label for="ctrl_familyName" class="placeholder">{{ hvzForm.widget('familyName').label }}</label>
+                <input type="text" id="ctrl_familyName" class="text mandatory" required
+                       name="{{ hvzForm.widget('familyName').name }}"
+                       autocomplete="family-name" value="{{ hvzForm.widget('familyName').value }}">
+                {{ hvzForm.widget('familyName').ErrorAsHTML|raw }}
             </div>
 
-            <div class="formRow empty">
+            <div class="formRow empty {{ hvzForm.widget('givenName').class }}">
+                <label for="ctrl_givenName" class="placeholder">{{ hvzForm.widget('givenName').label }}</label>
+                <input type="text" id="ctrl_givenName" class="text mandatory" required
+                       name="{{ hvzForm.widget('givenName').name }}"
+                       autocomplete="given-name" value="{{ hvzForm.widget('givenName').value }}">
+                {{ hvzForm.widget('givenName').ErrorAsHTML|raw }}
+            </div>
+
+            <div class="formRow empty {{ hvzForm.widget('billingStreet').class }}">
                 <i class="fas fa-map-marked-alt input-unity"></i>
                 <label for="ctrl_billingStreet" class="placeholder">Strasse/Hausnummer</label>
-                <input type="text" class="text mandatory" required id="ctrl_billingStreet" name="address-line1"
-                       autocomplete="address-line1">
+                <input type="text" class="text mandatory" required id="ctrl_billingStreet"
+                       name="{{ hvzForm.widget('billingStreet').name }}"
+                       autocomplete="address-line1" value="{{ hvzForm.widget('billingStreet').value }}">
+                {{ hvzForm.widget('billingStreet').ErrorAsHTML|raw }}
             </div>
 
-            <div class="formRow empty">
+            <div class="formRow empty {{ hvzForm.widget('billingCity').class }}">
                 <i class="fas fa-map-marker-alt input-unity"></i>
-                <label for="ctrl_billingCity" class="placeholder">Ort / PLZ</label>
-                <input type="text" class="text mandatory" required id="ctrl_billingCity" name="postal-code_address-level2"
-                       autocomplete="postal-code address-level2">
+                <label for="ctrl_billingCity" class="placeholder">{{ hvzForm.widget('billingCity').label }}</label>
+                <input type="text" class="text mandatory" required id="ctrl_billingCity"
+                       name="{{ hvzForm.widget('billingCity').name }}"
+                       autocomplete="postal-code address-level2" value="{{ hvzForm.widget('billingCity').value }}">
+                {{ hvzForm.widget('billingCity').ErrorAsHTML|raw }}
             </div>
 
 
-            <div class="formRow empty">
+            <div class="formRow empty {{ hvzForm.widget('billingEmail').class }}">
                 <i class="fas fa-at input-unity"></i>
-                <label for="ctrl_eMail" class="placeholder">E-Mail-Adresse</label>
-                <input type="email" class="text mandatory" required id="ctrl_eMail" name="email" autocomplete="email">
+                <label for="ctrl_eMail" class="placeholder">{{ hvzForm.widget('billingEmail').label }}</label>
+                <input type="email" class="text mandatory" required id="ctrl_eMail"
+                       name="{{ hvzForm.widget('billingEmail').name }}"
+                       autocomplete="email" value="{{ hvzForm.widget('billingEmail').value }}">
+                {{ hvzForm.widget('billingEmail').ErrorAsHTML|raw }}
             </div>
 
 
-            <div class="formRow empty">
+            <div class="formRow empty {{ hvzForm.widget('billingTel').class }}">
                 <i class="fas fa-phone-alt input-unity"></i>
-                <label for="ctrl_billingTel" class="placeholder">Telefon</label>
-                <input type="tel" class="text mandatory" required id="ctrl_billingTel" name="home tel" autocomplete="home tel">
+                <label for="ctrl_billingTel" class="placeholder">{{ hvzForm.widget('billingTel').label }}</label>
+                <input type="tel" class="text mandatory" required id="ctrl_billingTel"
+                       name="{{ hvzForm.widget('billingTel').name }}"
+                       autocomplete="home tel" value="{{ hvzForm.widget('billingTel').value }}">
+                {{ hvzForm.widget('billingTel').ErrorAsHTML|raw }}
             </div>
 
         </fieldset>
 
         <fieldset id="agbChecking">
-
             <div class="checkbox-container">
-                <input type="checkbox" required id="ctrl_agb" class="input-checkbox">
-                <label for="ctrl_agb" class="label-checkbox">Ich erkläre mich mit den <a target="_blank"
-                                                                                                     href="/extern/page/agb/#top">AGB</a>
-                    und den <a target="_blank" href="/extern/page/datenschutzerklaerung/#top">Datenschutzrichtlinien</a>
-                    einverstanden</label>
+                <input value="0" type="checkbox" required id="ctrl_agbAccept" class="input-checkbox"
+                       name="{{ hvzForm.widget('agbAccept').name }}">
+                <label for="ctrl_agbAccept" class="label-checkbox">{{ hvzForm.widget('agbAccept').label|raw }}</label>
+                {{ hvzForm.widget('agbAccept').ErrorAsHTML|raw }}
             </div>
 
             <div class="" id="orderOverview" style="width: 100%;">
@@ -368,9 +426,31 @@
                 <input id="orderBtn" type="submit" class="button-primary font-bold float-right"
                        value="Halteverbot bestellen">
             </div>
-
         </fieldset>
     </div>
 </form>
 
+{% if isSubmited %}
+    <script>
+        $("#ctrl_extraTag option[value={{ hvzForm.widget('extraTag').value }}]").attr('selected', true);
+        $("#ctrl_startTime option[value={{ hvzForm.widget('startTime').value }}]").attr('selected', true);
+        $("#ctrl_endTime option[value={{ hvzForm.widget('endTime').value }}]").attr('selected', true);
+        $("#ctrl_hvzReason option[value={{ hvzForm.widget('hvzReason').value }}]").attr('selected', true);
+        $("#ctrl_hvzLength option[value={{ hvzForm.widget('hvzLength').value }}]").attr('selected', true);
+        $("#ctrl_hvzCarType option[value={{ hvzForm.widget('hvzCarType').value }}]").attr('selected', true);
+        $("#ctrl_hvzType option[value={{ hvzForm.widget('hvzType').value }}]").attr('selected', true);
+        $("#ctrl_gender option[value={{ hvzForm.widget('gender').value }}]").attr('selected', true);
+        $("#ctrl_extraTag").change();
+        $("#ctrl_startTime").change();
+        $("#ctrl_endTime").change();
+        $("#ctrl_hvzReason").change();
+        $("#ctrl_hvzLength").change();
+        $("#ctrl_hvzCarType").change();
+        $("#ctrl_hvzType").change();
+        $("#ctrl_gender").change();
 
+        $('html, body').animate({
+            scrollTop: $('.error:first').offset().top - 20
+        }, 1000);
+    </script>
+{% endif %}

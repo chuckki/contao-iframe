@@ -303,12 +303,17 @@ legend {
 }
 
 .formRow {
-    height: 50px;
+    /*height: 50px;*/
     min-height: 50px;
     position: relative;
     display: inline-block;
     line-height: 16px;
     overflow: hidden;
+}
+
+.formRow.error input,
+.formRow.error select{
+    border: 1px solid #d60e0e;
 }
 
 .empty .placeholder {
@@ -404,7 +409,6 @@ h3 {
 }
 
 #orderForm {
-    width: 65%;
     width: 80%;
     margin: 0 auto;
 }
@@ -577,13 +581,13 @@ input:required:valid {
 
     .input-unity {
         font-size: 20px;
-        left: 0px;
+        left: 0;
         width: 50px !important;
         text-align: center;
     }
 
     .fa-info-circle.input-unity {
-        padding: 18px 0px;
+        padding: 18px 0;
     }
 
     .placeholder ~ select,

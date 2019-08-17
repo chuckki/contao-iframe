@@ -15,7 +15,7 @@
 </div>
 
 <div id="orderForm">
-    {{ include('@ChuckkiHvzIframe/form.html.twig', {request_token: requestToken, ort: hvz.question , extraTag: hvz.hvz_extra_tag, extraKostenDoppelseitig: (hvz.hvz_double - hvz.hvz_single)|number_format(2, '.', ',') }) }}
+    {{ include('@ChuckkiHvzIframe/form.html.twig', {request_token: requestToken, hvzForm: hvzForm, ort: hvz.question , extraTag: hvz.hvz_extra_tag, extraKostenDoppelseitig: (hvz.hvz_double - hvz.hvz_single)|number_format(2, '.', ',') }) }}
 </div>
 
 <script>
@@ -34,6 +34,7 @@
                     type: 'POST',
                     data: window.FormData ? new FormData(this) : form.serialize(),
                     cache: false,
+                    url: '/extern/submit/{{ hvz.id }}',
                     contentType: false,
                     processData: false,
                     success: function (data) {
