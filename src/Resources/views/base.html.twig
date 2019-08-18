@@ -3,208 +3,60 @@
 <head>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
     <title>Halteverbot online bestellen</title>
 
     <base href="{{ app.request.getSchemeAndHttpHost() }}"/>
 
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/chuckkihvziframe/css/normalize.css') }}"/>
-    <link rel="stylesheet" type="text/css" href="https://www.static-immobilienscout24.de/fro/core/3.0.1-0/css/core.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://www.static-immobilienscout24.de/fro/core/3.0.1-0/css/core.min.css"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/chuckkihvziframe/css/display.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/chuckkihvziframe/css/datepicker.css') }}"/>
 
     <script type="text/javascript" src="https://kit.fontawesome.com/92df57eace.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"
+            integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.2.1/typeahead.bundle.min.js" integrity="sha256-VCsWOz+0GuHdS/sIICtQNTFJdbaDI80rxvoB7BXabrU=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://www.static-immobilienscout24.de/fro/core/3.0.1-0/js/core.min.js"></script>
-
-    <script type="text/javascript">
-
-        function checkForm() {
-
-            if (document.orderform.town.value == "notown") {
-                alert("Bitte wählen Sie zunächst eine Stadt aus.");
-                //document.orderform.town.focus();
-                document.getElementById('top').focus();
-                return false;
-            }
-
-            if (document.orderform.lang.value == "") {
-                alert("Bitte geben Sie die Länge Ihrer Halteverbotszone an.");
-                return false;
-            } else if (parseInt("" + document.orderform.lang.value + "") > 20) {
-                alert("Bei Bestellungen von Halteverbotszonen über 20 m Länge wird der Preis wahrscheinlich abweichen. Bitte setzen Sie sich NACH der Bestellung bei Bedarf mit uns per E-Mail oder kostenlos über unsere Hotline in Verbindung.");
-                //return true;
-            }
-
-            if (document.orderform.str.value == "") {
-                alert("Bitte geben Sie eine Straße für das Halteverbot an.");
-                document.orderform.str.focus();
-                return false;
-            }
-
-            if (document.orderform.hnr.value == "") {
-                alert("Bitte geben Sie eine Hausnummer für das Halteverbot an.");
-                document.orderform.hnr.focus();
-                return false;
-            }
-
-            if (document.orderform.plz.value.length < 5) {
-                alert("Bitte geben Sie in Deutschland eine fünfstellige Postleitzahl an.");
-                document.orderform.plz.focus();
-                return false;
-            }
-
-
-            if (document.orderform.zusatz.value == "") {
-                alert("Bitte geben Sie unbedingt den gewünschten Zeitraum für die Aufschrift an.");
-                document.orderform.zusatz.focus();
-                return false;
-            }
-
-
-            var plzmatch = false;
-            $.ajax({
-                url: '/ajax/checkPLZ.php'
-                    + '?plz='
-                    + encodeURI(document.orderform.plz.value)
-                    + '&town='
-                    + encodeURI(document.orderform.town.value),
-                success: function (result) {
-                    //alert(result);
-                    if (parseInt(result) < 1) {
-                        //
-                    } else {
-                        plzmatch = true;
-                    }
-                },
-                async: false
-            });
-
-            if (!plzmatch) {
-                alert("Diese Kombination aus Stadt und Postleitzahl ist uns nicht bekannt. Bitte kontaktieren Sie uns ggf. nach der Bestellung.");
-            }
-
-            if (document.orderform.detailtext.value == "") {
-
-                var myRadio = $('input[name="verwendung"]');
-                var checkedValue = myRadio.filter(':checked').val();
-
-                if (checkedValue == "baustelle" || checkedValue == "sonstiges") {
-
-                    alert("Bitte beschreiben Sie Ihr Vorhaben genauer.");
-                    // $('#vorhaben_fehler').show();
-                    return false;
-                }
-            }
-
-            if (document.orderform.extrabreit.value == "") {
-
-                var myRadio = $('input[name="car_type"]');
-                var checkedValue = myRadio.filter(':checked').val();
-
-                if (checkedValue == "lkw") {
-
-                    alert("Bitte geben Sie an, ob Sie eine einseitige oder beidseitige Halteverbotszone benötigen.");
-                    document.orderform.extrabreit.focus();
-                    return false;
-                }
-            }
-
-
-            return true;
-        }
-
-        /* checkout */
-        function checkCustomerData() {
-
-            if (document.customer_data.email.value == "") {
-                alert("Bitte geben Sie unbedingt Ihre E-Mail Adresse an.");
-                document.customer_data.email.focus();
-                return false;
-            }
-
-            if (document.customer_data.email.value != document.customer_data.email_repeat.value) {
-                alert("Bitte überprüfen Sie die Eingabe der E-Mail-Adressen.");
-                document.customer_data.email.focus();
-                return false;
-            }
-
-            var myRadio = $('input[name="anrede"]');
-            var checkedValue = myRadio.filter(':checked').val();
-
-            if (checkedValue == "undefined" || checkedValue == undefined) {
-
-                alert("Bitte geben Sie eine Anrede an.");
-                return false;
-            }
-
-            if (document.customer_data.anrede.value == "") {
-                alert("Bitte geben Sie eine Anrede an.");
-                return false;
-            }
-
-            if (document.customer_data.firstname.value == "" || document.customer_data.lastname.value == "") {
-                alert("Bitte geben Sie Ihren Vor- und Nachnamen an.");
-                document.customer_data.firstname.focus();
-                return false;
-            }
-
-            if (document.customer_data.strasse.value == "" || document.customer_data.nr.value == "") {
-                alert("Bitte geben Sie Ihre Straße und Hausnummer an.");
-                document.customer_data.strasse.focus();
-                return false;
-            }
-
-            if (document.customer_data.kunde_plz.value == "" || document.customer_data.ort.value == "") {
-                alert("Bitte geben Sie Ihre PLZ und Ihren Wohnort an.");
-                document.customer_data.kunde_plz.focus();
-                return false;
-            }
-
-            if (document.customer_data.fon.value == "") {
-                alert("Bitte geben Sie Ihre Telefonnummer an.");
-                document.customer_data.fon.focus();
-                return false;
-            }
-
-
-            return true;
-        }
-
-    </script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.2.1/typeahead.bundle.min.js"
+            integrity="sha256-VCsWOz+0GuHdS/sIICtQNTFJdbaDI80rxvoB7BXabrU=" crossorigin="anonymous"></script>
+    <script type="text/javascript"
+            src="https://www.static-immobilienscout24.de/fro/core/3.0.1-0/js/core.min.js"></script>
 
 </head>
-<body style="max-width:980px;" onLoad="document.getElementById('tags').focus();">
+<body onLoad="document.getElementById('tags').focus();">
 
 {% block noscript %}
     <noscript>
         <style>
             .page-cover {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 100%;
-    z-index: 100;
-}
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                height: 100%;
+                z-index: 100;
+            }
+
             .page-cover p {
-    width: 95%;
-    font-size: 15px;
-}
-.page-cover p {
-    position: absolute;
-    top: 10%;
-    left: 50%;
-    transform: translate(-50%, -10%);
-    width: 50%;
-    color: white;
-    background: rgba(0,0,0,0.6);
-    padding: 2rem;
-    border-radius: 4px;
-}
+                width: 95%;
+                font-size: 15px;
+            }
+
+            .page-cover p {
+                position: absolute;
+                top: 10%;
+                left: 50%;
+                transform: translate(-50%, -10%);
+                width: 50%;
+                color: white;
+                background: rgba(0, 0, 0, 0.6);
+                padding: 2rem;
+                border-radius: 4px;
+            }
+
             body:before {
                 content: " ";
                 width: 100%;

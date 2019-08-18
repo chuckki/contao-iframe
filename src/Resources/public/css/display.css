@@ -11,25 +11,12 @@
     width: 1px;
 }
 
-/*
-html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, form, fieldset, legend, label, input, select, textarea, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figure, figcaption, footer, header, main, menu, nav, section, summary, time, mark, audio, video {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    -o-box-sizing: border-box;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    outline: 0;
-}
-*/
 html {
     font-size: 100%;
 }
 
 * {
-    outline: none; /* Works in Firefox, Chrome, IE8 and above */
+    outline: none;
 }
 
 input:focus,
@@ -50,7 +37,7 @@ table {
 }
 
 body {
-    max-width: 860px;
+    max-width: 980px;
     margin: 0 auto;
 }
 
@@ -74,7 +61,6 @@ body {
     background: #F6F6F6;
     padding: 10px 10px;
     margin: 0 auto 10px;
-    /*    width: 80%;*/
     font-size: 14px;
 }
 
