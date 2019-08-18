@@ -143,7 +143,7 @@
                             data-toggle="popover"
                             data-placement="auto"
                             data-original-title="Gültigkeitsdauer"
-                            data-content="Der oben angegebene Preis bezieht sich auf die Gültigkeit eines Tages. Ab dem zweiten Tag werden pro Tag Zusatzkosten in Höhe von <strong>{{ extraTag|number_format(2, ',') }} €</strong> erhoben."
+                            data-content="Der oben angezeigte Preis bezieht sich auf die Gültigkeitsdauer eines Tages. Ab dem zweiten Tag werden pro weiteren Gültigkeitstag Kosten von jeweils <strong>{{ extraTag|number_format(2, ',') }} €</strong> fällig."
                     ></button>
                     <label for="ctrl_extraTag" class="placeholder">{{ hvzForm.widget('extraTag').label }}</label>
                     <select id="ctrl_extraTag" class="select" required name="{{ hvzForm.widget('extraTag').name }}">
@@ -239,11 +239,12 @@
                        data-toggle="popover"
                        data-placement="auto"
                        data-original-title="Grund für die Stellung"
-                       data-content="Grund"
+                       data-content="Bei Baustellen und Containergestellungen fallen in den meisten Fällen behördliche Auflagen und Zusatzkosten an. In diesem Fall werden Sie durch uns entsprechend informiert und beraten."
                     ></i>
                     <label for="ctrl_hvzReason" class="placeholder">{{ hvzForm.widget('hvzReason').label }}</label>
                     <select id="ctrl_hvzReason" class="select" name="{{ hvzForm.widget('hvzReason').name }}">
                         <option value="umzug" selected="selected">Umzug</option>
+                        <option value="anlieferung">Anlieferung</option>
                         <option value="containergestellung">Containergestellung</option>
                         <option value="baustelle">Baustelle</option>
                         <option value="sonstiges">Sonstiges</option>
@@ -302,7 +303,7 @@
                        data-toggle="popover"
                        data-placement="auto"
                        data-original-title="Grund für die Stellung"
-                       data-content="Extrakosten <strong>+{{ extraKostenDoppelseitig }} €</strong>"
+                       data-content="Beachten Sie, dass am Gültigkeitstag an der von Ihnen gebuchten Adresse eine Rettungsgasse von mindestens 3 Metern gegeben ist. Andernfalls buchen Sie in jedem Falle eine beidseitige Aufstellung (<strong>+{{ extraKostenDoppelseitig }} €</strong>) um ausreichend Platz zu gewährleisten."
                     ></i>
                     <label for="ctrl_hvzType" class="placeholder">{{ hvzForm.widget('hvzType').label }}</label>
                     <select id="ctrl_hvzType" class="select" name="{{ hvzForm.widget('hvzType').name }}">
@@ -348,12 +349,6 @@
                        id="ctrl_billingOrganization" name="{{ hvzForm.widget('organization').name }}"
                        autocomplete="organization">
             </div>
-            <!--
-                        <div class="" id="umstElement" style="display: none;">
-                            <label for="umstid" class="placeholder">USt-IdNr.</label>
-                            <input type="text" value="" placeholder="USt-IdNr. (optional)" class="text" id="umstid" name="umstid">
-                        </div>
-            -->
 
             <div class="formRow empty {{ hvzForm.widget('familyName').class }}">
                 <label for="ctrl_familyName" class="placeholder">{{ hvzForm.widget('familyName').label }}</label>

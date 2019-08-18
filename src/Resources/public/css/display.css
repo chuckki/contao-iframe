@@ -298,7 +298,7 @@ legend {
 }
 
 .formRow.error input,
-.formRow.error select{
+.formRow.error select {
     border: 1px solid #d60e0e;
 }
 
@@ -522,11 +522,20 @@ input:required:valid {
     text-decoration: underline;
 }
 
-.submit-wrapper{
+.submit-wrapper {
     width: 100%;
 }
 
+
 @media (max-width: 1014px) {
+
+.campaign-box {
+    width: 80%;
+}
+
+    #orderForm {
+        width: 100%;
+    }
 
     .formRow {
         flex: 1 1 43%;
@@ -544,10 +553,19 @@ input:required:valid {
     .oneRow .formRow:nth-child(2n +1) {
         margin-left: 20px;
     }
+
+    legend {
+        height: auto;
+    }
 }
 
 
 @media (max-width: 669px) {
+
+.campaign-box {
+    width: 100%;
+}
+
 
     .input-text, .select, .textarea {
         font-size: 16px;
@@ -596,10 +614,12 @@ input:required:valid {
     .campaign-box {
         width: 85%;
     }
-.formbody input[type="submit"] {
-    font-size: 1.4rem;
-}
-    .submit-wrapper{
+
+    .formbody input[type="submit"] {
+        font-size: 1.4rem;
+    }
+
+    .submit-wrapper {
         display: flex;
         justify-content: center;
     }

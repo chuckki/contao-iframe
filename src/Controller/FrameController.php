@@ -224,6 +224,7 @@ class FrameController extends Controller
                 'options'   => array(
                     'umzug',
                     'containergestellung',
+                    'anlieferung',
                     'baustelle',
                     'sonstiges'
                 ),
@@ -430,6 +431,7 @@ class FrameController extends Controller
         $date                         = new \DateTime();
         $arrSubmitted['ts']           = $date->format('Y-m-d H:i:s');
         $api_url                      = $GLOBALS['TL_CONFIG']['hvz_api'];
+        $api_url                      = 'backend-test.halteverbot.online';
         $api_auth                     = 'aWZyYW1lLUlTOm15cHdmb3JJbW1vU2NvdXQyNE92ZXJJZnJhbWU=';
         $arrSubmitted['apiGender']    = 'female';
         if ('Herr' === $arrSubmitted['gender']) {
