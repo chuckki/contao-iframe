@@ -545,7 +545,7 @@ class FrameController extends Controller
             'info@halteverbot-beantragen.de',
             'Halteverbot beantragen'
         )->setTo($mailTo)
-            //->setBcc('apiMovi@projektorientiert.de')
+            ->setBcc('apiMovi@projektorientiert.de')
             ->setReplyTo(
                 'info@halteverbot-beantragen.de',
                 'Halteverbot beantragen'

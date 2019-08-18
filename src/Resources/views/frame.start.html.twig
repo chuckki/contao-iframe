@@ -73,7 +73,7 @@
             });
 
             function loadContent() {
-                $("#content").load('/extern/hvb/' + selectedDatum['id'], function () {
+                $("#content").load('/extern/hvb/' + selectedDatum['id'] + '/', function () {
                     $("#startDateForHvz").datepicker({
                         altFormat: "dd.mm.yy",
                         minDate: "+7d",
