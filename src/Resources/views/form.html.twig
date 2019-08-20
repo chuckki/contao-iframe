@@ -434,7 +434,9 @@
         $("#ctrl_hvzLength option[value={{ hvzForm.widget('hvzLength').value }}]").attr('selected', true);
         $("#ctrl_hvzCarType option[value={{ hvzForm.widget('hvzCarType').value }}]").attr('selected', true);
         $("#ctrl_hvzType option[value={{ hvzForm.widget('hvzType').value }}]").attr('selected', true);
+        {% if hvzForm.widget('gender').value is defined %}
         $("#ctrl_gender option[value={{ hvzForm.widget('gender').value }}]").attr('selected', true);
+        {% endif %}
         $("#ctrl_extraTag").change();
         $("#ctrl_startTime").change();
         $("#ctrl_endTime").change();
@@ -443,7 +445,7 @@
         $("#ctrl_hvzCarType").change();
         $("#ctrl_hvzType").change();
         $("#ctrl_gender").change();
-
+        DATEPIC.initDatePicker();
         $('html, body').animate({
             scrollTop: $('.error:first').offset().top - 20
         }, 1000);

@@ -30,9 +30,9 @@
 
             var form = $(document.querySelector('input[name="FORM_SUBMIT"][value="{{ formId }}"]').form);
             form.submit(function () {
-                let submitBtn = $("#orderBtn");
-                submitBtn.prop("disabled", true);
-                submitBtn.css("border", "1px solid");
+
+                $(".submit-wrapper").html("<div class='sending'><i class=\"fas fa-spinner fa-spin\"></i> Daten werden gesendet</div>");
+
                 $.ajax({
                     type: 'POST',
                     data: window.FormData ? new FormData(this) : form.serialize(),
@@ -42,25 +42,13 @@
                     processData: false,
                     success: function (data) {
 
-                        $(".citysearch").html(data);
-                        return;
-                        if (data == 'true') {
-                            form.off('submit').submit();
-                            return;
-                        }
-                        form.animate({'opacity': 0}, 200, 'swing', function () {
-                            form.html(data);
-                            form.animate({'opacity': 1}, 200);
+  //                      $("#content").html(data);
+//                        return;
+                        let contentEl = $("#content")
+                            contentEl.animate({'opacity': 0}, 200, 'swing', function () {
+                            contentEl.html(data);
+                            contentEl.animate({'opacity': 1}, 200);
 
-                            try {
-                                form.find('input,textarea').each(function (el) {
-                                    el.cleardefault();
-                                });
-                            } catch (err) {
-                            }
-
-                            form.trigger('ajax_change');
-                            $(window).trigger('ajax_change');
                         });
                     }
                 });

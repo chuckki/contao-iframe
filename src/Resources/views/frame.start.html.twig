@@ -61,7 +61,7 @@
             tagsEl.on("typeahead:selected", function (ev, suggestion) {
                 console.log('selected-event');
                 selectedDatum = suggestion;
-                //loadContent(selectedDatum);
+                loadContent(selectedDatum);
             });
 
             tagsEl.on("typeahead:select", function (ev, suggestion, be, am) {
@@ -76,8 +76,6 @@
                     selectedDatum = suggestion[0];
                 }
             });
-
-
             tagsEl.bind("typeahead:autocomplete", function (ev, suggestion) {
                 console.log('autocomplete-event');
                 selectedDatum = suggestion;
@@ -86,7 +84,6 @@
                 console.log('cursorchange-event');
                 console.log(suggestion);
             });
-
 
             $("#searchButton").click(function () {
                 loadContent(selectedDatum);
@@ -101,30 +98,28 @@
                 }
             });
 
-            /*
-                        tagsEl.focusout(function () {
-                            if ($(window).width() < 800) {
-                                $(".tt-suggestion:first-child").trigger('click');
-                            }
-                            return true;
-                        });
-            */
-
             function loadContent(selectedDatum) {
                 $("#content").load('/extern/{{ customer }}/hvb/' + selectedDatum['id'] + '/', function () {
-                    $("#startDateForHvz").datepicker({
-                        altFormat: "dd.mm.yy",
-                        minDate: "+7d",
-                        beforeShow: function () {
-                            $("#ctrl_startDateInput").parent().addClass('notempty');
-                        }
-                    }).on("change", function () {
-                        $("#startDateForHvz").datepicker("option", "altField", "#ctrl_startDateInput");
-                        cancelSelection();
-                        updatePrice();
-                    });
+                    DATEPIC.initDatePicker();
                 });
             }
         });
+
+        DATEPIC = {
+            initDatePicker: function () {
+                $("#startDateForHvz").datepicker({
+                    altFormat: "dd.mm.yy",
+                    minDate: "+7d",
+                    beforeShow: function () {
+                        $("#ctrl_startDateInput").parent().addClass('notempty');
+                    }
+                }).on("change", function () {
+                    $("#startDateForHvz").datepicker("option", "altField", "#ctrl_startDateInput");
+                    cancelSelection();
+                    updatePrice();
+                });
+            }
+        }
+
     </script>
 {% endblock %}
