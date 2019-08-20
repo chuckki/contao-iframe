@@ -46,7 +46,7 @@
     });
 
 
-    $("#ctrl_gender").on("input", function () {
+    $("#ctrl_gender").on("change", function () {
         let el = $("#genderIcon");
         el.removeClass('fa-genderless');
         if ($(this).val() === 'Herr') {
