@@ -69,7 +69,8 @@
             }</style>
         <div class="page-cover"><p>
                 Um eine Bestellung für ein Halteverbot auszulösen benötigen Sie JavaScript.
-                Ohne diese Funktion ist eine Halteverbotbestellung nicht möglich. Sollte dies bei Ihnen der Fall sein, so nehmen wir
+                Ohne diese Funktion ist eine Halteverbotbestellung nicht möglich. Sollte dies bei Ihnen der Fall sein,
+                so nehmen wir
                 Ihre Bestellung gerne via Telefon <a href="tel://+4921517892382">+49 2151 –
                     789 23 82</a> oder via E-Mail: <a href="mailto:info@halteverbot-beantragen.de">info@halteverbot-beantragen.de</a>
                 entgegen.<br><br>Anleitung zum Aktivieren von JavaScript: <a
@@ -88,10 +89,10 @@
 
 {% block footer %}
     <div id="footer">
-        <a href="extern/page/agb/#top" class="agb-link">AGB</a> |
-        <a href="extern/page/widerruf/#top" class="agb-link">Widerruf</a> |
-        <a href="extern/page/datenschutzerklaerung" class="agb-link">Datenschutz</a> |
-        <a href="extern/page/impressum/#top" class="imprint-link">Impressum</a>
+        <a href="extern/{{ customer }}/page/agb/#top" class="agb-link">AGB</a> |
+        <a href="extern/{{ customer }}/page/widerruf/#top" class="agb-link">Widerruf</a> |
+        <a href="extern/{{ customer }}/page/datenschutzerklaerung" class="agb-link">Datenschutz</a> |
+        <a href="extern/{{ customer }}/page/impressum/#top" class="imprint-link">Impressum</a>
     </div>
 {% endblock %}
 

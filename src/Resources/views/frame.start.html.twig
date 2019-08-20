@@ -1,16 +1,19 @@
 {% extends "@ChuckkiHvzIframe/base.html.twig" %}
 
+{% set customer = customer %}
 
 {% block content %}
     <div class="citysearch">
         <p>Hier können Sie für Ihren bevorstehenden Umzug sicher und unkompliziert ein entsprechendes Halteverbot
             bestellen. Wir sorgen dafür, dass Sie sich voll und ganz auf die Durchführung Ihres Umzuges konzentrieren
             können. Ein Service bereitgestellt von <a href="https://www.halteverbot-beantragen.de" target="_blank"
-                               title="Halteverbote online bestellen"> www.halteverbot-beantragen.de</a></p>
+                                                      title="Halteverbote online bestellen">
+                www.halteverbot-beantragen.de</a></p>
         <h3 id="hvzlistdropdown">Preise für Ihre Halteverbotszone in:</h3>
 
         <div class="ta_wrapper">
-            <input autofocus type="search" name="hvzLoopUp" placeholder="Name oder PLZ der Stadt eingeben" value="" autocomplete="off"  id="tags">
+            <input autofocus type="search" name="hvzLoopUp" placeholder="Name oder PLZ der Stadt eingeben" value=""
+                   autocomplete="off" id="tags">
             <button id="searchButton" class="searchBtn">
                 <i class="fas fa-search"></i>
                 <span class="">Suchen</span>
@@ -61,7 +64,7 @@
                 //loadContent(selectedDatum);
             });
 
-            tagsEl.on("typeahead:select", function (ev, suggestion, be ,am) {
+            tagsEl.on("typeahead:select", function (ev, suggestion, be, am) {
                 console.log('select -event');
                 selectedDatum = suggestion;
                 //loadContent(selectedDatum);
@@ -69,7 +72,7 @@
 
             tagsEl.bind("typeahead:render", function (ev, suggestion) {
                 console.log('selected-render');
-                if(suggestion.length > 0){
+                if (suggestion.length > 0) {
                     selectedDatum = suggestion[0];
                 }
             });
@@ -78,9 +81,6 @@
             tagsEl.bind("typeahead:autocomplete", function (ev, suggestion) {
                 console.log('autocomplete-event');
                 selectedDatum = suggestion;
-            });
-            tagsEl.bind("typeahead:asyncreceive", function (ev, suggestion,be) {
-                //console.log('asyncreceive-event');
             });
             tagsEl.bind("typeahead:cursorchange", function (ev, suggestion) {
                 console.log('cursorchange-event');
@@ -95,21 +95,23 @@
             tagsEl.keypress(function (e) {
                 if (13 === e.which) {
                     console.log(selectedDatum);
-                    if(selectedDatum !== ""){
+                    if (selectedDatum !== "") {
                         loadContent(selectedDatum);
                     }
                 }
             });
 
-            tagsEl.focusout(function () {
-                if ($(window).width() < 800) {
-                    $(".tt-suggestion:first-child").trigger('click');
-                }
-                return true;
-            });
+            /*
+                        tagsEl.focusout(function () {
+                            if ($(window).width() < 800) {
+                                $(".tt-suggestion:first-child").trigger('click');
+                            }
+                            return true;
+                        });
+            */
 
             function loadContent(selectedDatum) {
-                $("#content").load('/extern/hvb/' + selectedDatum['id'] + '/', function () {
+                $("#content").load('/extern/{{ customer }}/hvb/' + selectedDatum['id'] + '/', function () {
                     $("#startDateForHvz").datepicker({
                         altFormat: "dd.mm.yy",
                         minDate: "+7d",

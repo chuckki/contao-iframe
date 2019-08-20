@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Chuckki\HvzIframeBundle\Controller;
-
 
 use Contao\ArticleModel;
 use Contao\ContentModel;
@@ -31,39 +29,41 @@ class FramePages extends Controller
 
     private function buildHeadLine(string $headlineArray)
     {
-            $arrHeadline = StringUtil::deserialize($headlineArray);
-            $headlineString = \is_array($arrHeadline) ? $arrHeadline['value'] : $arrHeadline;
-            $headlineTag = \is_array($arrHeadline) ? $arrHeadline['unit'] : 'h1';
-            $string = '<h3>'.$headlineString.'</h3>';
-            return $string;
+        $arrHeadline    = StringUtil::deserialize($headlineArray);
+        $headlineString = \is_array($arrHeadline) ? $arrHeadline['value'] : $arrHeadline;
+        $headlineTag    = \is_array($arrHeadline) ? $arrHeadline['unit'] : 'h1';
+        $string         = '<h3>' . $headlineString . '</h3>';
+        return $string;
     }
 
-    public function showPageInFrameAction($alias)
+    public function showPageInFrameAction($customer, $alias)
     {
-        switch ($alias){
+        switch ($alias) {
             case 'impressum':
             case 'widerruf':
             case 'datenschutzerklaerung':
             case 'agb':
                 break;
             default:
-                throw new PageNotFoundException( 'Page not found: ' . \Environment::get('uri') );
+                throw new PageNotFoundException('Page not found: ' . \Environment::get('uri'));
         }
-
-        $pageObj = PageModel::findByAlias($alias);
+        $pageObj     = PageModel::findByAlias($alias);
         $articlesObj = ArticleModel::findByPid($pageObj->id);
-        $txt = '';
+        $txt         = '';
         foreach ($articlesObj as $articleModel) {
             $objElement = ContentModel::findByPid($articleModel->id);
             /** @var ContentModel $objElement */
-            $txt .= $this->buildHeadLine($objElement->headline). $objElement->text;
+            $txt .= $this->buildHeadLine($objElement->headline) . $objElement->text;
         }
-
         $insertTags = new InsertTags();
-        $txt    = $insertTags->replace($txt, false);
-        return $this->render('@ChuckkiHvzIframe/frame.page.html.twig', [
-            'content'          => $txt
-        ]);
+        $txt        = $insertTags->replace($txt, false);
+        return $this->render(
+            '@ChuckkiHvzIframe/frame.page.html.twig',
+            [
+                'customer' => $customer,
+                'content'  => $txt
+            ]
+        );
 
     }
 }

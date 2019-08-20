@@ -41,7 +41,7 @@ body {
     margin: 0 auto;
 }
 
-h2.tophl{
+h2.tophl {
     text-align: center;
 }
 
@@ -60,16 +60,18 @@ h2.tophl{
     border-radius: 0 4px 4px 0;
 }
 
-#searchButton .fa-search{
+#searchButton .fa-search {
     display: none;
 }
-#searchButton span{
+
+#searchButton span {
     display: inline;
 }
+
 .citysearch {
     border: 1px solid #E0E0E0;
     background: #F6F6F6;
-    padding: 10px 10px 20px;
+    padding: 10px 2% 20px;
     margin: 0 auto 10px;
     font-size: 14px;
 }
@@ -540,9 +542,11 @@ input:required:valid {
 
 @media (max-width: 1014px) {
 
-.campaign-box {
-    width: 80%;
-}
+
+    .ta_wrapper,
+    .campaign-box {
+        width: 80%;
+    }
 
     #orderForm {
         width: 100%;
@@ -574,25 +578,19 @@ input:required:valid {
 @media (max-width: 669px) {
 
     .twitter-typeahead:before,
-    #searchButton span{
+    #searchButton span {
         display: none;
     }
-    #searchButton .fa-search{
+
+    #searchButton .fa-search {
         display: inline;
         font-size: 1.4em;
     }
 
-    .ta_wrapper input{
+    .ta_wrapper input {
         padding-left: 12px;
     }
-    
-    .campaign-box {
-        width: 100%;
-    }
 
-    .ta_wrapper{
-        width: 90%;
-    }
 
     .input-text, .select, .textarea {
         font-size: 16px;

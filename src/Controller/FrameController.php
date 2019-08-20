@@ -28,19 +28,25 @@ class FrameController extends Controller
         $this->framework = $framework;
     }
 
-    public function loadFrameAction(): Response
+    public function loadFrameAction($customer): Response
     {
-        return $this->render('@ChuckkiHvzIframe/frame.start.html.twig');
+        return $this->render(
+            '@ChuckkiHvzIframe/frame.start.html.twig',
+            [
+                'customer' => $customer
+            ]
+        );
     }
 
-    public function getHvbInfo($id): Response
+    public function getHvbInfo($customer, $id): Response
     {
         $orderObj   = HvzModel::findById($id);
-        $formString = $this->buildForm($orderObj);
+        $formString = $this->buildForm($orderObj, $customer);
         //$formString->getWidget('test')->label
         return $this->render(
             '@ChuckkiHvzIframe/frame.details.html.twig',
             [
+                'customer'     => $customer,
                 'hvz'          => $orderObj,
                 'hvzForm'      => $formString,
                 'isSubmited'   => false,
@@ -50,7 +56,7 @@ class FrameController extends Controller
         );
     }
 
-    public function getHvbPrice($id): Response
+    public function getHvbPrice($customer, $id): Response
     {
         $hvzObj = HvzModel::findById($id);
         if (!$hvzObj) {
@@ -91,7 +97,7 @@ class FrameController extends Controller
 
     }
 
-    private function buildForm(HvzModel $hvzModel)
+    private function buildForm(HvzModel $hvzModel, $customer)
     {
         $objForm = new Form(
             'hvzOrderform', 'POST', function ($objHaste) {
@@ -376,8 +382,8 @@ class FrameController extends Controller
         $objForm->addFormField(
             'agbAccept',
             array(
-                'label'     => 'Ich erkläre mich mit den <a target="_blank" href="/extern/page/agb/#top">AGB</a>
-                    und den <a target="_blank" href="/extern/page/datenschutzerklaerung/#top">Datenschutzrichtlinien</a>
+                'label'     => 'Ich erkläre mich mit den <a target="_blank" href="/extern/' . $customer . '/page/agb/#top">AGB</a>
+                    und den <a target="_blank" href="/extern/' . $customer . '/page/datenschutzerklaerung/#top">Datenschutzrichtlinien</a>
                     einverstanden',
                 'inputType' => 'checkbox',
                 'eval'      => array('mandatory' => true)
@@ -387,13 +393,13 @@ class FrameController extends Controller
     }
 
 
-    public function checkFormAction($id): Response
+    public function checkFormAction($customer, $id): Response
     {
         $objHvz  = HvzModel::findById($id);
-        $objForm = $this->buildForm($objHvz);
+        $objForm = $this->buildForm($objHvz, $customer);
         if ($objForm->validate()) {
             $arrData              = $objForm->fetchAll();
-            $orderNumber          = $this->sendNewOrderToBackend($arrData, $objHvz);
+            $orderNumber          = $this->sendNewOrderToBackend($arrData, $customer, $objHvz);
             $arrData['uniqueRef'] = $orderNumber;
             $this->sendComfirmationMail($arrData, $objHvz);
             return $this->render(
@@ -408,6 +414,7 @@ class FrameController extends Controller
             return $this->render(
                 '@ChuckkiHvzIframe/frame.details.html.twig',
                 [
+                    'customer'     => $customer,
                     'hvz'          => $objHvz,
                     'isSubmited'   => true,
                     'hvzForm'      => $objForm,
@@ -419,8 +426,14 @@ class FrameController extends Controller
     }
 
 
-    private function sendNewOrderToBackend(&$arrSubmitted, HvzModel $hvzModel)
+    private function sendNewOrderToBackend(&$arrSubmitted, string $customer, HvzModel $hvzModel)
     {
+        switch ($customer) {
+            case 'is':
+                break;
+            default:
+                $customer = 'notSet';
+        }
         $zusatzTage                = (int) $arrSubmitted['extraTag'] - 1;
         $preisZusatzTag            = (int) $hvzModel->hvz_extra_tag;
         $arrSubmitted['fullPrice'] = $preisZusatzTag * $zusatzTage + (int) $hvzModel->hvz_single;
@@ -431,7 +444,6 @@ class FrameController extends Controller
         $date                         = new \DateTime();
         $arrSubmitted['ts']           = $date->format('Y-m-d H:i:s');
         $api_url                      = $GLOBALS['TL_CONFIG']['hvz_api'];
-        $api_url                      = 'backend-test.halteverbot.online';
         $api_auth                     = 'aWZyYW1lLUlTOm15cHdmb3JJbW1vU2NvdXQyNE92ZXJJZnJhbWU=';
         $arrSubmitted['apiGender']    = 'female';
         if ('Herr' === $arrSubmitted['gender']) {
@@ -465,7 +477,7 @@ class FrameController extends Controller
                 'telefon'        => $arrSubmitted['billingTel'],
                 'needLicence'    => true,
                 'gender'         => $arrSubmitted['apiGender'],
-                'customerId'     => 'iframe_IS',
+                'customerId'     => 'iframe_' . $customer,
                 'paymentStatus'  => 'in Progress',
             ];
             $pushMe = '';
@@ -546,35 +558,33 @@ class FrameController extends Controller
         ))->setFrom(
             'info@halteverbot-beantragen.de',
             'Halteverbot beantragen'
-        )->setTo($mailTo)
-            ->setBcc('apiMovi@projektorientiert.de')
-            ->setReplyTo(
-                'info@halteverbot-beantragen.de',
-                'Halteverbot beantragen'
-            )->setBody(
-                $this->renderView(
-                    '@ChuckkiHvzIframe/mail.confirmation.html.twig',
-                    [
-                        'hvzorder'       => $hvzModel,
-                        'customer'       => $arrSubmitted,
-                        'grussFormel'    => $grussFormel,
-                        'additionalInfo' => $additinalInfoHtml,
-                    ]
-                ),
-                'text/html'
-            )->addPart(
-                $this->renderView(
-                    '@ChuckkiHvzIframe/mail.confirmation.text.twig',
-                    [
-                        'hvzorder'       => $hvzModel,
-                        'customer'       => $arrSubmitted,
-                        'grussFormel'    => $grussFormel,
-                        'additionalInfo' => $additinalInfoTxt,
-                    ]
-                ),
-                'text/plain'
-            );
-        $mailer = $this->get('swiftmailer.mailer');
+        )->setTo($mailTo)->setBcc('apiMovi@projektorientiert.de')->setReplyTo(
+            'info@halteverbot-beantragen.de',
+            'Halteverbot beantragen'
+        )->setBody(
+            $this->renderView(
+                '@ChuckkiHvzIframe/mail.confirmation.html.twig',
+                [
+                    'hvzorder'       => $hvzModel,
+                    'customer'       => $arrSubmitted,
+                    'grussFormel'    => $grussFormel,
+                    'additionalInfo' => $additinalInfoHtml,
+                ]
+            ),
+            'text/html'
+        )->addPart(
+            $this->renderView(
+                '@ChuckkiHvzIframe/mail.confirmation.text.twig',
+                [
+                    'hvzorder'       => $hvzModel,
+                    'customer'       => $arrSubmitted,
+                    'grussFormel'    => $grussFormel,
+                    'additionalInfo' => $additinalInfoTxt,
+                ]
+            ),
+            'text/plain'
+        );
+        $mailer  = $this->get('swiftmailer.mailer');
         if (0 === $mailer->send($message)) {
             PushMeMessage::pushMe('Comfirmation Mail not Send:' . $arrSubmitted['uniqueRef'], 'iframe_IS');
         }
