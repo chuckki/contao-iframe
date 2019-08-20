@@ -130,7 +130,7 @@
                 <label for="ctrl_startDateInput"
                        class="placeholder">{{ hvzForm.widget('startDateInput').label|raw }}</label>
                 <i class="far fa-calendar input-unity"></i>
-                <input type="text" class="text mandatory" id="ctrl_startDateInput"
+                <input type="text" class="text mandatory" readonly id="ctrl_startDateInput"
                        pattern="\d{1,2}.\d{1,2}.20\d{2}" required name="{{ hvzForm.widget('startDateInput').name }}"
                        value="{{ hvzForm.widget('startDateInput').value }}"
                        title="Datum (dd.mm.yyyy) ab wann soll die Halteverbotszone gültig sein">
