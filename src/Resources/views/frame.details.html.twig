@@ -30,6 +30,8 @@
 
             var form = $(document.querySelector('input[name="FORM_SUBMIT"][value="{{ formId }}"]').form);
             form.submit(function () {
+                $("#orderBtn").prop( "disabled", true );
+                $("#orderBtn").css( "border", "1px solid" );
                 $.ajax({
                     type: 'POST',
                     data: window.FormData ? new FormData(this) : form.serialize(),
