@@ -65,11 +65,12 @@ class FrameController extends Controller
         $startDateString = Input::post('startDate');
         $extraTag        = (int) Input::post('extraTag') - 1;
         $hvzType         = Input::post('hvzType');
-        setlocale(LC_ALL, 'de_DE');
         $startDate = \DateTime::createFromFormat('d.m.Y', $startDateString);
         $endDate   = \DateTime::createFromFormat('d.m.Y', $startDateString);
         $endDate   = $endDate->modify('+' . $extraTag . ' days');
+        setlocale( LC_TIME, 'de_DE');
         $startTag  = strftime('%A', $startDate->getTimestamp());
+        setlocale( LC_TIME,'de_DE@euro', 'de_DE', 'de', 'ge');
         $endTag    = strftime('%A', $endDate->getTimestamp());
         $price     = ($hvzType === 'beidseitig') ? $hvzObj->hvz_double : $hvzObj->hvz_single;
         $order     = [
