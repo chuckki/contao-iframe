@@ -4,6 +4,7 @@ namespace Chuckki\HvzIframeBundle\Controller;
 
 use Chuckki\ContaoHvzBundle\HvzModel;
 use Chuckki\ContaoHvzBundle\PushMeMessage;
+use Chuckki\HvzIframeBundle\Services\Authenticator;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -20,16 +21,22 @@ class FrameController extends Controller
     protected $rootDir;
     protected $session;
     protected $framework;
+    private $authenticator;
 
-    public function __construct(string $rootDir, Session $session, ContaoFramework $framework)
+    public function __construct(string $rootDir, Session $session, ContaoFramework $framework, Authenticator $authenticator)
     {
         $this->rootDir   = $rootDir;
         $this->session   = $session;
         $this->framework = $framework;
+        $this->authenticator = $authenticator;
+
     }
 
     public function loadFrameAction($customer): Response
     {
+        $this->authenticator->getUsers();
+        $this->authenticator->isUserAuth($customer);
+
         return $this->render(
             '@ChuckkiHvzIframe/frame.start.html.twig',
             [

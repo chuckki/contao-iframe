@@ -13,6 +13,7 @@ services:
             - '%kernel.project_dir%'
             - "@session"
             - "@contao.framework"
+            - "@hvz.auth"
         tags: ['controller.service_arguments']
 
 
@@ -22,3 +23,12 @@ services:
             - "@session"
             - "@contao.framework"
         tags: ['controller.service_arguments']
+
+    hvz.auth:
+        class: Chuckki\HvzIframeBundle\Services\Authenticator
+        arguments:
+            - '%frameOptions%'
+
+    Chuckki\HvzIframeBundle\Services\Authenticator:
+        arguments:
+            - '%frameOptions%'
