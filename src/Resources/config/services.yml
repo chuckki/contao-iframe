@@ -27,8 +27,8 @@ services:
     hvz.auth:
         class: Chuckki\HvzIframeBundle\Services\Authenticator
         arguments:
-            - '%frameOptions%'
+            - '%iframe_user%'
 
     Chuckki\HvzIframeBundle\Services\Authenticator:
         arguments:
-            - '%frameOptions%'
+            - '%iframe_user%'
