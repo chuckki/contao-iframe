@@ -21,66 +21,91 @@ class FrameController extends Controller
     protected $rootDir;
     protected $session;
     protected $framework;
-    private $authenticator;
+    private   $authenticator;
 
-    public function __construct(string $rootDir, Session $session, ContaoFramework $framework, Authenticator $authenticator)
-    {
-        $this->rootDir   = $rootDir;
-        $this->session   = $session;
-        $this->framework = $framework;
+    public function __construct(
+        string $rootDir,
+        Session $session,
+        ContaoFramework $framework,
+        Authenticator $authenticator
+    ) {
+        $this->rootDir       = $rootDir;
+        $this->session       = $session;
+        $this->framework     = $framework;
         $this->authenticator = $authenticator;
 
     }
 
+    /**
+     * @param $customer
+     *
+     * /extern/{customer}/
+     *
+     * @return Response
+     */
     public function loadFrameAction($customer): Response
     {
         $this->authenticator->getUsers();
         $this->authenticator->isUserAuth($customer);
 
-        return $this->render(
-            '@ChuckkiHvzIframe/frame.start.html.twig',
-            [
-                'customer' => $customer
-            ]
-        );
+        return $this->render('@ChuckkiHvzIframe/frame.start.html.twig', [
+            'customer' => $customer
+        ]);
     }
 
+    /**
+     * @param $customer
+     * @param $id
+     *
+     * /extern/{customer}/hvb/{id}/
+     *
+     * @return Response
+     */
     public function getHvbInfo($customer, $id): Response
     {
+        $this->authenticator->isUserAuth($customer);
+
         $orderObj   = HvzModel::findById($id);
         $formString = $this->buildForm($orderObj, $customer);
-        //$formString->getWidget('test')->label
-        return $this->render(
-            '@ChuckkiHvzIframe/frame.details.html.twig',
-            [
-                'customer'     => $customer,
-                'hvz'          => $orderObj,
-                'hvzForm'      => $formString,
-                'isSubmited'   => false,
-                'requestToken' => \RequestToken::get(),
-                'formId'       => 'hvzOrderform'
-            ]
-        );
+
+        return $this->render('@ChuckkiHvzIframe/frame.details.html.twig', [
+            'customer'     => $customer,
+            'hvz'          => $orderObj,
+            'hvzForm'      => $formString,
+            'isSubmited'   => false,
+            'requestToken' => \RequestToken::get(),
+            'formId'       => 'hvzOrderform'
+        ]);
     }
 
+    /**
+     * @param $customer
+     * @param $id
+     *
+     * /extern/{customer}/getprice/{id}
+     *
+     * @return Response
+     */
     public function getHvbPrice($customer, $id): Response
     {
+        $this->authenticator->isUserAuth($customer);
+
         $hvzObj = HvzModel::findById($id);
         if (!$hvzObj) {
             throw new NotFoundException('Hvz not found');
         }
         $startDateString = Input::post('startDate');
-        $extraTag        = (int) Input::post('extraTag') - 1;
+        $extraTag        = (int)Input::post('extraTag') - 1;
         $hvzType         = Input::post('hvzType');
-        $startDate = \DateTime::createFromFormat('d.m.Y', $startDateString);
-        $endDate   = \DateTime::createFromFormat('d.m.Y', $startDateString);
-        $endDate   = $endDate->modify('+' . $extraTag . ' days');
-        setlocale( LC_TIME, 'de_DE','de_DE.utf8');
-        $startTag  = strftime('%A', $startDate->getTimestamp());
-        setlocale( LC_TIME,'de_DE@euro', 'de_DE', 'de', 'ge','de_DE.utf8');
-        $endTag    = strftime('%A', $endDate->getTimestamp());
-        $price     = ($hvzType === 'beidseitig') ? $hvzObj->hvz_double : $hvzObj->hvz_single;
-        $order     = [
+        $startDate       = \DateTime::createFromFormat('d.m.Y', $startDateString);
+        $endDate         = \DateTime::createFromFormat('d.m.Y', $startDateString);
+        $endDate         = $endDate->modify('+' . $extraTag . ' days');
+        setlocale(LC_TIME, 'de_DE', 'de_DE.utf8');
+        $startTag = strftime('%A', $startDate->getTimestamp());
+        setlocale(LC_TIME, 'de_DE@euro', 'de_DE', 'de', 'ge', 'de_DE.utf8');
+        $endTag = strftime('%A', $endDate->getTimestamp());
+        $price  = ($hvzType === 'beidseitig') ? $hvzObj->hvz_double : $hvzObj->hvz_single;
+        $order  = [
             'ort'               => $hvzObj->question,
             'hvzTitel'          => ucfirst($hvzType),
             'startDateName'     => $startTag,
@@ -96,313 +121,258 @@ class FrameController extends Controller
             'priceExtraTag'     => $hvzObj->hvz_extra_tag,
             'day'               => (($extraTag + 1) === 1) ? 'Tag' : 'Tage'
         ];
-        return $this->render(
-            '@ChuckkiHvzIframe/overviewOrder.html.twig',
-            [
-                'order' => $order
-            ]
-        );
+        return $this->render('@ChuckkiHvzIframe/overviewOrder.html.twig', [
+            'order' => $order
+        ]);
 
     }
 
     private function buildForm(HvzModel $hvzModel, $customer)
     {
-        $objForm = new Form(
-            'hvzOrderform', 'POST', function ($objHaste) {
+        $objForm = new Form('hvzOrderform', 'POST', function ($objHaste) {
             return Input::post('FORM_SUBMIT') === $objHaste->getFormId();
-        }
-        );
+        });
         // hvzAdresse
         // hvzAdresse
-        $objForm->addFormField(
-            'hvzAdresse',
-            array(
-                'default'   => '',
-                'label'     => 'Straße und Hausnummer',
-                'inputType' => 'text',
-                'eval'      => array('mandatory' => true)
-            )
-        );
+        $objForm->addFormField('hvzAdresse', array(
+            'default'   => '',
+            'label'     => 'Straße und Hausnummer',
+            'inputType' => 'text',
+            'eval'      => array('mandatory' => true)
+        ));
         // hvzPlz
-        $objForm->addFormField(
-            'hvzPlz',
-            array(
-                'default'   => '',
-                'label'     => 'Postleitzahl',
-                'inputType' => 'text',
-                'eval'      => array('mandatory' => true, 'rgxp' => 'digit', 'maxlength' => 5, 'minlength' => 4)
-            )
-        );
+        $objForm->addFormField('hvzPlz', array(
+            'default'   => '',
+            'label'     => 'Postleitzahl',
+            'inputType' => 'text',
+            'eval'      => array('mandatory' => true, 'rgxp' => 'digit', 'maxlength' => 5, 'minlength' => 4)
+        ));
         // hvzDatum
         // startDateInput
-        $objForm->addFormField(
-            'startDateInput',
-            array(
-                'default'   => '',
-                'label'     => 'Datum',
-                'inputType' => 'text',
-                'eval'      => array('mandatory' => true)
-            )
-        );
+        $objForm->addFormField('startDateInput', array(
+            'default'   => '',
+            'label'     => 'Datum',
+            'inputType' => 'text',
+            'eval'      => array('mandatory' => true)
+        ));
         // extraTag
-        $objForm->addFormField(
-            'extraTag',
-            array(
-                'description' => 'Anzahl der Tage',
-                'default'     => 1,
-                'label'       => 'Gültigkeitsdauer',
-                'inputType'   => 'select',
-                'size'        => 1,
-                'options'     => array(
-                    '1',
-                    '2',
-                    '3',
-                    '4',
-                    '5',
-                    '6',
-                    '7',
-                    '8',
-                    '9',
-                    '10',
-                    '11',
-                    '12',
-                    '13',
-                    '14',
-                ),
-                'eval'        => array('mandatory' => true)
-            )
-        );
+        $objForm->addFormField('extraTag', array(
+            'description' => 'Anzahl der Tage',
+            'default'     => 1,
+            'label'       => 'Gültigkeitsdauer',
+            'inputType'   => 'select',
+            'size'        => 1,
+            'options'     => array(
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9',
+                '10',
+                '11',
+                '12',
+                '13',
+                '14',
+            ),
+            'eval'        => array('mandatory' => true)
+        ));
         // startTime
-        $objForm->addFormField(
-            'startTime',
-            array(
-                'default'   => 7,
-                'label'     => 'täglich von',
-                'inputType' => 'select',
-                'size'      => 1,
-                'options'   => array(
-                    '7',
-                    '8',
-                    '9',
-                    '10',
-                    '11',
-                    '12',
-                    '13',
-                    '14',
-                    '15',
-                    '16',
-                    '17',
-                    '18',
-                    '19',
-                    '20',
-                ),
-                'eval'      => array('mandatory' => true)
-            )
-        );
+        $objForm->addFormField('startTime', array(
+            'default'   => 7,
+            'label'     => 'täglich von',
+            'inputType' => 'select',
+            'size'      => 1,
+            'options'   => array(
+                '7',
+                '8',
+                '9',
+                '10',
+                '11',
+                '12',
+                '13',
+                '14',
+                '15',
+                '16',
+                '17',
+                '18',
+                '19',
+                '20',
+            ),
+            'eval'      => array('mandatory' => true)
+        ));
         // endTime
-        $objForm->addFormField(
-            'endTime',
-            array(
-                'default'   => 19,
-                'label'     => 'täglich bis',
-                'inputType' => 'select',
-                'size'      => 1,
-                'options'   => array(
-                    '7',
-                    '8',
-                    '9',
-                    '10',
-                    '11',
-                    '12',
-                    '13',
-                    '14',
-                    '15',
-                    '16',
-                    '17',
-                    '18',
-                    '19',
-                    '20',
-                ),
-                'eval'      => array('mandatory' => true)
-            )
-        );
+        $objForm->addFormField('endTime', array(
+            'default'   => 19,
+            'label'     => 'täglich bis',
+            'inputType' => 'select',
+            'size'      => 1,
+            'options'   => array(
+                '7',
+                '8',
+                '9',
+                '10',
+                '11',
+                '12',
+                '13',
+                '14',
+                '15',
+                '16',
+                '17',
+                '18',
+                '19',
+                '20',
+            ),
+            'eval'      => array('mandatory' => true)
+        ));
         // hvzDetails
         // hvzReason
-        $objForm->addFormField(
-            'hvzReason',
-            array(
-                'default'   => 'umzug',
-                'label'     => 'Grund für die Stellung',
-                'inputType' => 'select',
-                'size'      => 1,
-                'options'   => array(
-                    'umzug',
-                    'containergestellung',
-                    'anlieferung',
-                    'baustelle',
-                    'sonstiges'
-                ),
-                'eval'      => array('mandatory' => true)
-            )
-        );
+        $objForm->addFormField('hvzReason', array(
+            'default'   => 'umzug',
+            'label'     => 'Grund für die Stellung',
+            'inputType' => 'select',
+            'size'      => 1,
+            'options'   => array(
+                'umzug',
+                'containergestellung',
+                'anlieferung',
+                'baustelle',
+                'sonstiges'
+            ),
+            'eval'      => array('mandatory' => true)
+        ));
         // hvzLength
-        $objForm->addFormField(
-            'hvzLength',
-            array(
-                'default'   => '15',
-                'label'     => 'Länge',
-                'inputType' => 'select',
-                'size'      => 1,
-                'options'   => array(
-                    '5',
-                    '10',
-                    '15',
-                    '20'
-                ),
-                'eval'      => array('mandatory' => true)
-            )
-        );
+        $objForm->addFormField('hvzLength', array(
+            'default'   => '15',
+            'label'     => 'Länge',
+            'inputType' => 'select',
+            'size'      => 1,
+            'options'   => array(
+                '5',
+                '10',
+                '15',
+                '20'
+            ),
+            'eval'      => array('mandatory' => true)
+        ));
         // hvzCarType
-        $objForm->addFormField(
-            'hvzCarType',
-            array(
-                'default'   => 'pkw',
-                'label'     => 'Fahrzeugtyp',
-                'inputType' => 'select',
-                'size'      => 1,
-                'options'   => array(
-                    'pkw',
-                    'lkw'
-                ),
-                'eval'      => array('mandatory' => true)
-            )
-        );
+        $objForm->addFormField('hvzCarType', array(
+            'default'   => 'pkw',
+            'label'     => 'Fahrzeugtyp',
+            'inputType' => 'select',
+            'size'      => 1,
+            'options'   => array(
+                'pkw',
+                'lkw'
+            ),
+            'eval'      => array('mandatory' => true)
+        ));
         // hvzType
-        $objForm->addFormField(
-            'hvzType',
-            array(
-                'default'   => 'einseitig',
-                'label'     => 'Beschilderung',
-                'inputType' => 'select',
-                'size'      => 1,
-                'options'   => array(
-                    'einseitig',
-                    'beidseitig'
-                ),
-                'eval'      => array('mandatory' => true)
-            )
-        );
+        $objForm->addFormField('hvzType', array(
+            'default'   => 'einseitig',
+            'label'     => 'Beschilderung',
+            'inputType' => 'select',
+            'size'      => 1,
+            'options'   => array(
+                'einseitig',
+                'beidseitig'
+            ),
+            'eval'      => array('mandatory' => true)
+        ));
         // hvzAdditionalInfos
-        $objForm->addFormField(
-            'hvzAdditionalInfos',
-            array(
-                'default'   => '',
-                'label'     => 'Zusatzinformationen',
-                'inputType' => 'textarea'
-            )
-        );
+        $objForm->addFormField('hvzAdditionalInfos', array(
+            'default'   => '',
+            'label'     => 'Zusatzinformationen',
+            'inputType' => 'textarea'
+        ));
         // billingData
         // gender
-        $objForm->addFormField(
-            'gender',
-            array(
-                'default'   => '',
-                'label'     => 'Anrede',
-                'inputType' => 'select',
-                'size'      => 1,
-                'options'   => array(
-                    'Herr',
-                    'Frau'
-                ),
-                'eval'      => array('mandatory' => true)
-            )
-        );
+        $objForm->addFormField('gender', array(
+            'default'   => '',
+            'label'     => 'Anrede',
+            'inputType' => 'select',
+            'size'      => 1,
+            'options'   => array(
+                'Herr',
+                'Frau'
+            ),
+            'eval'      => array('mandatory' => true)
+        ));
         // organization
-        $objForm->addFormField(
-            'organization',
-            array(
-                'default'   => '',
-                'label'     => 'Firma',
-                'inputType' => 'text',
-            )
-        );
+        $objForm->addFormField('organization', array(
+            'default'   => '',
+            'label'     => 'Firma',
+            'inputType' => 'text',
+        ));
         // organization
-        $objForm->addFormField(
-            'familyName',
-            array(
-                'default'   => '',
-                'label'     => 'Name',
-                'inputType' => 'text',
-                'eval'      => array('mandatory' => true)
-            )
-        );
+        $objForm->addFormField('familyName', array(
+            'default'   => '',
+            'label'     => 'Name',
+            'inputType' => 'text',
+            'eval'      => array('mandatory' => true)
+        ));
         // organization
-        $objForm->addFormField(
-            'givenName',
-            array(
-                'default'   => '',
-                'label'     => 'Vorname',
-                'inputType' => 'text',
-                'eval'      => array('mandatory' => true)
-            )
-        );
+        $objForm->addFormField('givenName', array(
+            'default'   => '',
+            'label'     => 'Vorname',
+            'inputType' => 'text',
+            'eval'      => array('mandatory' => true)
+        ));
         // organization
-        $objForm->addFormField(
-            'billingStreet',
-            array(
-                'default'   => '',
-                'label'     => 'Strasse/Hausnummer',
-                'inputType' => 'text',
-                'eval'      => array('mandatory' => true)
-            )
-        );
+        $objForm->addFormField('billingStreet', array(
+            'default'   => '',
+            'label'     => 'Strasse/Hausnummer',
+            'inputType' => 'text',
+            'eval'      => array('mandatory' => true)
+        ));
         // organization
-        $objForm->addFormField(
-            'billingCity',
-            array(
-                'default'   => '',
-                'label'     => 'Ort/Plz',
-                'inputType' => 'text',
-                'eval'      => array('mandatory' => true)
-            )
-        );
+        $objForm->addFormField('billingCity', array(
+            'default'   => '',
+            'label'     => 'Ort/Plz',
+            'inputType' => 'text',
+            'eval'      => array('mandatory' => true)
+        ));
         // organization
-        $objForm->addFormField(
-            'billingEmail',
-            array(
-                'default'   => '',
-                'label'     => 'E-Mail-Adresse',
-                'inputType' => 'text',
-                'eval'      => array('mandatory' => true)
-            )
-        );
+        $objForm->addFormField('billingEmail', array(
+            'default'   => '',
+            'label'     => 'E-Mail-Adresse',
+            'inputType' => 'text',
+            'eval'      => array('mandatory' => true)
+        ));
         // organization
-        $objForm->addFormField(
-            'billingTel',
-            array(
-                'default'   => '',
-                'label'     => 'Telefon',
-                'inputType' => 'text',
-                'eval'      => array('mandatory' => true)
-            )
-        );
+        $objForm->addFormField('billingTel', array(
+            'default'   => '',
+            'label'     => 'Telefon',
+            'inputType' => 'text',
+            'eval'      => array('mandatory' => true)
+        ));
         // Need a checkbox?
-        $objForm->addFormField(
-            'agbAccept',
-            array(
-                'label'     => 'Ich erkläre mich mit den <a target="_blank" href="/extern/' . $customer . '/page/agb/#top">AGB</a>
+        $objForm->addFormField('agbAccept', array(
+            'label'     => 'Ich erkläre mich mit den <a target="_blank" href="/extern/' . $customer . '/page/agb/#top">AGB</a>
                     und den <a target="_blank" href="/extern/' . $customer . '/page/datenschutzerklaerung/#top">Datenschutzrichtlinien</a>
                     einverstanden',
-                'inputType' => 'checkbox',
-                'eval'      => array('mandatory' => true)
-            )
-        );
+            'inputType' => 'checkbox',
+            'eval'      => array('mandatory' => true)
+        ));
         return $objForm;
     }
 
 
+    /**
+     * @param $customer
+     * @param $id
+     *
+     * /extern/{customer}/submit/{id}
+     *
+     * @return Response
+     */
     public function checkFormAction($customer, $id): Response
     {
+        $this->authenticator->isUserAuth($customer);
+
         $objHvz  = HvzModel::findById($id);
         $objForm = $this->buildForm($objHvz, $customer);
         if ($objForm->validate()) {
@@ -410,26 +380,20 @@ class FrameController extends Controller
             $orderNumber          = $this->sendNewOrderToBackend($arrData, $customer, $objHvz);
             $arrData['uniqueRef'] = $orderNumber;
             $this->sendComfirmationMail($arrData, $objHvz);
-            return $this->render(
-                '@ChuckkiHvzIframe/orderConfirm.html.twig',
-                [
-                    'customermail' => $arrData['billingEmail'],
-                    'ordernumber'  => $orderNumber
-                ]
-            );
+            return $this->render('@ChuckkiHvzIframe/orderConfirm.html.twig', [
+                'customermail' => $arrData['billingEmail'],
+                'ordernumber'  => $orderNumber
+            ]);
 
         } else {
-            return $this->render(
-                '@ChuckkiHvzIframe/frame.details.html.twig',
-                [
-                    'customer'     => $customer,
-                    'hvz'          => $objHvz,
-                    'isSubmited'   => true,
-                    'hvzForm'      => $objForm,
-                    'requestToken' => \RequestToken::get(),
-                    'formId'       => 'hvzOrderform'
-                ]
-            );
+            return $this->render('@ChuckkiHvzIframe/frame.details.html.twig', [
+                'customer'     => $customer,
+                'hvz'          => $objHvz,
+                'isSubmited'   => true,
+                'hvzForm'      => $objForm,
+                'requestToken' => \RequestToken::get(),
+                'formId'       => 'hvzOrderform'
+            ]);
         }
     }
 
@@ -442,9 +406,9 @@ class FrameController extends Controller
             default:
                 $customer = 'notSet';
         }
-        $zusatzTage                = (int) $arrSubmitted['extraTag'] - 1;
-        $preisZusatzTag            = (int) $hvzModel->hvz_extra_tag;
-        $arrSubmitted['fullPrice'] = $preisZusatzTag * $zusatzTage + (int) $hvzModel->hvz_single;
+        $zusatzTage                = (int)$arrSubmitted['extraTag'] - 1;
+        $preisZusatzTag            = (int)$hvzModel->hvz_extra_tag;
+        $arrSubmitted['fullPrice'] = $preisZusatzTag * $zusatzTage + (int)$hvzModel->hvz_single;
         setlocale(LC_ALL, 'de_DE');
         $endDate                      = \DateTime::createFromFormat('d.m.Y', $arrSubmitted['startDateInput']);
         $endDate                      = $endDate->modify('+' . $arrSubmitted['extraTag'] . ' days');
@@ -452,7 +416,7 @@ class FrameController extends Controller
         $date                         = new \DateTime();
         $arrSubmitted['ts']           = $date->format('Y-m-d H:i:s');
         $api_url                      = $GLOBALS['TL_CONFIG']['hvz_api'];
-        $api_auth                     = 'aWZyYW1lLUlTOm15cHdmb3JJbW1vU2NvdXQyNE92ZXJJZnJhbWU=';
+        $api_auth                     = $this->authenticator->getApiPwForUser($customer);
         $arrSubmitted['apiGender']    = 'female';
         if ('Herr' === $arrSubmitted['gender']) {
             $arrSubmitted['apiGender'] = 'male';
@@ -463,7 +427,7 @@ class FrameController extends Controller
             $data   = [
                 'uniqueRef'      => dechex(time()),
                 'reason'         => $arrSubmitted['hvzReason'],
-                'plz'            => (int) ($arrSubmitted['hvzPlz']),
+                'plz'            => (int)($arrSubmitted['hvzPlz']),
                 'city'           => $hvzModel->question,
                 'price'          => $arrSubmitted['fullPrice'] . '',
                 'streetName'     => $arrSubmitted['hvzAdresse'],
@@ -473,7 +437,7 @@ class FrameController extends Controller
                 'timeFrom'       => $arrSubmitted['startTime'] . ':00',
                 'timeTo'         => $arrSubmitted['endTime'] . ':00',
                 'email'          => $arrSubmitted['billingEmail'],
-                'length'         => (int) ($arrSubmitted['hvzLength']),
+                'length'         => (int)($arrSubmitted['hvzLength']),
                 'isDoubleSided'  => $doubleSide,
                 'carrier'        => $arrSubmitted['givenName'] . ' ' . $arrSubmitted['familyName'],
                 'additionalInfo' => $arrSubmitted['hvzAdditionalInfos'] . 'Genehmigung vorhanden:' . 'nein',
@@ -491,15 +455,13 @@ class FrameController extends Controller
             $pushMe = '';
             try {
                 // Send order to API
-                $client   = new Client(
-                    [
-                        'base_uri' => $api_url,
-                        'headers'  => [
-                            'Content-Type'  => 'application/json',
-                            'authorization' => 'Basic ' . $api_auth,
-                        ],
-                    ]
-                );
+                $client   = new Client([
+                    'base_uri' => $api_url,
+                    'headers'  => [
+                        'Content-Type'  => 'application/json',
+                        'authorization' => 'Basic ' . $api_auth,
+                    ],
+                ]);
                 $response = $client->post('/v1/order/new', ['body' => json_encode($data)]);
                 if (201 !== $response->getStatusCode()) {
 
@@ -520,10 +482,8 @@ class FrameController extends Controller
                 PushMeMessage::pushMe($pushMe);
             }
         }
-        PushMeMessage::pushMe(
-            'IS HvbOnline2Backend -> Keine Auftragsnummer: ' . $arrSubmitted['orderNumber'] . '_0 :: '
-            . $arrSubmitted['ts']
-        );
+        PushMeMessage::pushMe('IS HvbOnline2Backend -> Keine Auftragsnummer: ' . $arrSubmitted['orderNumber'] . '_0 :: '
+                              . $arrSubmitted['ts']);
         return $arrSubmitted['orderNumber'] . '_0';
     }
 
@@ -542,7 +502,7 @@ class FrameController extends Controller
                 $mailTo = 'info@halteverbot-beantragen.de';
             }
         }
-        $tagesStunde = (int) (date('H'));
+        $tagesStunde = (int)(date('H'));
         $grussFormel = 'Sehr geehrte Damen und Herren,';
         if (!empty($arrSubmitted['familyName'])) {
             $grussFormel = 'Guten Tag';
@@ -561,37 +521,24 @@ class FrameController extends Controller
                 'Ihre angegebenen Zusatzinformationen:<br>' . $arrSubmitted['hvzAdditionalInfos'] . '<br>';
             $additinalInfoTxt  = "Ihre angegebenen Zusatzinformationen:\n" . $arrSubmitted['hvzAdditionalInfos'] . "\n";
         }
-        $message = (new \Swift_Message(
-            'Bestätigung Ihrer Bestellung ' . $arrSubmitted['uniqueRef']
-        ))->setFrom(
-            'info@halteverbot-beantragen.de',
-            'Halteverbot beantragen'
-        )->setTo($mailTo)->setBcc('apiMovi@projektorientiert.de')->setReplyTo(
-            'info@halteverbot-beantragen.de',
-            'Halteverbot beantragen'
-        )->setBody(
-            $this->renderView(
-                '@ChuckkiHvzIframe/mail.confirmation.html.twig',
-                [
-                    'hvzorder'       => $hvzModel,
-                    'customer'       => $arrSubmitted,
-                    'grussFormel'    => $grussFormel,
-                    'additionalInfo' => $additinalInfoHtml,
-                ]
-            ),
-            'text/html'
-        )->addPart(
-            $this->renderView(
-                '@ChuckkiHvzIframe/mail.confirmation.text.twig',
-                [
-                    'hvzorder'       => $hvzModel,
-                    'customer'       => $arrSubmitted,
-                    'grussFormel'    => $grussFormel,
-                    'additionalInfo' => $additinalInfoTxt,
-                ]
-            ),
-            'text/plain'
-        );
+        $message = (new \Swift_Message('Bestätigung Ihrer Bestellung '
+                                       . $arrSubmitted['uniqueRef']))
+            ->setFrom('auftrag@halteverbot-beantragen.de', 'Halteverbot beantragen')
+            ->setTo($mailTo)
+            ->setBcc('apiMovi@projektorientiert.de')
+            ->setReplyTo('info@halteverbot-beantragen.de', 'Halteverbot beantragen')
+            ->setBody($this->renderView('@ChuckkiHvzIframe/mail.confirmation.html.twig', [
+                'hvzorder'       => $hvzModel,
+                'customer'       => $arrSubmitted,
+                'grussFormel'    => $grussFormel,
+                'additionalInfo' => $additinalInfoHtml,
+            ]), 'text/html')
+            ->addPart($this->renderView('@ChuckkiHvzIframe/mail.confirmation.text.twig', [
+                'hvzorder'       => $hvzModel,
+                'customer'       => $arrSubmitted,
+                'grussFormel'    => $grussFormel,
+                'additionalInfo' => $additinalInfoTxt,
+            ]), 'text/plain');
         $mailer  = $this->get('swiftmailer.mailer');
         if (0 === $mailer->send($message)) {
             PushMeMessage::pushMe('Comfirmation Mail not Send:' . $arrSubmitted['uniqueRef'], 'iframe_IS');
