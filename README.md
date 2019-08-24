@@ -1,21 +1,25 @@
-# FrameBundle for Hvb
+# iFrameBundle für Hvb
 
 
-Loopup- und Bestellfunktion via Iframe 
+Lookup- und Bestellfunktion via Iframe
+Benötigt in der paramers.yml Einträge für die Identifizierung der User
+`[base-uri]/extern/[username]`, sowie API-Auth-Keys und SwiftMailer.
 
 
-## Customize
+## Requirements
 
-via `parameters.yml` User identifizieren:
+via `parameters.yml`:
+```yaml
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: ~
+    mailer_password: ~
+    mailer_port: 1025
+    mailer_encryption: ~
 
+    iframe_user:
+        'is': 'dfj3sd'
+        'test': 'empty'
 ```
-    frameOptions:
-        users:
-            # username for Backend identifikation
-            - 'is':
-                    # pw for Backend identifikation
-                  - 'dfj3sd' # pw for Backend identifikation
-```
 
-Call via `[base-uri]/extern/[username]`
 
