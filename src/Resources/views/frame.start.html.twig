@@ -53,7 +53,14 @@
                 source: t.ttAdapter(),
                 name: "myorts",
                 displayKey: "ort",
-                limit: 20
+                limit: 20,
+                templates: {
+                    empty: [
+                        '<div class="empty-message">',
+                        'Kein Suchergebnis',
+                        '</div>'
+                    ].join('\n'),
+                }
             });
 
             var selectedDatum = '';
@@ -69,6 +76,7 @@
                 selectedDatum = suggestion;
                 //loadContent(selectedDatum);
             });
+
 
             tagsEl.bind("typeahead:render", function (ev, suggestion) {
                 console.log('selected-render');
@@ -95,6 +103,8 @@
                     if (selectedDatum !== "") {
                         loadContent(selectedDatum);
                     }
+                }else{
+                    selectedDatum = '';
                 }
             });
 
