@@ -14,6 +14,7 @@ services:
             - "@session"
             - "@contao.framework"
             - "@hvz.auth"
+            - "@hvz.communicator"
         tags: ['controller.service_arguments']
 
 
@@ -29,6 +30,11 @@ services:
         arguments:
             - '%iframe_user%'
 
-    Chuckki\HvzIframeBundle\Services\Authenticator:
+    hvz.communicator:
+        class: Chuckki\HvzIframeBundle\Services\Communicator
         arguments:
-            - '%iframe_user%'
+            - '@hvz.auth'
+            - '@swiftmailer.mailer.default'
+            - '@twig'
+            - '@monolog.logger'
+

@@ -19,11 +19,6 @@ class Authenticator
         $this->iframe_user = $iframe_user;
     }
 
-    public function getUsers()
-    {
-        dump($this->iframe_user);
-    }
-
     public function getApiPwForUser($customer)
     {
         return $this->iframe_user[$customer];
