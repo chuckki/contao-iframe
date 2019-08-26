@@ -4,9 +4,9 @@
 
 {% block content %}
     <div class="citysearch">
-        <p>Hier können Sie für Ihren bevorstehenden Umzug sicher und unkompliziert ein entsprechendes Halteverbot
+        <p>Hier können Sie für Ihren bevorstehenden Umzug sicher und unkompliziert ein entsprechendes Halteverbot via Rechnung
             bestellen. Wir sorgen dafür, dass Sie sich voll und ganz auf die Durchführung Ihres Umzuges konzentrieren
-            können. Ein Service bereitgestellt von <a href="https://www.halteverbot-beantragen.de" target="_blank"
+            können. <br>Ein Service bereitgestellt von <a href="https://www.halteverbot-beantragen.de" target="_blank"
                                                       title="Halteverbote online bestellen">
                 www.halteverbot-beantragen.de</a></p>
         <h3 id="hvzlistdropdown">Preise für Ihre Halteverbotszone in:</h3>
@@ -48,7 +48,8 @@
             tagsEl.typeahead({
                 minLength: 1,
                 hint: true,
-                highlight: true
+                highlight: true,
+                autoselect: true
             }, {
                 source: t.ttAdapter(),
                 name: "myorts",
@@ -101,6 +102,7 @@
                 if (13 === e.which) {
                     console.log(selectedDatum);
                     if (selectedDatum !== "") {
+                        $(".tt-suggestion:first-child").trigger('click');
                         loadContent(selectedDatum);
                     }
                 }else{
@@ -111,6 +113,10 @@
             function loadContent(selectedDatum) {
                 $("#content").load('/extern/{{ customer }}/hvb/' + selectedDatum['id'] + '/', function () {
                     DATEPIC.initDatePicker();
+                    $('#tags').blur();
+                    $('html, body').animate({
+                        scrollTop: $('#hvzDetails').offset().top - 20
+                    }, 500);
                 });
             }
         });
