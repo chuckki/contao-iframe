@@ -103,7 +103,7 @@
                 <label for="ctrl_hvzAdresse" class="placeholder">{{ hvzForm.widget('hvzAdresse').label|raw }}</label>
                 <i class="fas fa-map-marked-alt input-unity"></i>
                 <input type="text" class="text mandatory" id="ctrl_hvzAdresse" maxlength="100" minlength="3"
-                       pattern="[0-9A-Za-z '#\.-]{3,}" required name="{{ hvzForm.widget('hvzAdresse').name }}"
+                       required name="{{ hvzForm.widget('hvzAdresse').name }}"
                        value="{{ hvzForm.widget('hvzAdresse').value }}" autocomplete="address-line1"
                        title="Tragen Sie hier die für das Halteverbot relevante Strasse und Hausnummer ein">
                 {{ hvzForm.widget('hvzAdresse').ErrorAsHTML|raw }}
