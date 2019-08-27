@@ -37,7 +37,7 @@ class FrameController extends Controller
         $this->session       = $session;
         $this->framework     = $framework;
         $this->authenticator = $authenticator;
-        $this->communicator = $communicator;
+        $this->communicator  = $communicator;
     }
 
     /**
@@ -50,9 +50,12 @@ class FrameController extends Controller
     public function loadFrameAction($customer): Response
     {
         $this->authenticator->isUserAuth($customer);
-        return $this->render('@ChuckkiHvzIframe/frame.start.html.twig', [
-            'customer' => $customer
-        ]);
+        return $this->render(
+            '@ChuckkiHvzIframe/frame.start.html.twig',
+            [
+                'customer' => $customer
+            ]
+        );
     }
 
     /**
@@ -71,15 +74,17 @@ class FrameController extends Controller
             throw new NotFoundHttpException('Unknown City');
         }
         $formObj = new FormBuilder($orderObj, $customer);
-
-        return $this->render('@ChuckkiHvzIframe/frame.details.html.twig', [
-            'customer'     => $customer,
-            'hvz'          => $orderObj,
-            'hvzForm'      => $formObj->buildForm(),
-            'isSubmited'   => false,
-            'requestToken' => \RequestToken::get(),
-            'formId'       => 'hvzOrderform'
-        ]);
+        return $this->render(
+            '@ChuckkiHvzIframe/frame.details.html.twig',
+            [
+                'customer'     => $customer,
+                'hvz'          => $orderObj,
+                'hvzForm'      => $formObj->buildForm(),
+                'isSubmited'   => false,
+                'requestToken' => \RequestToken::get(),
+                'formId'       => 'hvzOrderform'
+            ]
+        );
     }
 
     /**
@@ -93,13 +98,12 @@ class FrameController extends Controller
     public function getHvbPrice($customer, $id): Response
     {
         $this->authenticator->isUserAuth($customer);
-
         $hvzObj = HvzModel::findById($id);
         if (!$hvzObj) {
             throw new NotFoundException('Hvz not found');
         }
         $startDateString = Input::post('startDate');
-        $extraTag        = (int)Input::post('extraTag') - 1;
+        $extraTag        = (int) Input::post('extraTag') - 1;
         $hvzType         = Input::post('hvzType');
         $startDate       = \DateTime::createFromFormat('d.m.Y', $startDateString);
         $endDate         = \DateTime::createFromFormat('d.m.Y', $startDateString);
@@ -108,7 +112,7 @@ class FrameController extends Controller
         $startTag = strftime('%A', $startDate->getTimestamp());
         setlocale(LC_TIME, 'de_DE.utf8', 'de_DE');
         $endTag = strftime('%A', $endDate->getTimestamp());
-        $price  = ($hvzType === 'beidseitig') ? (int)$hvzObj->hvz_double : (int)$hvzObj->hvz_single;
+        $price  = ($hvzType === 'beidseitig') ? (int) $hvzObj->hvz_double : (int) $hvzObj->hvz_single;
         $order  = [
             'ort'               => $hvzObj->question,
             'hvzTitel'          => ucfirst($hvzType),
@@ -125,9 +129,12 @@ class FrameController extends Controller
             'priceExtraTag'     => $hvzObj->hvz_extra_tag,
             'day'               => (($extraTag + 1) === 1) ? 'Tag' : 'Tage'
         ];
-        return $this->render('@ChuckkiHvzIframe/overviewOrder.html.twig', [
-            'order' => $order
-        ]);
+        return $this->render(
+            '@ChuckkiHvzIframe/overviewOrder.html.twig',
+            [
+                'order' => $order
+            ]
+        );
 
     }
 
@@ -146,28 +153,33 @@ class FrameController extends Controller
         if (!$objHvz) {
             throw new NotFoundException('Hvz not found');
         }
-
         $formBuilder = new FormBuilder($objHvz, $customer);
         $objForm     = $formBuilder->buildForm();
         if ($objForm->validate()) {
-            $arrData     = $objForm->fetchAll();
+            $arrData              = $objForm->fetchAll();
             $arrData['uniqueRef'] = $this->communicator->sendNewOrderToBackend($arrData, $customer, $objHvz);
-            $this->communicator->sendComfirmationMail($arrData, $objHvz);
-            return $this->render('@ChuckkiHvzIframe/orderConfirm.html.twig', [
-                'customermail' => $arrData['billingEmail'],
-                'ordernumber'  => $arrData['uniqueRef']
-            ]);
+            $this->communicator->cleanUpAndSaveToDB($arrData, $objHvz);
+            $this->communicator->sendConfirmationMail($arrData, $objHvz);
+            return $this->render(
+                '@ChuckkiHvzIframe/orderConfirm.html.twig',
+                [
+                    'customermail' => $arrData['billingEmail'],
+                    'ordernumber'  => $arrData['uniqueRef']
+                ]
+            );
 
         }
-
         // resend orderForm with errors
-        return $this->render('@ChuckkiHvzIframe/frame.details.html.twig', [
-            'customer'     => $customer,
-            'hvz'          => $objHvz,
-            'isSubmited'   => true,
-            'hvzForm'      => $objForm,
-            'requestToken' => \RequestToken::get(),
-            'formId'       => 'hvzOrderform'
-        ]);
+        return $this->render(
+            '@ChuckkiHvzIframe/frame.details.html.twig',
+            [
+                'customer'     => $customer,
+                'hvz'          => $objHvz,
+                'isSubmited'   => true,
+                'hvzForm'      => $objForm,
+                'requestToken' => \RequestToken::get(),
+                'formId'       => 'hvzOrderform'
+            ]
+        );
     }
 }

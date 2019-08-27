@@ -37,4 +37,9 @@ services:
             - '@swiftmailer.mailer.default'
             - '@twig'
             - '@monolog.logger'
+            - '@hvz.order.manager'
 
+    hvz.order.manager:
+        class: Chuckki\HvzIframeBundle\Services\OrderManager
+        arguments:
+            - '@monolog.logger'
