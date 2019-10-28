@@ -27,8 +27,7 @@ services:
 
     hvz.auth:
         class: Chuckki\HvzIframeBundle\Services\Authenticator
-        arguments:
-            - '%iframe_user%'
+        autowire: true
 
     hvz.communicator:
         class: Chuckki\HvzIframeBundle\Services\Communicator

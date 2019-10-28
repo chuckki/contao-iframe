@@ -4,32 +4,39 @@
 namespace Chuckki\HvzIframeBundle\Services;
 
 
+use Chuckki\HvzIframeBundle\Model\HvzIframeUserModel;
 use Contao\CoreBundle\Exception\AccessDeniedException;
 
 class Authenticator
 {
 
-    private $iframe_user;
+    private $iframeUserModel;
 
     /**
      * Authenticator constructor.
      */
-    public function __construct($iframe_user)
+    public function __construct(HvzIframeUserModel $hvzIframeUserModel)
     {
-        $this->iframe_user = $iframe_user;
+        $this->iframeUserModel = $hvzIframeUserModel;
     }
 
-    public function getApiPwForUser($customer)
+    public function getApiPwForUser($customer): string
     {
-        return $this->iframe_user[$customer];
+        $iframeUser = HvzIframeUserModel::findOneBy('user',$customer);
+
+        if(!$iframeUser){
+            throw new AccessDeniedException('Access Denied - User not found');
+        }
+
+        return $iframeUser->token;
     }
 
-    public function isUserAuth($customer)
+    public function isUserAuth($customer): void
     {
-        if(!array_key_exists($customer, $this->iframe_user))
-        {
-            throw new AccessDeniedException('Access Denied');
+        $iframeUser = HvzIframeUserModel::findOneBy('user',$customer);
+
+        if(!$iframeUser){
+            throw new AccessDeniedException('Access Denied - User not found');
         }
     }
-
 }
