@@ -123,12 +123,12 @@ class Communicator
                 $pushMe = 'IS Hvb2Api:' . $data['uniqueRef'] . "\n APICall Catch:" . $e->getMessage();
             }
             if ('' !== $pushMe) {
-                PushMeMessage::pushMe($pushMe);
+                PushMeMessage::pushMe($pushMe,'iFrame');
             }
         }
         PushMeMessage::pushMe(
             'IS HvbOnline2Backend -> Keine Auftragsnummer: ' . $arrSubmitted['orderNumber'] . '_0 :: '
-            . $arrSubmitted['ts']
+            . $arrSubmitted['ts'], 'iFrame'
         );
         return $arrSubmitted['orderNumber'] . '_0';
     }
@@ -198,7 +198,7 @@ class Communicator
             'text/plain'
         );
         if (0 === $this->mailer->send($message)) {
-            PushMeMessage::pushMe('Comfirmation Mail not Send:' . $arrSubmitted['uniqueRef'], 'iframe_IS');
+            PushMeMessage::pushMe('Comfirmation Mail not Send:' . $arrSubmitted['uniqueRef'], 'iFrame');
         }
     }
 
