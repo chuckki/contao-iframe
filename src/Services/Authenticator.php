@@ -28,7 +28,7 @@ class Authenticator
             throw new AccessDeniedException('Access Denied - User not found');
         }
 
-        return $iframeUser->token;
+        return html_entity_decode($iframeUser->token);
     }
 
     public function isUserAuth($customer): void

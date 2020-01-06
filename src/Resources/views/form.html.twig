@@ -405,6 +405,12 @@
 
         <fieldset id="agbChecking">
             <div class="checkbox-container">
+                <input value="1" type="checkbox" required id="ctrl_dataAccept" class="input-checkbox"
+                       name="{{ hvzForm.widget('dataAccept').name }}">
+                <label for="ctrl_agbAccept" class="label-checkbox">{{ hvzForm.widget('dataAccept').label|raw }}</label>
+                {{ hvzForm.widget('dataAccept').ErrorAsHTML|raw }}
+            </div>
+            <div class="checkbox-container">
                 <input value="1" type="checkbox" required id="ctrl_agbAccept" class="input-checkbox"
                        name="{{ hvzForm.widget('agbAccept').name }}">
                 <label for="ctrl_agbAccept" class="label-checkbox">{{ hvzForm.widget('agbAccept').label|raw }}</label>

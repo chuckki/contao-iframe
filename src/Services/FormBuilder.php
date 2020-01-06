@@ -245,7 +245,14 @@ class FormBuilder
             'inputType' => 'text',
             'eval'      => array('mandatory' => true)
         ));
-        // Need a checkbox?
+
+        $objForm->addFormField('dataAccept', array(
+            'label' => 'Ich stimme zu, dass meine Daten von <a target="_blank" href="https://www.halteverbot-beantragen.de/impressum.html">Confido</a> erhoben und zur Leistungserbringung verarbeitet werden.
+Ich kann diese Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen. Weitere Informationen zum Umgang mit Ihren Daten finden Sie <a target="_blank" href="https://www.halteverbot-beantragen.de/datenschutzerklaerung.html">hier</a>.',
+            'inputType' => 'checkbox',
+            'eval'      => array('mandatory' => true)
+        ));
+
         $objForm->addFormField('agbAccept', array(
             'label'     => 'Ich erkläre mich mit den <a target="_blank" href="/extern/' . $this->customer . '/page/agb/#top">AGB</a>
                     und den <a target="_blank" href="/extern/' . $this->customer . '/page/datenschutzerklaerung/#top">Datenschutzrichtlinien</a>
