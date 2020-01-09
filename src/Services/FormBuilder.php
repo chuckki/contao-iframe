@@ -256,7 +256,7 @@ Ich kann diese Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen. W
         $objForm->addFormField('agbAccept', array(
             'label'     => 'Ich erkläre mich mit den <a target="_blank" href="/extern/' . $this->customer . '/page/agb/#top">AGB</a>
                     und den <a target="_blank" href="/extern/' . $this->customer . '/page/datenschutzerklaerung/#top">Datenschutzrichtlinien</a>
-                    einverstanden',
+                    von <a href="https://www.halteverbot-beantragen.de/impressum.html" target="_blank">Confido</a> einverstanden.',
             'inputType' => 'checkbox',
             'eval'      => array('mandatory' => true)
         ));
