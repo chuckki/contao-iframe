@@ -10,6 +10,7 @@ use Contao\InsertTags;
 use Contao\PageModel;
 use Contao\StringUtil;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class FramePages extends Controller
@@ -27,16 +28,14 @@ class FramePages extends Controller
         $this->framework = $framework;
     }
 
-    private function buildHeadLine(string $headlineArray)
+    private function buildHeadLine(string $headlineArray): string
     {
         $arrHeadline    = StringUtil::deserialize($headlineArray);
         $headlineString = \is_array($arrHeadline) ? $arrHeadline['value'] : $arrHeadline;
-        $headlineTag    = \is_array($arrHeadline) ? $arrHeadline['unit'] : 'h1';
-        $string         = '<h3>' . $headlineString . '</h3>';
-        return $string;
+        return '<h3>' . $headlineString . '</h3>';
     }
 
-    public function showPageInFrameAction($customer, $alias)
+    public function showPageInFrameAction($customer, $alias): Response
     {
         switch ($alias) {
             case 'impressum':

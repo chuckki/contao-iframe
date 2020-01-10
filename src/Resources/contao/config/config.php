@@ -1,5 +1,6 @@
 <?php
 
+use Chuckki\HvzIframeBundle\Model\HvzIframeUserModel;
 
 array_insert($GLOBALS['BE_MOD'], 0, array
 (
@@ -12,6 +13,4 @@ array_insert($GLOBALS['BE_MOD'], 0, array
     )
 ));
 
-
-
-$GLOBALS['TL_MODELS']['tl_hvz_iframe'] = \Chuckki\HvzIframeBundle\Model\HvzIframeUserModel::class;
+$GLOBALS['TL_MODELS']['tl_hvz_iframe'] = HvzIframeUserModel::class;

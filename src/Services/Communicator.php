@@ -202,20 +202,19 @@ class Communicator
         }
     }
 
-    public function cleanUpAndSaveToDB($arrSubmitted, HvzModel $hvzModel)
+    public function cleanUpAndSaveToDB($arrSubmitted, HvzModel $hvzModel): void
     {
-        if ($arrSubmitted["hvzType"] == "einseitig") {
+        if ($arrSubmitted['hvzType'] === 'einseitig') {
             $arrSubmitted['type']           = 1;
             $arrSubmitted['hvz_solo_price'] = $hvzModel->hvz_single;
             $arrSubmitted['Genehmigung']    = 'Einfache HVZ mit Genehmigung';
-
         } else {
             $arrSubmitted['type']           = 2;
             $arrSubmitted['hvz_solo_price'] = $hvzModel->hvz_double;
             $arrSubmitted['Genehmigung']    = 'Doppelseitige HVZ mit Genehmigung';
 
         }
-        if ($arrSubmitted["hvzCarType"] == "pkw") {
+        if ($arrSubmitted['hvzCarType'] === 'pkw') {
             $arrSubmitted['Fahrzeug'] = 'Fahrzeug bis 3,5t';
         } else {
             $arrSubmitted['Fahrzeug'] = 'Fahrzeug größer 3,5t (LKW)';

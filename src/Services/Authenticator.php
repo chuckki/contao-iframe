@@ -9,12 +9,8 @@ use Contao\CoreBundle\Exception\AccessDeniedException;
 
 class Authenticator
 {
-
     private $iframeUserModel;
 
-    /**
-     * Authenticator constructor.
-     */
     public function __construct(HvzIframeUserModel $hvzIframeUserModel)
     {
         $this->iframeUserModel = $hvzIframeUserModel;
