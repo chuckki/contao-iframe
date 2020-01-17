@@ -94,7 +94,7 @@ class Communicator
                 'needLicence'    => true,
                 'gender'         => $arrSubmitted['apiGender'],
                 'customerId'     => 'iframe_' . $customer,
-                'paymentStatus'  => 'invoice',
+                'paymentStatus'  => 'Rechnung',
             ];
             $pushMe = '';
             try {
@@ -171,7 +171,7 @@ class Communicator
         ))->setFrom(
             'auftrag@halteverbot-beantragen.de',
             'Halteverbot beantragen'
-        )->setTo($mailTo)->setBcc('apiMovi@projektorientiert.de')->setReplyTo(
+        )->setTo($mailTo)->setBcc('info@halteverbot-beantragen.de')->setReplyTo(
             'info@halteverbot-beantragen.de',
             'Halteverbot beantragen'
         )->setBody(
