@@ -17,6 +17,8 @@ services:
             - "@hvz.communicator"
         tags: ['controller.service_arguments']
 
+    Chuckki\HvzIframeBundle\Model\HvzIframeUserModel:
+        class: Chuckki\HvzIframeBundle\Model\HvzIframeUserModel
 
     Chuckki\HvzIframeBundle\Controller\FramePages:
         arguments:
