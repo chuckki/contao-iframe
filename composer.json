@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": "^7.1",
-        "contao/core-bundle": "4.4.*",
+        "contao/core-bundle": "^4.4.1",
         "symfony/framework-bundle": "^3.3",
         "codefog/contao-haste":"^4.14.1"
     },
