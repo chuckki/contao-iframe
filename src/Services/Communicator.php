@@ -171,7 +171,7 @@ class Communicator
         ))->setFrom(
             'auftrag@halteverbot-beantragen.de',
             'Halteverbot beantragen'
-        )->setTo($mailTo)->setBcc('info@halteverbot-beantragen.de')->setReplyTo(
+        )->setTo($mailTo)->setReplyTo(
             'info@halteverbot-beantragen.de',
             'Halteverbot beantragen'
         )->setBody(
@@ -200,6 +200,11 @@ class Communicator
         if (0 === $this->mailer->send($message)) {
             PushMeMessage::pushMe('Comfirmation Mail not Send:' . $arrSubmitted['uniqueRef'], 'iFrame');
         }
+        $message->setReplyTo($mailTo)->setTo('info@halteverbot-beantragen.de');
+        if (0 === $this->mailer->send($message)) {
+            PushMeMessage::pushMe('Comfirmation Mail To Home not Send:' . $arrSubmitted['uniqueRef'], 'iFrame');
+        }
+
     }
 
     public function cleanUpAndSaveToDB($arrSubmitted, HvzModel $hvzModel): void
