@@ -68,31 +68,21 @@
             var selectedDatum = '';
 
             tagsEl.on("typeahead:selected", function (ev, suggestion) {
-                console.log('selected-event');
                 selectedDatum = suggestion;
                 loadContent(selectedDatum);
             });
 
             tagsEl.on("typeahead:select", function (ev, suggestion, be, am) {
-                console.log('select -event');
                 selectedDatum = suggestion;
-                //loadContent(selectedDatum);
             });
 
-
             tagsEl.bind("typeahead:render", function (ev, suggestion) {
-                console.log('selected-render');
                 if (suggestion.length > 0) {
                     selectedDatum = suggestion[0];
                 }
             });
             tagsEl.bind("typeahead:autocomplete", function (ev, suggestion) {
-                console.log('autocomplete-event');
                 selectedDatum = suggestion;
-            });
-            tagsEl.bind("typeahead:cursorchange", function (ev, suggestion) {
-                console.log('cursorchange-event');
-                console.log(suggestion);
             });
 
             $("#searchButton").click(function () {
@@ -101,7 +91,6 @@
 
             tagsEl.keypress(function (e) {
                 if (13 === e.which) {
-                    console.log(selectedDatum);
                     if (selectedDatum !== "") {
                         $(".tt-suggestion:first-child").trigger('click');
                         loadContent(selectedDatum);
