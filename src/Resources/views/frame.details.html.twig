@@ -25,8 +25,20 @@
 
             jQuery(function () {
                 jQuery('[data-toggle="tooltip"]').tooltip({container: 'body'});
-                jQuery.popoverTrigger('[data-toggle="popover"]');
+//                jQuery.popoverTrigger('[data-toggle="popover"]');
+                /*
+                jQuery('[data-toggle="popover"]').popover({
+                    html: true,
+                    container: 'body'
+                })
+
+                 */
+                //jQuery.popover('[data-toggle="popover"]');
+
             });
+
+
+
 
             var form = $(document.querySelector('input[name="FORM_SUBMIT"][value="{{ formId }}"]').form);
             form.submit(function () {
@@ -42,8 +54,6 @@
                     processData: false,
                     success: function (data) {
 
-  //                      $("#content").html(data);
-//                        return;
                         let contentEl = $("#content")
                             contentEl.animate({'opacity': 0}, 200, 'swing', function () {
                             contentEl.html(data);

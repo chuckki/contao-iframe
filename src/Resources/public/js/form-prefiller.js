@@ -4,17 +4,14 @@ var PrefillMachine = {
 
     prefillCorrectly: function() {
 
-
         if ($("#ctrl_hvzAdresse").val() === '1' || $("#ctrl_hvzAdresse").val() === 'Mehrweg 34') {
 
             fillCounter++;
-
             if (fillCounter > 1) {
                 $("#ctrl_extraTag option[value=" + fillCounter + "]").attr('selected', true);
                 $("#ctrl_extraTag").change();
                 return;
             }
-
 
             $("#ctrl_hvzPlz").val("34554");
             $("#ctrl_hvzAdresse").val("Mehrweg 34");
@@ -37,4 +34,5 @@ var PrefillMachine = {
 
 $(".campaign-box").click(function () {
     PrefillMachine.prefillCorrectly();
+    console.log("done");
 });

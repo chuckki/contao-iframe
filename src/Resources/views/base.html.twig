@@ -9,20 +9,22 @@
     <base href="{{ app.request.getSchemeAndHttpHost() }}"/>
 
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/chuckkihvziframe/css/normalize.css') }}"/>
-    <link rel="stylesheet" type="text/css"
-          href="https://www.static-immobilienscout24.de/fro/core/3.0.1-0/css/core.min.css"/>
+    <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">-->
+    <!--<link rel="stylesheet" type="text/css" href="https://www.static-immobilienscout24.de/fro/core/3.0.1-0/css/core.min.css"/>-->
+    <!-- <link rel="stylesheet" type="text/css" href="{{ asset('bundles/chuckkihvziframe/css/tooltip.css') }}"/>-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/chuckkihvziframe/css/screen.css') }}"/>
+
+
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/chuckkihvziframe/css/display.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/chuckkihvziframe/css/datepicker.css') }}"/>
+    <!-- <link rel="stylesheet" type="text/css" href="{{ asset('bundles/chuckkihvziframe/css/'~ customer ~ '.css') }}"/>-->
 
     <script type="text/javascript" src="https://kit.fontawesome.com/92df57eace.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"
-            integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.2.1/typeahead.bundle.min.js"
-            integrity="sha256-VCsWOz+0GuHdS/sIICtQNTFJdbaDI80rxvoB7BXabrU=" crossorigin="anonymous"></script>
-    <script type="text/javascript"
-            src="https://www.static-immobilienscout24.de/fro/core/3.0.1-0/js/core.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.2.1/typeahead.bundle.min.js" integrity="sha256-VCsWOz+0GuHdS/sIICtQNTFJdbaDI80rxvoB7BXabrU=" crossorigin="anonymous"></script>
+   <script src="{{ asset('bundles/chuckkihvziframe/js/bootstrap.bundle.min.js') }}" crossorigin="anonymous"></script>
+<!--   <script type="text/javascript" src="https://www.static-immobilienscout24.de/fro/core/3.0.1-0/js/core.min.js"></script>-->
 
 </head>
 <body onLoad="document.getElementById('tags').focus();">
