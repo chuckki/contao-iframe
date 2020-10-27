@@ -53,6 +53,9 @@ class Communicator
         $zusatzTage                = (int) $arrSubmitted['extraTag'] - 1;
         $preisZusatzTag            = (int) $hvzModel->hvz_extra_tag;
         $arrSubmitted['fullPrice'] = $preisZusatzTag * $zusatzTage + (int) $hvzModel->hvz_single;
+        if($arrSubmitted['hvzType'] === 'beidseitig') {
+            $arrSubmitted['fullPrice'] += $hvzModel->hvz_double - $hvzModel->hvz_single;
+        }
         setlocale(LC_ALL, 'de_DE');
         $endDate                      = \DateTime::createFromFormat('d.m.Y', $arrSubmitted['startDateInput']);
         $endDate                      = $endDate->modify('+' . $zusatzTage . ' days');
